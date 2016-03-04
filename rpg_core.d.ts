@@ -3,6 +3,35 @@
 // Definitions by: aaa<https://>, bbb<https://>
 // Definitions: https://
 
+
+interface GraphicsStatic {
+    render(stage: Stage);
+}
+declare var Graphics: GraphicsStatic;
+
+declare class Bitmap {
+    constructor(width?: number, height?: number);
+    addLoadListener(listner: () => any): void;
+    adjustTone(r: number, g: number, b: number): void;
+    blt(source: Bitmap, sx: number, sy: number, sw: number , sh: number,
+        dx: number, dy: number, dw?: number, dh?: number): void;
+    fillAll(color: string);
+}
+
+declare class Sprite {
+    constructor(bitmap?: Bitmap);
+    bitmap: Bitmap;
+    x: number;
+    y: number;
+    update();
+}
+
+declare class Stage {
+    constructor();
+    addChild(childe: any);
+}
+
+
 /**
  * This is not a class, but contains some methods that will be added to the
  * standard Javascript objects.
