@@ -205,13 +205,13 @@ declare namespace RPG {
         speed: number;
         successRate: number;
         tpGain: number;
+        occasion: number;
     }
 
     export interface Skill extends UsableItem {
         message1: string;
         message2: string;
         mpCost: number;
-        occasion: number;
         repeats: number;
         requiredWtypeId1: number;
         requiredWtypeId2: number;

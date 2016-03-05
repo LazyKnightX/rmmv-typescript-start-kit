@@ -750,8 +750,8 @@ declare class Game_BattlerBase {
     skillTpCost(skill: RPG.Skill): number;
     canPaySkillCost(skill: RPG.Skill): boolean;
     paySkillCost(skill: RPG.Skill): void;
-    isOccasionOk(item: RPG.Item): boolean;
-    meetsUsableItemConditions(item: RPG.Item): boolean;
+    isOccasionOk(item: RPG.UsableItem): boolean;
+    meetsUsableItemConditions(item: RPG.UsableItem): boolean;
     meetsSkillConditions(skill: RPG.Skill): boolean;
     meetsItemConditions(item: RPG.Item): boolean;
     canUse(item: RPG.UsableItem): boolean;
