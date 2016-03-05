@@ -102,7 +102,7 @@ declare namespace RPG {
 
         meta: {[key: string]: string | boolean};
     }
-    export namespace Map {
+    namespace Map {
         /**
          * The data class for the encounter settings.
          */
@@ -138,7 +138,6 @@ declare namespace RPG {
          */
         order: number;
     }
-
     /**
      * The data class for map events.
      */
@@ -364,7 +363,7 @@ declare namespace RPG {
          */
         parameters: Array<any>;
     }
-    export namespace Class {
+    namespace Class {
         /**
          * The data class for a class's [Skills to Learn].
          */
@@ -495,8 +494,6 @@ declare namespace RPG {
         traits: Array<Trait>;
         meta: {[key: string]: string | boolean};
     }
-
-
     /**
      * A superclass of actor, class, skill, item, weapon, armor, enemy, and state.
      *
@@ -762,7 +759,6 @@ declare namespace RPG {
          * The name.
          */
         name: string;
-
         /**
          * Action restrictions.
          *
@@ -817,8 +813,10 @@ declare namespace RPG {
          * Number of steps until state is removed.
          */
         stepToRemove: number;
+        /**
+         * The icon number.
+         */
         iconIndex: number;
-
         /**
          * The message when an actor fell in the state.
          */
@@ -882,7 +880,7 @@ declare namespace RPG {
          */
         scrollY: number;
     }
-    export namespace UsableItem {
+    namespace UsableItem {
         /**
          * The data class for damage.
          */
@@ -938,8 +936,7 @@ declare namespace RPG {
             value2: number;
         }
     }
-
-    export namespace Enemy {
+    namespace Enemy {
         /**
          * The data class for enemy [Drop Items].
          */
@@ -1017,7 +1014,7 @@ declare namespace RPG {
          */
         pages: Array<RPG.Troop.Page>;
     }
-    export namespace Troop {
+    namespace Troop {
         /**
          * The data class for enemy troop members.
          */
@@ -1056,7 +1053,7 @@ declare namespace RPG {
              */
             list: Array<EventCommand>;
         }
-        export namespace Page {
+        namespace Page {
             /**
              * The data class of battle event [Conditions].
              */
@@ -1157,7 +1154,7 @@ declare namespace RPG {
          */
         timings: Array<Animation.Timing>;
     }
-    export namespace Animation {
+    namespace Animation {
         /**
          * The data class for the timing of an animation's SE and flash effects.
          */
@@ -1444,7 +1441,7 @@ declare namespace RPG {
          */
         editMapId: number;
     }
-    export namespace System {
+    namespace System {
         /**
          * The data class for vehicles.
          */

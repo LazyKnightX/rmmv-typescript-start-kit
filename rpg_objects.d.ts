@@ -429,9 +429,9 @@ declare class Game_Action {
     setGuard(): void;
     setSkill(skillId: number): void;
     setItem(itemId: number): void;
-    setItemObject(object: RPG.BaseItem): void;
+    setItemObject(object: RPG.UsableItem): void;
     setTarget(targetIndex: number): void;
-    item(): Game_Item;
+    item(): RPG.UsableItem;
     isSkill(): boolean;
     isItem(): boolean;
     numRepeats(): number;
@@ -1177,6 +1177,10 @@ declare class Game_Party extends Game_Unit {
     protected _weapons: {[itemId: number]: number};
     protected _armors: {[itemId: number]: number};
 
+    members(): Array<Game_Actor>;
+    aliveMembers(): Array<Game_Actor>;
+    deadMembers(): Array<Game_Actor>;
+    movableMembers(): Array<Game_Actor>;
     initAllItems(): void;
     exists(): boolean;
     size(): number;
@@ -1259,6 +1263,10 @@ declare class Game_Troop extends Game_Unit {
     protected _turnCount: number;
     protected _namesCount: {[name: string]: number};
 
+    members(): Array<Game_Enemy>;
+    aliveMembers(): Array<Game_Enemy>;
+    deadMembers(): Array<Game_Enemy>;
+    movableMembers(): Array<Game_Enemy>;
     isEventRunning(): boolean;
     updateInterpreter(): void;
     turnCount(): number;
