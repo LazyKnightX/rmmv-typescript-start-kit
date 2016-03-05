@@ -1,6 +1,3 @@
-/// <reference path="rpg_library.d.ts" />
-import RPG = require('rpg_library');
-
 /**
  * -----------------------------------------------------------------------------
  * Game_Temp
