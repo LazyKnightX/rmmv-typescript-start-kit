@@ -7,94 +7,117 @@ declare namespace RPG {
          * The map's display name.
          */
         displayName: string;
+
         /**
          * The map's tile set.
          */
         tilesetId: number;
+
         /**
          * The map's width.
          */
         width: number;
+
         /**
          * The map's height.
          */
         height: number;
+
         /**
          * The scroll type (0: No Loop, 1: Vertical Loop, 2: Horizontal Loop, 3: Both Loop).
          */
         scrollType: number;
+
         /**
          * The truth value indicating whether the battle background specification is enabled.
          */
         specifyBattleback: boolean;
+
         /**
          * The file name of the floor graphic if the battle background specification is enabled.
          */
         battleback1Name: string;
+
         /**
          * The file name of the wall graphic if the battle background specification is enabled.
          */
         battleback2_name: string;
+
         /**
          * The truth value indicating whether BGM autoswitching is enabled.
          */
         autoplayBgm: boolean;
+
         /**
          * The name of that BGM (RPG.AudioFile) if BGM autoswitching is enabled.
          */
         bgm: AudioFile;
+
         /**
          * The truth value indicating whether BGS autoswitching is enabled.
          */
         autoplayBgs: boolean;
+
         /**
          * The name of that BGS (RPG.AudioFile) if BGS autoswitching is enabled.
          */
         bgs: AudioFile;
+
         /**
          * The truth value of the [Disable Dashing] option.
          */
         disableDashing: boolean;
+
         /**
          * An encounter list. A RPG.Map.Encounter ID array.
          */
         encounterList: Array<Map.Encounter>;
+
         /**
          * The average number of steps between encounters.
          */
         encounterStep: number;
+
         /**
          * The file name of the parallax background's graphic.
          */
         parallaxName: string;
+
         /**
          * The truth value of the [Loop Horizontal] option for the parallax background.
          */
         parallaxLoopX: boolean;
+
         /**
          * The truth value of the [Loop Vertical] option for the parallax background.
          */
         parallaxLoopY: boolean;
+
         /**
          * The automatic x-axis scrolling speed for the parallax background.
          */
         parallaxSx: number;
+
         /**
          * The automatic y-axis scrolling speed for the parallax background.
          */
         parallaxSy: number;
+
         /**
          * The truth value of the [Show in the Editor] option for the parallax background.
          */
         parallaxShow: boolean;
+
         /**
          * The text of the note.
          */
         note: string;
+
         /**
          * The map data. A 3-dimensional tile ID array (Table).
          */
         data: Array<number>;
+
         /**
          * The array of RPG.Event data.
          */
@@ -111,10 +134,12 @@ declare namespace RPG {
              * The enemy troop ID.
              */
             troopId: number;
+
             /**
              * Weight.
              */
             weight: number;
+
             /**
              * An array containing region IDs.
              */
@@ -129,10 +154,12 @@ declare namespace RPG {
          * The map name.
          */
         name: string;
+
         /**
          * The parent map ID.
          */
         parentId: number;
+
         /**
          * The map tree display order, which is used internally.
          */
@@ -146,22 +173,27 @@ declare namespace RPG {
          * The event ID.
          */
         id: number;
+
         /**
          * The event name.
          */
         name: string;
+
         /**
          * The event's x-coordinate on the map.
          */
         x: number;
+
         /**
          * The event's y-coordinate on the map.
          */
         y: number;
+
         /**
          * The event pages. RPG.Event.Page array.
          */
         pages: Array<Event.Page>;
+
         /**
          * The text of the note.
          */
@@ -178,50 +210,62 @@ declare namespace RPG {
              * The event condition (RPG.Event.Page.Condition).
              */
             conditions: Array<Page.Condition>;
+
             /**
              * The event graphic (RPG.Event.Page.Graphic) .
              */
             image: Page.Graphic;
+
             /**
              * The type of movement (0: fixed, 1: random, 2: approach, 3: custom).
              */
             moveType: number;
+
             /**
              * The movement speed (1: x8 slower, 2: x4 slower, 3: x2 slower, 4: normal, 5: x2 faster, 6: x4 faster).
              */
             moveSpeed: number;
+
             /**
              * The movement frequency (1: lowest, 2: lower, 3: normal, 4: higher, 5: highest).
              */
             moveFrequency: number;
+
             /**
              * The movement route (RPG.MoveRoute). Referenced only when the movement type is set to custom.
              */
             moveRoute: Array<MoveRoute>;
+
             /**
              * The truth value of the [Walking Animation] option.
              */
             walkAnime: boolean;
+
             /**
              * The truth value of the [Stepping Animation] option.
              */
             stepAnime: boolean;
+
             /**
              * The truth value of the [Direction Fix] option.
              */
             directionFix: boolean;
+
             /**
              * The truth value of the [Through] option.
              */
             through: boolean;
+
             /**
              * The priority type (0: below characters, 1: same as characters, 2: above characters).
              */
             priorityType: number;
+
             /**
              * The event trigger (0: action button, 1: player touch, 2: event touch, 3: autorun, 4: parallel).
              */
             trigger: number;
+
             /**
              * A list of event commands. An RPG.EventCommand array.
              */
@@ -236,50 +280,62 @@ declare namespace RPG {
                  * The truth value indicating whether the first [Switch] condition is valid.
                  */
                 switch1Valid: boolean;
+
                 /**
                  * The truth value indicating whether the second [Switch] condition is valid.
                  */
                 switch2Valid: boolean;
+
                 /**
                  * The truth value indicating whether the [Variable] condition is valid.
                  */
                 variableValid: boolean;
+
                 /**
                  * The truth value indicating whether the [Self Switch] condition is valid.
                  */
                 selfSwitchValid: boolean;
+
                 /**
                  * The truth value indicating whether the [Item] condition is valid.
                  */
                 itemValid: boolean;
+
                 /**
                  * The truth value indicating whether the [Actor] condition is valid.
                  */
                 actorValid: boolean;
+
                 /**
                  * The ID of that switch if the first [Switch] condition is valid.
                  */
                 switch1Id: number;
+
                 /**
                  * The ID of that switch if the second [Switch] condition is valid.
                  */
                 switch2Id: number;
+
                 /**
                  * The ID of that variable if the [Variable] condition is valid.
                  */
                 variableId: number;
+
                 /**
                  * The standard value of that variable (x and greater) if the [Variable] condition is valid.
                  */
                 variableValue: number;
+
                 /**
                  * The letter of that self switch ("A".."D") if the [Self Switch] condition is valid.
                  */
                 selfSwitchCh: string;
+
                 /**
                  * The ID of that item if the [Item] condition is valid.
                  */
                 itemId: number;
+
                 /**
                  * The ID of that actor if the [Actor] condition is valid.
                  */
@@ -293,18 +349,22 @@ declare namespace RPG {
                  * The tile ID. If the specified graphic is not a tile, this value is 0.
                  */
                 tileId: number;
+
                 /**
                  * The file name of the character's graphic.
                  */
                 characterName: string;
+
                 /**
                  * The index of the character's graphic file (0..7).
                  */
                 characterIndex: number;
+
                 /**
                  * The direction in which the character is facing (2: down, 4: left, 6: right, 8: up).
                  */
                 direction: number;
+
                 /**
                  * The character's pattern (0..2).
                  */
@@ -320,10 +380,12 @@ declare namespace RPG {
          * The event code.
          */
         code: number;
+
         /**
          * The indent depth. Usually 0. The [Conditional Branch] command, among others, adds 1 with every step deeper.
          */
         indent: number;
+
         /**
          * An array containing the Event command's arguments. The contents vary for each command.
          */
@@ -337,14 +399,17 @@ declare namespace RPG {
          * The truth value of the [Repeat Action] option.
          */
         repeat: boolean;
+
         /**
          * The truth value of the [Skip If Cannot Move] option.
          */
         skippable: boolean;
+
         /**
          * The truth value of the [Wait for Completion] option.
          */
         wait: boolean;
+
         /**
          * Program contents. An RPG.MoveCommand array.
          */
@@ -358,6 +423,7 @@ declare namespace RPG {
          * Move command code.
          */
         code: number;
+
         /**
          * An array containing the Move command's arguments. The contents vary for each command.
          */
@@ -372,10 +438,12 @@ declare namespace RPG {
              * The data class for a class's [Skills to Learn].
              */
             level: number;
+
             /**
              * The ID of the skill to learn.
              */
             skillId: number;
+
             /**
              * The text of the note.
              */
@@ -390,54 +458,67 @@ declare namespace RPG {
          * The ID.
          */
         id: number;
+
         /**
          * The name.
          */
         name: string;
+
         /**
          * The actor's nickname.
          */
         nickname: string;
+
         /**
          * The actor's class ID.
          */
         classId: number;
+
         /**
          * The actor's initial level.
          */
         initialLevel: number;
+
         /**
          * The actor's max level
          */
         maxLevel: number;
+
         /**
          * The file name of the actor's walking graphic.
          */
         characterName: string;
+
         /**
          * The index (0..7) of the actor's walking graphic.
          */
         characterIndex: number;
+
         /**
          * The file name of the actor's face graphic.
          */
         faceName: string;
+
         /**
          * The index (0..7) of the actor's face graphic.
          */
         faceIndex: number;
+
         /**
          * The actor's initial equipment. An array of weapon IDs or armor IDs with the following subscripts:
          */
         equips: Array<number>;
+
         /**
          * The profile.
          */
         profile: string;
+
         /**
          * The text of the note.
          */
         note: string;
+
         /**
          * The array of Trait data.
          */
@@ -452,10 +533,12 @@ declare namespace RPG {
          * The ID.
          */
         id: number;
+
         /**
          * The name.
          */
         name: string;
+
         /**
          * An array of values that decides the experience curve. The subscripts are as follows:
          *
@@ -465,6 +548,7 @@ declare namespace RPG {
          * 3: Acceleration B
          */
         expParams: Array<number>;
+
         /**
          * The parameter development curve. A 2-dimensional array containing ordinary parameters according to level (Table).
          *
@@ -480,14 +564,17 @@ declare namespace RPG {
          * 7: Luck
          */
         params: Array<Array<number>>;
+
         /**
          * The skills to learn. An array of RPG.Class.Learning.
          */
         learnings: Array<Class.Learning>;
+
         /**
          * The text of the note.
          */
         note: string;
+
         /**
          * The array of Trait data.
          */
@@ -504,18 +591,22 @@ declare namespace RPG {
          * The item ID.
          */
         id: number;
+
         /**
          * The item name.
          */
         name: string;
+
         /**
          * The icon number.
          */
         iconIndex: number;
+
         /**
          * The description text.
          */
         description: string;
+
         /**
          * The text of the note.
          */
@@ -543,6 +634,7 @@ declare namespace RPG {
          * 11: The User
          */
         scope: number;
+
         /**
          * When the item/skill may be used.
          *
@@ -552,22 +644,27 @@ declare namespace RPG {
          * 3: Never
          */
         occasion: number;
+
         /**
          * The speed correction.
          */
         speed: number;
+
         /**
          * The success rate.
          */
         successRate: number;
+
         /**
          * The number of repeats.
          */
         repeats: number;
+
         /**
          * The number of TP gained.
          */
         tpGain: number;
+
         /**
          * The type of hit.
          *
@@ -576,14 +673,17 @@ declare namespace RPG {
          * 2: Magical attack
          */
         hitType: number;
+
         /**
          * The animation ID.
          */
         animationId: number;
+
         /**
          * Damage (RPG.UsableItem.Damage).
          */
         damage: UsableItem.Damage;
+
         /**
          * A list of use effects. An RPG.UsableItem.Effect array.
          */
@@ -597,26 +697,32 @@ declare namespace RPG {
          * Skill type ID.
          */
         stypeId: number;
+
         /**
          * Number of MP consumed.
          */
         mpCost: number;
+
         /**
          * Number of TP consumed
          */
         tpCost: number;
+
         /**
          * The use message.
          */
         message1: string;
+
         /**
          * The use message.
          */
         message2: string;
+
         /**
          * Weapon type required.
          */
         requiredWtypeId1: number;
+
         /**
          * Weapon type required.
          */
@@ -633,10 +739,12 @@ declare namespace RPG {
          * 2: Key item
          */
         itypeId: number;
+
         /**
          * The item's price.
          */
         price: number;
+
         /**
          * The truth value indicating whether the item disappears when used.
          */
@@ -650,6 +758,7 @@ declare namespace RPG {
          * The price of the weapon or armor.
          */
         price: number;
+
         /**
          * The type of weapon or armor.
          *
@@ -660,6 +769,7 @@ declare namespace RPG {
          * 4: Accessory
          */
         etypeId: number;
+
         /**
          * The amount of parameter change. An array of integers using the following IDs as subscripts:
          *
@@ -673,6 +783,7 @@ declare namespace RPG {
          * 7: Luck
          */
         params: Array<number>;
+
         /**
          * The array of Trait data.
          */
@@ -686,6 +797,7 @@ declare namespace RPG {
          * The weapon type ID.
          */
         wtypeId: number;
+
         /**
          * The animation ID when using the weapon.
          */
@@ -708,10 +820,12 @@ declare namespace RPG {
          * The file name of the enemy's battler graphic.
          */
         battlerName: string;
+
         /**
          * The adjustment value for the battler graphic's hue (0..360).
          */
         battlerHue: number;
+
         /**
          * Parameters. An array of integers using the following IDs as subscripts:
          *
@@ -725,22 +839,27 @@ declare namespace RPG {
          * 7: Luck
          */
         params: Array<number>;
+
         /**
          * The enemy's experience.
          */
         exp: number;
+
         /**
          * The enemy's gold.
          */
         gold: number;
+
         /**
          * The items the enemy drops. An RPG.Enemy.DropItem array.
          */
         dropItems: Array<Enemy.DropItem>;
+
         /**
          * The enemy's action pattern. An array of RPG.Enemy.Action.
          */
         actions: Array<Enemy.Action>;
+
         /**
          * The text of the note.
          */
@@ -755,10 +874,12 @@ declare namespace RPG {
          * The ID.
          */
         id: number;
+
         /**
          * The name.
          */
         name: string;
+
         /**
          * Action restrictions.
          *
@@ -769,18 +890,22 @@ declare namespace RPG {
          * 4: Cannot act
          */
         restriction: number;
+
         /**
          * The state priority (0..100).
          */
         priority: number;
+
         /**
          * Removes state at end of battle (true/false).
          */
         removeAtBattleEnd: boolean;
+
         /**
          * Removes state by action restriction (true/false).
          */
         removeByRestriction: boolean;
+
         /**
          * The timing of automatic state removal.
          *
@@ -789,50 +914,62 @@ declare namespace RPG {
          * 2: At end of turn
          */
         autoRemovalTiming: number;
+
         /**
          * The minimum turns of the duration.
          */
         minTurns: number;
+
         /**
          * The maximum turns of the duration.
          */
         maxTurns: number;
+
         /**
          * Removes state by damage (true/false).
          */
         removeByDamage: boolean;
+
         /**
          * Chance of state being removed by damage (%).
          */
         chanceByDamage: number;
+
         /**
          * Removes state by walking (true/false).
          */
         removeByWalking: boolean;
+
         /**
          * Number of steps until state is removed.
          */
         stepToRemove: number;
+
         /**
          * The icon number.
          */
         iconIndex: number;
+
         /**
          * The message when an actor fell in the state.
          */
         message1: string;
+
         /**
          * The message when an enemy fell in the state.
          */
         message2: string;
+
         /**
          * The message when the state remains.
          */
         message3: string;
+
         /**
          * The message when the state is removed.
          */
         message4: string;
+
         /**
          * The side-view motion.
          */
@@ -842,10 +979,12 @@ declare namespace RPG {
          * The side-view overlay.
          */
         overlay: number;
+
         /**
          * The text of the note.
          */
         note: string;
+
         /**
          * The array of Trait data.
          */
@@ -859,22 +998,27 @@ declare namespace RPG {
          * The trait code.
          */
         code: number;
+
         /**
          * The ID of the data (such as elements or states) according to the type of the trait.
          */
         dataId: number;
+
         /**
          * The value set according to the type of the trait.
          */
         value: number;
+
         /**
          * The map tree expansion flag, which is used internally.
          */
         expanded: boolean;
+
         /**
          * The x-axis scroll position, which is used internally.
          */
         scrollX: number;
+
         /**
          * The y-axis scroll position, which is used internally.
          */
@@ -897,18 +1041,22 @@ declare namespace RPG {
              * 6: MP drain
              */
             type: number;
+
             /**
              * The element ID.
              */
             elementId: number;
+
             /**
              * The formula.
              */
             formula: string;
+
             /**
              * The degree of variability.
              */
             variance: number;
+
             /**
              * Critical hit (true/false).
              */
@@ -922,14 +1070,17 @@ declare namespace RPG {
              * The use effect code.
              */
             code: number;
+
             /**
              * The ID of data (state, parameter, and so on) according to the type of use effect.
              */
             dataId: number;
+
             /**
              * Value 1 set according to the type of use effect.
              */
             value1: number;
+
             /**
              * Value 2 set according to the type of use effect.
              */
@@ -950,10 +1101,12 @@ declare namespace RPG {
              * 3: Armor
              */
             kind: number;
+
             /**
              * The ID of the data depending on the type of dropped item (item, weapon, or armor).
              */
             dataId: number;
+
             /**
              * N of the probability that the item will be dropped, 1/N.
              */
@@ -967,6 +1120,7 @@ declare namespace RPG {
              * The ID of skills to be employed as actions.
              */
             skillId: number;
+
             /**
              * The type of condition.
              *
@@ -979,14 +1133,17 @@ declare namespace RPG {
              * 6: Switch
              */
             conditionType: number;
+
             /**
              * The first parameter of the condition.
              */
             conditionParam1: number;
+
             /**
              * The second parameter of the condition.
              */
             conditionParam2: number;
+
             /**
              * The action's priority rating (1..10).
              */
@@ -1001,14 +1158,17 @@ declare namespace RPG {
          * The troop ID.
          */
         id: number;
+
         /**
          * The troop name.
          */
         name: string;
+
         /**
          * The troop members. An RPG.Troop.Member array.
          */
         members: Array<RPG.Troop.Member>;
+
         /**
          * The battle events. An RPG.Troop.Page array.
          */
@@ -1023,14 +1183,17 @@ declare namespace RPG {
              * The enemy ID.
              */
             enemyId: number;
+
             /**
              * The troop member's x-coordinate.
              */
             x: number;
+
             /**
              * The troop member's y-coordinate.
              */
             y: number;
+
             /**
              * The truth value of the [Appear Halfway] option.
              */
@@ -1044,10 +1207,12 @@ declare namespace RPG {
              * Condition (RPG.Troop.Page.Condition).
              */
             condition: Page.Condition;
+
             /**
              * Span (0: battle, 1: turn, 2: moment).
              */
             span: number;
+
             /**
              * Program contents. An RPG.EventCommand array.
              */
@@ -1062,46 +1227,57 @@ declare namespace RPG {
                  * The truth value indicating whether the [At End of Turn] condition is valid.
                  */
                 turnEnding: boolean;
+
                 /**
                  * The truth value indicating whether the [Turn No.] condition is valid.
                  */
                 turnValid: boolean;
+
                 /**
                  * The truth value indicating whether the [Enemy] condition is valid.
                  */
                 enemyValid: boolean;
+
                 /**
                  * The truth value indicating whether the [Actor] condition is valid.
                  */
                 actorValid: boolean;
+
                 /**
                  * The truth value indicating whether the [Switch] condition is valid.
                  */
                 switchValid: boolean;
+
                 /**
                  * The a and b values specified in the [Turn No.] condition. To be input in the form A + B * X.
                  */
                 turnA: number;
+
                 /**
                  * The a and b values specified in the [Turn No.] condition. To be input in the form A + B * X.
                  */
                 turnB: number;
+
                 /**
                  * The troop member index specified in the [Enemy] condition (0..7).
                  */
                 enemyIndex: number;
+
                 /**
                  * The HP percentage specified in the [Enemy] condition.
                  */
                 enemyHp: number;
+
                 /**
                  * The actor ID specified in the [Actor] condition.
                  */
                 actorId: number;
+
                 /**
                  * The HP percentage specified in the [Actor] condition.
                  */
                 actorHp: number;
+
                 /**
                  * The switch ID specified in the [Switch] condition.
                  */
@@ -1117,38 +1293,47 @@ declare namespace RPG {
          * The animation ID.
          */
         id: number;
+
         /**
          * The animation name.
          */
         name: string;
+
         /**
          * The file name of the first animation's graphic.
          */
         animation1Name: string;
+
         /**
          * The adjustment value for the hue of the first animation's graphic (0..360).
          */
         animation1Hue: number;
+
         /**
          * The file name of the second animation's graphic.
          */
         animation2Name: string;
+
         /**
          * The adjustment value for the hue of the second animation's graphic (0..360).
          */
         animation2Hue: number;
+
         /**
          * The base position (0: head, 1: center, 2: feet, 3: screen).
          */
         position: number;
+
         /**
          * Number of frames.
          */
         frameMax: number;
+
         /**
          * The three-dimensional array containing the frame contents.
          */
         frames: Array<Array<Array<number>>>;
+
         /**
          * Timing for SE and flash effects. An RPG.Animation.Timing array.
          */
@@ -1163,18 +1348,22 @@ declare namespace RPG {
              * The frame number. 1 less than the number displayed in RPG Maker.
              */
             frame: number;
+
             /**
              * The sound effect or SE (RPG.AudioFile).
              */
             se: AudioFile;
+
             /**
              * The flash area (0: none, 1: target, 2: screen; 3: hide target).
              */
             flashScope: number;
+
             /**
              * The color of the flash (Color).
              */
             flashColor: Array<number>;
+
             /**
              * The duration of the flash.
              */
@@ -1189,14 +1378,17 @@ declare namespace RPG {
          * The ID of the tile set.
          */
         id: number;
+
         /**
          * The name of the tile set.
          */
         name: string;
+
         /**
          * The mode of the tile set (0: Field type, 1: Area type, 2: VX compatible type).
          */
         mode: number;
+
         /**
          * The file name of the graphic used as the number index (0-8) tile set.
          *
@@ -1213,6 +1405,7 @@ declare namespace RPG {
          * 8 TileE
          */
         tilesetNames: Array<string>;
+
         /**
          * The flags table. A 1-dimensional array containing a variety of flags (Table).
          *
@@ -1231,9 +1424,11 @@ declare namespace RPG {
          * 0x0400: Impassable by ship
          * 0x0800: Airship cannot land
          * 0xF000: Terrain tag
-         * This manual does not discuss bit operations, but they are similar to those in C. We recommend an Internet search using keywords such as "hexadecimal bit operations" when necessary.
+         * This manual does not discuss bit operations, but they are similar to those in C.
+         * We recommend an Internet search using keywords such as "hexadecimal bit operations" when necessary.
          */
         flags: Array<number>;
+
         /**
          * The text of the note.
          */
@@ -1248,18 +1443,22 @@ declare namespace RPG {
          * The event ID.
          */
         id: number;
+
         /**
          * The event name.
          */
         name: string;
+
         /**
          * The event trigger (0: none, 1: autorun; 2: parallel).
          */
         trigger: number;
+
         /**
          * The condition switch ID.
          */
         switchId: number;
+
         /**
          * A list of event commands. An RPG.EventCommand array.
          */
@@ -1271,30 +1470,37 @@ declare namespace RPG {
          * The game title.
          */
         gameTitle: string;
+
         /**
          * A random number used for update checks. The number changes every time data is saved in RPG Maker.
          */
         versionId: number;
+
         /**
          * The locale string such as "ja_JP" and "en_US".
          */
         locale: string;
+
         /**
          * The initial party. An array of actor IDs.
          */
         partyMembers: Array<number>;
+
         /**
          * The unit of currency.
          */
         currencyUnit: string;
+
         /**
          * The window color.
          */
         windowTone: Array<number>;
+
         /**
          * A list of elements. A string array using element IDs as subscripts, with the element in the 0 position being nil.
          */
         elements: Array<string>;
+
         /**
          * he equipment type. A string array with the following subscripts:
          * 1: Weapon
@@ -1304,138 +1510,172 @@ declare namespace RPG {
          * 5: Accessory
          */
         equipTypes: Array<string>;
+
         /**
          * A list of skill types. A string array using skill type IDs as subscripts, with the element in the 0 position being nil.
          */
         skillTypes: Array<string>;
+
         /**
          * A list of weapon types. A string array using weapon type IDs as subscripts, with the element in the 0 position being nil.
          */
         weaponTypes: Array<string>;
+
         /**
          * A list of armor types. A string array using armor type IDs as subscripts, with the element in the 0 position being nil.
          */
         armorTypes: Array<string>;
+
         /**
          * A switch name list. A string array using switch IDs as subscripts, with the element in the 0 position being nil.
          */
         switches: Array<string>;
+
         /**
          * A variable name list. A string array using variable IDs as subscripts, with the element in the 0 position being nil.
          */
         variables: Array<string>;
+
         /**
          * Boat settings (RPG.System.Vehicle).
          */
         boat: System.Vehicle;
+
         /**
          * Ship settings (RPG.System.Vehicle).
          */
         ship: System.Vehicle;
+
         /**
          * Airship settings (RPG.System.Vehicle).
          */
         airship: System.Vehicle;
+
         /**
          * The file name of the title (background) graphic.
          */
         title1Name: string;
+
         /**
          * The file name of the title (frame) graphic.
          */
         title2Name: string;
+
         /**
          * The truth value of the [Draw Game Title] option.
          */
         optDrawTitle: boolean;
+
         /**
          * The truth value of the [Start Transparent] option.
          */
         optTransparent: boolean;
+
         /**
          * The truth value of the [Show Player Followers] option.
          */
         optFollowers: boolean;
+
         /**
          * The truth value of the [K.O. by Slip Damage] option.
          */
         optSlipDeath: boolean;
+
         /**
          * The truth value of the [K.O. by Floor Damage] option.
          */
         optFloorDeath: boolean;
+
         /**
          * The truth value of the [Display TP in Battle] option.
          */
         optDisplayTp: boolean;
+
         /**
          * The truth value of the [Reserve Members' EXP] option.
          */
         optExtraExp: boolean;
+
         /**
          * The truth value of the [use side-view battle] option.
          */
         optSideView: boolean;
+
         /**
          * The title BGM (RPG.AudioFile).
          */
         titleBgm: AudioFile;
+
         /**
          * The battle BGM (RPG.AudioFile).
          */
         battleBgm: AudioFile;
+
         /**
          * The battle end ME (RPG.AudioFile).
          */
         battleEndMe: AudioFile;
+
         /**
          * The gameover ME (RPG.AudioFile).
          */
         gameoverMe: AudioFile;
+
         /**
          * Sound effects. An RPG.SE array.
          */
         sounds: Array<AudioFile>;
+
         /**
          * The map ID of the player's initial position.
          */
         startMapId: number;
+
         /**
          * The map's x-coordinate of the player's initial position.
          */
         startX: number;
+
         /**
          * The map's y-coordinate of the player's initial position.
          */
         startY: number;
+
         /**
          * Terms (RPG.System.Terms).
          */
         terms: System.Terms;
+
         /**
          * Party settings for battle tests. An RPG.System.TestBattler array.
          */
         testBattlers: Array<System.TestBattler>;
+
         /**
          * The enemy troop ID for battle tests.
          */
         testTroopId: number;
+
         /**
          * The file name of the battle background (floor) graphic for use in editing enemy troops and battle tests.
          */
         battleback1Name: string;
+
         /**
          * The file name of the battle background (wall) graphic for use in editing enemy troops and battle tests.
          */
         battleback2Name: string;
+
         /**
          * The battler graphic file name for use in editing animations.
          */
         battlerName: string;
+
         /**
          * The adjustment value for the battler graphic's hue (0..360) for use in editing animations.
          */
         battlerHue: number;
+
         /**
          * The ID of the map currently being edited. For internal use.
          */
@@ -1451,21 +1691,26 @@ declare namespace RPG {
              */
             characterName: string;
             /**
+
              * The index of the vehicle's walking graphic (0..7).
              */
             characterIndex: number;
+
             /**
              * The vehicle's BGM (RPG.AudioFile).
              */
             bgm: AudioFile;
+
             /**
              * The map ID of the vehicle's initial position.
              */
             startMapId: number;
+
             /**
              * The map's x-coordinate of the vehicle's initial position.
              */
             startX: number;
+
             /**
              * The map's y-coordinate of the vehicle's initial position.
              */
@@ -1490,6 +1735,7 @@ declare namespace RPG {
              * 9: EXP (short)
              */
             basic: Array<string>;
+
             /**
              * Parameters. A string array with the following subscripts:
              *
@@ -1504,6 +1750,7 @@ declare namespace RPG {
              * 8: Hit
              * 9: Evasion
              */
+
             params: Array<string>;
             /**
              * 0: Fight
@@ -1534,6 +1781,7 @@ declare namespace RPG {
              * 25: Sell
              */
             commands: Array<string>;
+
             /**
              * The messages.
              */
@@ -1547,10 +1795,12 @@ declare namespace RPG {
              * The actor ID.
              */
             actorId: number;
+
             /**
              * The actor's level.
              */
             level: number;
+
             /**
              * The actor's equipment. An array of weapon IDs or armor IDs with the following subscripts:
              *
@@ -1571,20 +1821,23 @@ declare namespace RPG {
          * The sound file name.
          */
         name: string;
+
         /**
          * The pan.
          */
         pan: number;
+
         /**
          * The sound's pitch (50..150). The default value is 100.
          */
         pitch: number;
+
         /**
          * The sound's volume (0..100). The default values are 100 for BGM and ME and 80 for BGS and SE.
          */
         volume: number;
     }
 }
-declare module "rpg_library" {
+declare module 'rpg_library' {
     export = RPG;
 }
