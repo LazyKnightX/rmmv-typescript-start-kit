@@ -145,7 +145,7 @@ declare class Game_Message {
     positionType(): number;
     choiceDefaultType(): number;
     choiceCancelType(): number;
-    choiceBackground():number;
+    choiceBackground(): number;
     choicePositionType(): number;
     numInputVariableId(): number;
     numInputMaxDigits(): number;
@@ -606,36 +606,67 @@ declare class Game_BattlerBase {
     protected _buffs: Array<number>;
     protected _buffTurns: Array<number>;
 
+    /** Hit Points */
     readonly hp: number;
+    /** Magic Points */
     readonly mp: number;
+    /** Tactical Points */
     readonly tp: number;
+    /** Maximum Hit Points */
     readonly mhp: number;
+    /** Maximum Magic Points */
     readonly mmp: number;
+    /** ATtacK power */
     readonly atk: number;
+    /** DEFense power */
     readonly def: number;
+    /** Magic ATtack power */
     readonly mat: number;
+    /** Magic DeFense power */
     readonly mdf: number;
+    /** AGIlity */
     readonly agi: number;
+    /** LUcK */
     readonly luk: number;
+    /** HIT rate */
     readonly hit: number;
+    /** EVAsion rate */
     readonly eva: number;
+    /** CRItical rate */
     readonly cri: number;
+    /** Critical EVasion rate */
     readonly cev: number;
+    /** Magic EVasion rate */
     readonly mev: number;
+    /** Magic ReFlection rate */
     readonly mrf: number;
+    /** CouNTer attack rate */
     readonly cnt: number;
+    /** Hp ReGeneration rate */
     readonly hrg: number;
+    /** Mp ReGeneration rate */
     readonly mrg: number;
+    /** Tp ReGeneration rate */
     readonly trg: number;
+    /** TarGet Rate */
     readonly tgr: number;
+    /** Ggweqrtg*xzuaRD effect rate */
     readonly grd: number;
+    /** RECovery effect rate */
     readonly rec: number;
+    /** PHArmacology */
     readonly pha: number;
+    /** Mp Cost Rate */
     readonly mcr: number;
+    /** Tp Charge Rate */
     readonly tcr: number;
+    /** Physical Damage Rate */
     readonly pdr: number;
+    /** Magical Damage Rate */
     readonly mdr: number;
+    /** Floor Damage Rate */
     readonly fdr: number;
+    /** EXperience Rate */
     readonly exr: number;
 
     initMembers(): void;
@@ -764,7 +795,7 @@ declare class Game_BattlerBase {
     canGuard(): boolean;
 }
 
-interface RPG_BattlerAnimation {
+interface BattlerAnimation {
     animationId: number;
     mirror: boolean;
     delay: number;
@@ -783,7 +814,7 @@ declare class Game_Battler extends Game_BattlerBase {
     protected _result: Game_ActionResult;
     protected _actionState: string;
     protected _lastTargetIndex: number;
-    protected _animations: Array<RPG_BattlerAnimation>;
+    protected _animations: Array<BattlerAnimation>;
     protected _damagePopup: boolean;
     protected _effectType: string;
     protected _motionType: string;
@@ -811,7 +842,7 @@ declare class Game_Battler extends Game_BattlerBase {
     effectType(): string;
     motionType(): string;
     weaponImageId(): number;
-    shiftAnimation(): RPG_BattlerAnimation;
+    shiftAnimation(): BattlerAnimation;
     startAnimation(animationId: number, mirror: boolean, delay: number): void;
     startDamagePopup(): void;
     startWeaponAnimation(weaponImageId: number): void;
@@ -902,14 +933,14 @@ declare class Game_Actor extends Game_Battler {
     protected _faceName: string;
     protected _faceIndex: number;
     protected _battlerName: string;
-    protected _exp: {key: number};
+    protected _exp: {[classId: number]: number};
     protected _skills: Array<number>;
     protected _equips: Array<Game_Item>;
     protected _actionInputIndex: number;
     protected _lastMenuSkill: Game_Item;
     protected _lastBattleSkill: Game_Item;
     protected _lastCommandSymbol: string;
-    protected _stateSteps: {key: number};
+    protected _stateSteps: {[stateId: number]: number};
 
     readonly level: number;
 
@@ -1142,9 +1173,9 @@ declare class Game_Party extends Game_Unit {
     protected _targetActorId: number;
     protected _actors: Array<Game_Actor>;
 
-    protected _items: {key: number;};
-    protected _weapons: {key: number;};
-    protected _armors: {key: number;};
+    protected _items: {[itemId: number]: number};
+    protected _weapons: {[itemId: number]: number};
+    protected _armors: {[itemId: number]: number};
 
     initAllItems(): void;
     exists(): boolean;
@@ -1158,7 +1189,7 @@ declare class Game_Party extends Game_Unit {
     armors(): Array<RPG.Armor>;
     equipItems(): Array<RPG.EquipItem>;
     allItems(): Array<RPG.BaseItem>;
-    itemContainer(item: RPG.BaseItem): {key: number};
+    itemContainer(item: RPG.BaseItem): {[itemId: number]: number};
     setupStartingMembers(): void;
     name(): string;
     setupBattleTest(): void;
@@ -1223,10 +1254,10 @@ declare class Game_Troop extends Game_Unit {
 
     protected _interpreter: Game_Interpreter;
     protected _troopId: number;
-    protected _eventFlags: {};
+    protected _eventFlags: {[page: number]: boolean};
     protected _enemies: Array<Game_Enemy>;
     protected _turnCount: number;
-    protected _namesCount: {};
+    protected _namesCount: {[name: string]: number};
 
     isEventRunning(): boolean;
     updateInterpreter(): void;
@@ -1805,7 +1836,7 @@ declare class Game_Vehicle extends Game_Character {
     isAirship(): boolean;
     resetDirection(): void;
     initMoveSpeed(): void;
-    vehicle(): RPG.Vehicle;
+    vehicle(): RPG.System.Vehicle;
     loadSystemSettings(): void;
     refresh(): void;
     setLocation(mapId: number, x: number, y: number): void;
@@ -1973,10 +2004,6 @@ declare class Game_Interpreter {
      * Select Item
      */
     command104(): boolean;
-    /**
-     *
-     * @param params
-     */
     setupItemChoice(params: Array<number>): void;
     /**
      * Show Scrolling Text
@@ -2023,10 +2050,6 @@ declare class Game_Interpreter {
      * Jump to Label
      */
     command119(): boolean;
-    /**
-     *
-     * @param index
-     */
     jumpTo(index: number): void;
     /**
      * Control Switches
