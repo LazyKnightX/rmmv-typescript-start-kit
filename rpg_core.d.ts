@@ -8,6 +8,18 @@
 //     // aaa
 // }
 
+
+//
+declare class Bitmap {
+    constructor(width?: number, height?: number);
+    addLoadListener(listner: () => any): void;
+    adjustTone(r: number, g: number, b: number): void;
+    blt(source: Bitmap, sx: number, sy: number, sw: number , sh: number,
+        dx: number, dy: number, dw?: number, dh?: number): void;
+    fillAll(color: string);
+}
+
+
 /**
  * The static class that carries out graphics processing.
  *
@@ -621,32 +633,6 @@ interface GraphicsStatic {
 }
 declare var Graphics: GraphicsStatic;
 
-
-
-declare class Bitmap {
-    constructor(width?: number, height?: number);
-    addLoadListener(listner: () => any): void;
-    adjustTone(r: number, g: number, b: number): void;
-    blt(source: Bitmap, sx: number, sy: number, sw: number , sh: number,
-        dx: number, dy: number, dw?: number, dh?: number): void;
-    fillAll(color: string);
-}
-
-declare class Sprite extends PIXI.Sprite {
-    constructor(bitmap?: Bitmap);
-    bitmap: Bitmap;
-    x: number;
-    y: number;
-    update();
-    protected mikemike(): number;
-}
-
-declare class Stage {
-    constructor();
-    addChild(childe: any): void;
-}
-
-
 /**
  * This is not a class, but contains some methods that will be added to the
  * standard Javascript objects.
@@ -787,7 +773,6 @@ declare class Rectangle extends PIXI.Rectangle {
      * @static
      * @property emptyRectangle
      * @type Rectangle
-     * @private
      */
     static emptyRectangle: Rectangle;
 
@@ -834,55 +819,6 @@ declare class Rectangle extends PIXI.Rectangle {
      * @type Number
      */
     height: number;
-}
-
-declare class ScreenSprite {
-    /**
-     * The sprite which covers the entire game screen.
-     *
-     * @class ScreenSprite
-     * @constructor
-     */
-    constructor();
-
-    /**
-     * The opacity of the sprite (0 to 255).
-     *
-     * @property opacity
-     * @type Number
-     */
-    opacity: number;
-
-    /**
-     * Sets black to the color of the screen sprite.
-     *
-     * @method setBlack
-     */
-    setBlack(): void;
-
-    /**
-     * Sets white to the color of the screen sprite.
-     *
-     * @method setWhite
-     */
-    setWhite(): void;
-
-    /**
-     * Sets the color of the screen sprite by values.
-     *
-     * @method setColor
-     * @param {Number} r The red value in the range (0, 255)
-     * @param {Number} g The green value in the range (0, 255)
-     * @param {Number} b The blue value in the range (0, 255)
-     */
-    setColor(r?: number, g?: number, b?: number): void;
-
-    /**
-     * @method _renderCanvas
-     * @param {Object} renderSession
-     * @private
-     */
-    protected _renderCanvas(renderSession: any): void;
 }
 
 interface JsonExStatic {
@@ -933,3 +869,353 @@ interface JsonExStatic {
  * @class JsonEx
  */
 declare var JsonEx: JsonExStatic;
+
+declare class ScreenSprite {
+    /**
+     * The sprite which covers the entire game screen.
+     *
+     * @class ScreenSprite
+     * @constructor
+     */
+    constructor();
+
+    /**
+     * The opacity of the sprite (0 to 255).
+     *
+     * @property opacity
+     * @type Number
+     */
+    opacity: number;
+
+    /**
+     * Sets black to the color of the screen sprite.
+     *
+     * @method setBlack
+     */
+    setBlack(): void;
+
+    /**
+     * Sets white to the color of the screen sprite.
+     *
+     * @method setWhite
+     */
+    setWhite(): void;
+
+    /**
+     * Sets the color of the screen sprite by values.
+     *
+     * @method setColor
+     * @param {Number} r The red value in the range (0, 255)
+     * @param {Number} g The green value in the range (0, 255)
+     * @param {Number} b The blue value in the range (0, 255)
+     */
+    setColor(r?: number, g?: number, b?: number): void;
+
+    /**
+     * @method _renderCanvas
+     * @param {PIXI.CanvasRenderer} renderSession
+     * @private
+     */
+    protected _renderCanvas(renderSession: PIXI.CanvasRenderer): void;
+}
+
+declare class Sprite extends PIXI.Sprite {
+    /**
+     * Number of the created objects.
+     *
+     * @static
+     * @property _counter
+     * @type Number
+     */
+    static _counter: number;
+
+    /**
+     * The image for the sprite.
+     *
+     * @property bitmap
+     * @type Bitmap
+     */
+    bitmap: Bitmap;
+
+    /**
+     * The width of the sprite without the scale.
+     *
+     * @property width
+     * @type Number
+     */
+    width: number;
+
+    /**
+     * The height of the sprite without the scale.
+     *
+     * @property height
+     * @type Number
+     */
+    height: number;
+
+    /**
+     * The opacity of the sprite (0 to 255).
+     *
+     * @property opacity
+     * @type Number
+     */
+    opacity: number;
+
+    /**
+     * The visibility of the sprite.
+     *
+     * @property visible
+     * @type Boolean
+     */
+    visible: boolean;
+
+    /**
+     * The x coordinate of the sprite.
+     *
+     * @property x
+     * @type Number
+     */
+    x: number;
+
+    /**
+     * The y coordinate of the sprite.
+     *
+     * @property y
+     * @type Number
+     */
+    y: number;
+
+    /**
+     * The origin point of the sprite. (0,0) to (1,1).
+     *
+     * @property anchor
+     * @type Point
+     */
+    point: Point;
+
+    /**
+     * The scale factor of the sprite.
+     *
+     * @property scale
+     * @type Point
+     */
+    scale: Point;
+
+    /**
+     * The rotation of the sprite in radians.
+     *
+     * @property rotation
+     * @type Number
+     */
+    rotation: number;
+
+    /**
+     * The blend mode to be applied to the sprite.
+     *
+     * @property blendMode
+     * @type Number
+     */
+    blendMode: number;
+
+    /**
+     * Sets the filters for the sprite.
+     *
+     * @property filters
+     * @type Array<PIXI.AbstractFilter>
+     */
+    filters: Array<PIXI.AbstractFilter>;
+
+    /**
+     * [read-only] The array of children of the sprite.
+     *
+     * @property children
+     * @type Array<PIXI.DisplayObject>
+     */
+    children: Array<PIXI.DisplayObject>;
+
+    /**
+     * [read-only] The object that contains the sprite.
+     *
+     * @property parent
+     * @type PIXI.DisplayObjectContainer
+     */
+    parent: PIXI.DisplayObjectContainer;
+
+    /**
+     * The basic object that is rendered to the game screen.
+     *
+     * @class Sprite
+     * @constructor
+     * @param {Bitmap} bitmap The image for the sprite
+     */
+    constructor(bitmap?: Bitmap);
+
+    /**
+     * Updates the sprite for each frame.
+     *
+     * @method update
+     */
+    update(): void;
+
+    /**
+     * @method updateTransform
+     * @private
+     */
+    updateTransform(): void;
+
+    /**
+     * Sets the x and y at once.
+     *
+     * @method move
+     * @param {Number} x The x coordinate of the sprite
+     * @param {Number} y The y coordinate of the sprite
+     */
+    move(x: number, y: number): void;
+
+    /**
+     * Sets the rectagle of the bitmap that the sprite displays.
+     *
+     * @method setFrame
+     * @param {Number} x The x coordinate of the frame
+     * @param {Number} y The y coordinate of the frame
+     * @param {Number} width The width of the frame
+     * @param {Number} height The height of the frame
+     */
+    setFrame(x: number, y: number, width: number, height: number): void;
+
+    /**
+     * Gets the blend color for the sprite.
+     *
+     * @method getBlendColor
+     * @return {Array} The blend color [r, g, b, a]
+     */
+    getBlendColor(): Array<number>;
+
+    /**
+     * Sets the blend color for the sprite.
+     *
+     * @method setBlendColor
+     * @param {Array} color The blend color [r, g, b, a]
+     */
+    setBlendColor(color: Array<number>): void;
+
+    /**
+     * Gets the color tone for the sprite.
+     *
+     * @method getColorTone
+     * @return {Array} The color tone [r, g, b, gray]
+     */
+    getColorTone(): Array<number>;
+
+    /**
+     * Sets the color tone for the sprite.
+     *
+     * @method setColorTone
+     * @param {Array} tone The color tone [r, g, b, gray]
+     */
+    setColorTone(tone: Array<number>): void;
+
+    /**
+     * Adds a child to the container.
+     *
+     * @method addChild
+     * @param {PIXI.DisplayObject} child The child to add
+     * @return {PIXI.DisplayObject} The child that was added
+     */
+    addChild(child: PIXI.DisplayObject): PIXI.DisplayObject;
+
+    /**
+     * Adds a child to the container at a specified index.
+     *
+     * @method addChildAt
+     * @param {PIXI.DisplayObject} child The child to add
+     * @param {Number} index The index to place the child in
+     * @return {PIXI.DisplayObject} The child that was added
+     */
+    addChildAt(child: PIXI.DisplayObject, index: number): PIXI.DisplayObject;
+
+    /**
+     * Removes a child from the container.
+     *
+     * @method removeChild
+     * @param {PIXI.DisplayObject} child The child to remove
+     * @return {PIXI.DisplayObject} The child that was removed
+     */
+    removeChild(child: PIXI.DisplayObject): PIXI.DisplayObject;
+
+    /**
+     * Removes a child from the specified index position.
+     *
+     * @method removeChildAt
+     * @param {Number} index The index to get the child from
+     * @return {PIXI.DisplayObject} The child that was removed
+     */
+    removeChildAt(index: number): PIXI.DisplayObject;
+
+    /**
+     * @method _onBitmapLoad
+     * @private
+     */
+    protected _onBitmapLoad(): void;
+
+    /**
+     * @method _refresh
+     * @private
+     */
+    protected _refresh(): void;
+
+    /**
+     * @method _isInBitmapRect
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Number} w
+     * @param {Number} h
+     * @return {Boolean}
+     * @private
+     */
+    protected _isInBitmapRect(x: number, y: number, w: number, h: number): boolean;
+
+    /**
+     * @method _needsTint
+     * @return {Boolean}
+     * @private
+     */
+    protected _needsTint(): boolean;
+
+    /**
+     * @method _createTinter
+     * @param {Number} w
+     * @param {Number} h
+     * @private
+     */
+    protected _createTinter(w: number, h: number): void;
+
+    /**
+     * @method _executeTint
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Number} w
+     * @param {Number} h
+     * @private
+     */
+    protected _executeTint(x: number, y: number, w: number, h: number): void;
+
+    /**
+     * @method _renderCanvas
+     * @param {PIXI.CanvasRenderer} renderSession
+     * @private
+     */
+    protected _renderCanvas(renderSessio: PIXI.CanvasRenderer): void;
+
+    /**
+     * @method _renderWebGL
+     * @param {PIXI.WebGLRenderer} renderSession
+     * @private
+     */
+    protected _renderWebGL(renderSession: PIXI.WebGLRenderer): void;
+}
+
+declare class Stage {
+    constructor();
+    addChild(childe: any): void;
+}
