@@ -474,7 +474,7 @@ declare class Game_Action {
     evaluateWithTarget(target: Game_Battler): number;
     testApply(target: Game_Battler): boolean;
     hasItemAnyValidEffects(target: Game_Battler): void;
-    testItemEffect(target: Game_Battler, effect: RPG.UsableItem.Effect): boolean;
+    testItemEffect(target: Game_Battler, effect: RPG.Effect): boolean;
     itemCnt(target: Game_Battler): number;
     itemMrf(target: Game_Battler): number;
     itemHit(target: Game_Battler): number;
@@ -493,22 +493,22 @@ declare class Game_Action {
     executeMpDamage(target: Game_Battler, value: number): void;
     gainDrainedHp(value: number): void;
     gainDrainedMp(value: number): void;
-    applyItemEffect(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectRecoverHp(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectRecoverMp(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectGainTp(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectAddState(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectAddAttackState(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectAddNormalState(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectRemoveState(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectAddBuff(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectAddDebuff(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectRemoveBuff(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectRemoveDebuff(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectSpecial(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectGrow(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectLearnSkill(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
-    itemEffectCommonEvent(target: Game_Battler, effect: RPG.UsableItem.Effect): void;
+    applyItemEffect(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectRecoverHp(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectRecoverMp(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectGainTp(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectAddState(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectAddAttackState(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectAddNormalState(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectRemoveState(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectAddBuff(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectAddDebuff(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectRemoveBuff(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectRemoveDebuff(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectSpecial(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectGrow(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectLearnSkill(target: Game_Battler, effect: RPG.Effect): void;
+    itemEffectCommonEvent(target: Game_Battler, effect: RPG.Effect): void;
     makeSuccess(target: Game_Battler): void;
     applyItemUserEffect(target: Game_Battler): void;
     lukEffectRate(target: Game_Battler): number;
@@ -602,7 +602,7 @@ declare class Game_BattlerBase {
 
     protected _paramPlus: Array<number>;
     protected _states: Array<number>;
-    protected _stateTurns: {key: number};
+    protected _stateTurns: {[stateId: number]: number};
     protected _buffs: Array<number>;
     protected _buffTurns: Array<number>;
 
@@ -1277,7 +1277,7 @@ declare class Game_Troop extends Game_Unit {
     makeUniqueNames(): void;
     letterTable(): Array<string>;
     enemyNames(): Array<string>;
-    meetsConditions(page: RPG.Event.Page): boolean;
+    meetsConditions(page: RPG.EventPage): boolean;
     setupBattleEvent(): void;
     increaseTurn(): void;
     expTotal(): number;
@@ -1895,7 +1895,7 @@ declare class Game_Event extends Game_Character {
     initMembers(): void;
     eventId(): number;
     event(): RPG.Event;
-    page(): RPG.Event.Page;
+    page(): RPG.EventPage;
     list(): Array<RPG.EventCommand>;
     isCollidedWithCharacters(x: number, y: number): boolean;
     isCollidedWithEvents(x: number, y: number): boolean;
@@ -1916,7 +1916,7 @@ declare class Game_Event extends Game_Character {
     erase(): void;
     refresh(): void;
     findProperPageIndex(): number;
-    meetsConditions(page: RPG.Event.Page): boolean;
+    meetsConditions(page: RPG.EventPage): boolean;
     setupPage(): void;
     clearPageSettings(): void;
     setupPageSettings(): void;
@@ -1937,7 +1937,7 @@ declare class Game_Event extends Game_Character {
  */
 declare class Game_Interpreter {
     protected _depth: number;
-    protected _branch: {key: number};
+    protected _branch: {[indent: number]: number | boolean};
     protected _params: Array<any>;
     protected _indent: number;
     protected _frameCount: number;
@@ -1982,462 +1982,575 @@ declare class Game_Interpreter {
     character(param: number): Game_Character;
     operateValue(operation: number, operandType: number, operand: number): number;
     changeHp(target: number, value: number, allowDeath: boolean): void;
+
     /**
      * Show Text
      */
     command101(): boolean;
+
     /**
      * Show Choices
      */
     command102(): boolean;
     setupChoices(params: Array<any>): void;
+
     /**
      * When [**]
      */
     command402(): boolean;
+
     /**
      * When Cancel
      */
     command403(): boolean;
+
     /**
      * Input Number
      */
     command103(): boolean;
+
     /**
      *
      * @param params
      */
     setupNumInput(params: Array<number>): void;
+
     /**
      * Select Item
      */
     command104(): boolean;
     setupItemChoice(params: Array<number>): void;
+
     /**
      * Show Scrolling Text
      */
     command105(): boolean;
+
     /**
      * Comment
      */
     command108(): boolean;
+
     /**
      * Conditional Branch
      */
     command111(): boolean;
+
     /**
      * Else
      */
     command411(): boolean;
+
     /**
      * Loop
      */
     command112(): boolean;
+
     /**
      * Repeat Above
      */
     command413(): boolean;
+
     /**
      * Break Loop
      */
     command113(): boolean;
+
     /**
      * Exit Event Processing
      */
     command115(): boolean;
+
     /**
      * Common Event
      */
     command117(): boolean;
     setupChild(list: Array<RPG.EventCommand>, eventId: number): void;
+
     /**
      * Label
      */
     command118(): boolean;
+
     /**
      * Jump to Label
      */
     command119(): boolean;
     jumpTo(index: number): void;
+
     /**
      * Control Switches
      */
     command121(): boolean;
+
     /**
      * Control Variables
      */
     command122(): boolean;
     gameDataOperand(type: number, param1: number, param2: number): number;
     operateVariable(variableId: number, operationType: number, value: number): void;
+
     /**
      * Control Self Switch
      */
     command123(): boolean;
+
     /**
      * Control Timer
      */
     command124(): boolean;
+
     /**
      * Change Gold
      */
     command125(): boolean;
+
     /**
      * Change Items
      */
     command126(): boolean;
+
     /**
      * Change Weapons
      */
     command127(): boolean;
+
     /**
      * Change Armors
      */
     command128(): boolean;
+
     /**
      * Change Party Member
      */
     command129(): boolean;
+
     /**
      * Change Battle BGM
      */
     command132(): boolean;
+
     /**
      * Change Victory ME
      */
     command133(): boolean;
+
     /**
      * Change Save Access
      */
     command134(): boolean;
+
     /**
      * Change Menu Access
      */
     command135(): boolean;
+
     /**
      * Change Encounter Disable
      */
     command136(): boolean;
+
     /**
      * Change Formation Access
      */
     command137(): boolean;
+
     /**
      * Change Window Color
      */
     command138(): boolean;
+
     /**
      * Change Defeat ME
      */
     command139(): boolean;
+
     /**
      * Change Vehicle BGM
      */
     command140(): boolean;
+
     /**
      * Transfer Player
      */
     command201(): boolean;
+
     /**
      * Set Vehicle Location
      */
     command202(): boolean;
+
     /**
      * Set Event Location
      */
     command203(): boolean;
+
     /**
      * Scroll Map
      */
     command204(): boolean;
+
     /**
      * Set Movement Route
      */
     command205(): boolean;
+
     /**
      * Getting On and Off Vehicles
      */
     command206(): boolean;
+
     /**
      * Change Transparency
      */
     command211(): boolean;
+
     /**
      * Show Animation
      */
     command212(): boolean;
+
     /**
      * Show Balloon Icon
      */
     command213(): boolean;
+
     /**
      * Erase Event
      */
     command214(): boolean;
+
     /**
      * Change Player Followers
      */
     command216(): boolean;
+
     /**
      * Gather Followers
      */
     command217(): boolean;
+
     /**
      * Fadeout Screen
      */
     command221(): boolean;
+
     /**
      * Fadein Screen
      */
     command222(): boolean;
+
     /**
      * Tint Screen
      */
     command223(): boolean;
+
     /**
      * Flash Screen
      */
     command224(): boolean;
+
     /**
      * Shake Screen
      */
     command225(): boolean;
+
     /**
      * Wait
      */
     command230(): boolean;
+
     /**
      * Show Picture
      */
     command231(): boolean;
+
     /**
      * Move Picture
      */
     command232(): boolean;
+
     /**
      * Rotate Picture
      */
     command233(): boolean;
+
     /**
      * Tint Picture
      */
     command234(): boolean;
+
     /**
      * Erase Picture
      */
     command235(): boolean;
+
     /**
      * Set Weather Effect
      */
     command236(): boolean;
+
     /**
      * Play BGM
      */
     command241(): boolean;
+
     /**
      * Fadeout BGM
      */
     command242(): boolean;
+
     /**
      * Save BGM
      */
     command243(): boolean;
+
     /**
      * Resume BGM
      */
     command244(): boolean;
+
     /**
      * Play BGS
      */
     command245(): boolean;
+
     /**
      * Fadeout BGS
      */
     command246(): boolean;
+
     /**
      * Play ME
      */
     command249(): boolean;
+
     /**
      * Play SE
      */
     command250(): boolean;
+
     /**
      * Stop SE
      */
     command251(): boolean;
+
     /**
      * Play Movie
      */
     command261(): boolean;
     videoFileExt(): string;
+
     /**
      * Change Map Name Display
      */
     command281(): boolean;
+
     /**
      * Change Tileset
      */
     command282(): boolean;
+
     /**
      * Change Battle Back
      */
     command283(): boolean;
+
     /**
      * Change Parallax
      */
     command284(): boolean;
+
     /**
      * Get Location Info
      */
     command285(): boolean;
+
     /**
      * Battle Processing
      */
     command301(): boolean;
+
     /**
      * If Win
      */
     command601(): boolean;
+
     /**
      * If Escape
      */
     command602(): boolean;
+
     /**
      * If Lose
      */
     command603(): boolean;
+
     /**
      * Shop Processing
      */
     command302(): boolean;
+
     /**
      * Name Input Processing
      */
     command303(): boolean;
+
     /**
      * Change HP
      */
     command311(): boolean;
+
     /**
      * Change MP
      */
     command312(): boolean;
+
     /**
      * Change TP
      */
     command326(): boolean;
+
     /**
      * Change State
      */
     command313(): boolean;
+
     /**
      * Recover All
      */
     command314(): boolean;
+
     /**
      * Change EXP
      */
     command315(): boolean;
+
     /**
      * Change Level
      */
     command316(): boolean;
+
     /**
      * Change Parameter
      */
     command317(): boolean;
+
     /**
      * Change Skill
      */
     command318(): boolean;
+
     /**
      * Change Equipment
      */
     command319(): boolean;
+
     /**
      * Change Name
      */
     command320(): boolean;
+
     /**
      * Change Class
      */
     command321(): boolean;
+
     /**
      * Change Actor Images
      */
     command322(): boolean;
+
     /**
      * Change Vehicle Image
      */
     command323(): boolean;
+
     /**
      * Change Nickname
      */
     command324(): boolean;
+
     /**
      * Change Profile
      */
     command325(): boolean;
+
     /**
      * Change Enemy HP
      */
     command331(): boolean;
+
     /**
      * Change Enemy MP
      */
     command332(): boolean;
+
     /**
      * Change Enemy TP
      */
     command342(): boolean;
+
     /**
      * Change Enemy State
      */
     command333(): boolean;
+
     /**
      * Enemy Recover All
      */
     command334(): boolean;
+
     /**
      * Enemy Appear
      */
     command335(): boolean;
+
     /**
      * Enemy Transform
      */
     command336(): boolean;
+
     /**
      * Show Battle Animation
      */
     command337(): boolean;
+
     /**
      * Force Action
      */
     command339(): boolean;
+
     /**
      * Abort Battle
      */
     command340(): boolean;
+
     /**
      * Open Menu Screen
      */
     command351(): boolean;
+
     /**
      * Open Save Screen
      */
     command352(): boolean;
+
     /**
      * Game Over
      */
     command353(): boolean;
+
     /**
      * Return to Title Screen
      */
     command354(): boolean;
+
     /**
      * Script
      */
     command355(): boolean;
+
     /**
      * Plugin Command
      */

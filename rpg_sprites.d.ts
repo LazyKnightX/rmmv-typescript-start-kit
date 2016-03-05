@@ -252,8 +252,8 @@ declare class Sprite_Enemy extends Sprite_Battler {
  * The sprite for displaying an animation.
  */
 declare class Sprite_Animation extends Sprite {
-    static _checker1: {key: RPG.Animation};
-    static _checker2: {key: RPG.Animation};
+    protected static _checker1: {key: RPG.Animation};
+    protected static _checker2: {key: RPG.Animation};
 
     protected _target: Sprite_Base;
     protected _animation: RPG.Animation;
@@ -331,8 +331,8 @@ declare class Sprite_Damage extends Sprite {
  * The sprite for displaying state icons.
  */
 declare class Sprite_StateIcon extends Sprite {
-    static _iconWidth: number;
-    static _iconHeight: number;
+    protected static _iconWidth: number;
+    protected static _iconHeight: number;
 
     protected _battler: Game_Battler;
     protected _iconIndex: number;
@@ -503,7 +503,7 @@ declare class Spriteset_Base extends Sprite {
 declare class Spriteset_Map extends Spriteset_Base {
     protected _parallax: TilingSprite;
     protected _tilemap: Tilemap;
-    protected _tileset = RPG.Tileset;
+    protected _tileset: RPG.Tileset;
     protected _characterSprites: Array<Sprite_Character>;
     protected _shadowSprite: Sprite;
     protected _destinationSprite: Sprite_Destination;

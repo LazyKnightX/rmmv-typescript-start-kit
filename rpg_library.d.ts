@@ -190,9 +190,9 @@ declare namespace RPG {
         y: number;
 
         /**
-         * The event pages. RPG.Event.Page array.
+         * The event pages. RPG.EventPage array.
          */
-        pages: Array<Event.Page>;
+        pages: Array<EventPage>;
 
         /**
          * The text of the note.
@@ -201,175 +201,173 @@ declare namespace RPG {
 
         meta: {[key: string]: string | boolean};
     }
-    namespace Event {
+    /**
+     * The data class for the event page.
+     */
+    interface EventPage {
         /**
-         * The data class for the event page.
+         * The event condition (RPG.EventPage.Condition).
          */
-        interface Page {
+        conditions: Array<EventPage.Condition>;
+
+        /**
+         * The event graphic (RPG.EventPage.Graphic) .
+         */
+        image: EventPage.Graphic;
+
+        /**
+         * The type of movement (0: fixed, 1: random, 2: approach, 3: custom).
+         */
+        moveType: number;
+
+        /**
+         * The movement speed (1: x8 slower, 2: x4 slower, 3: x2 slower, 4: normal, 5: x2 faster, 6: x4 faster).
+         */
+        moveSpeed: number;
+
+        /**
+         * The movement frequency (1: lowest, 2: lower, 3: normal, 4: higher, 5: highest).
+         */
+        moveFrequency: number;
+
+        /**
+         * The movement route (RPG.MoveRoute). Referenced only when the movement type is set to custom.
+         */
+        moveRoute: Array<MoveRoute>;
+
+        /**
+         * The truth value of the [Walking Animation] option.
+         */
+        walkAnime: boolean;
+
+        /**
+         * The truth value of the [Stepping Animation] option.
+         */
+        stepAnime: boolean;
+
+        /**
+         * The truth value of the [Direction Fix] option.
+         */
+        directionFix: boolean;
+
+        /**
+         * The truth value of the [Through] option.
+         */
+        through: boolean;
+
+        /**
+         * The priority type (0: below characters, 1: same as characters, 2: above characters).
+         */
+        priorityType: number;
+
+        /**
+         * The event trigger (0: action button, 1: player touch, 2: event touch, 3: autorun, 4: parallel).
+         */
+        trigger: number;
+
+        /**
+         * A list of event commands. An RPG.EventCommand array.
+         */
+        list: Array<EventCommand>;
+    }
+    namespace EventPage {
+        /**
+         * The data class for the event page conditions.
+         */
+        interface Condition {
             /**
-             * The event condition (RPG.Event.Page.Condition).
+             * The truth value indicating whether the first [Switch] condition is valid.
              */
-            conditions: Array<Page.Condition>;
+            switch1Valid: boolean;
 
             /**
-             * The event graphic (RPG.Event.Page.Graphic) .
+             * The truth value indicating whether the second [Switch] condition is valid.
              */
-            image: Page.Graphic;
+            switch2Valid: boolean;
 
             /**
-             * The type of movement (0: fixed, 1: random, 2: approach, 3: custom).
+             * The truth value indicating whether the [Variable] condition is valid.
              */
-            moveType: number;
+            variableValid: boolean;
 
             /**
-             * The movement speed (1: x8 slower, 2: x4 slower, 3: x2 slower, 4: normal, 5: x2 faster, 6: x4 faster).
+             * The truth value indicating whether the [Self Switch] condition is valid.
              */
-            moveSpeed: number;
+            selfSwitchValid: boolean;
 
             /**
-             * The movement frequency (1: lowest, 2: lower, 3: normal, 4: higher, 5: highest).
+             * The truth value indicating whether the [Item] condition is valid.
              */
-            moveFrequency: number;
+            itemValid: boolean;
 
             /**
-             * The movement route (RPG.MoveRoute). Referenced only when the movement type is set to custom.
+             * The truth value indicating whether the [Actor] condition is valid.
              */
-            moveRoute: Array<MoveRoute>;
+            actorValid: boolean;
 
             /**
-             * The truth value of the [Walking Animation] option.
+             * The ID of that switch if the first [Switch] condition is valid.
              */
-            walkAnime: boolean;
+            switch1Id: number;
 
             /**
-             * The truth value of the [Stepping Animation] option.
+             * The ID of that switch if the second [Switch] condition is valid.
              */
-            stepAnime: boolean;
+            switch2Id: number;
 
             /**
-             * The truth value of the [Direction Fix] option.
+             * The ID of that variable if the [Variable] condition is valid.
              */
-            directionFix: boolean;
+            variableId: number;
 
             /**
-             * The truth value of the [Through] option.
+             * The standard value of that variable (x and greater) if the [Variable] condition is valid.
              */
-            through: boolean;
+            variableValue: number;
 
             /**
-             * The priority type (0: below characters, 1: same as characters, 2: above characters).
+             * The letter of that self switch ("A".."D") if the [Self Switch] condition is valid.
              */
-            priorityType: number;
+            selfSwitchCh: string;
 
             /**
-             * The event trigger (0: action button, 1: player touch, 2: event touch, 3: autorun, 4: parallel).
+             * The ID of that item if the [Item] condition is valid.
              */
-            trigger: number;
+            itemId: number;
 
             /**
-             * A list of event commands. An RPG.EventCommand array.
+             * The ID of that actor if the [Actor] condition is valid.
              */
-            list: Array<EventCommand>;
+            actorId: number;
         }
-        namespace Page {
+        /**
+         * The data class for the Event page [Graphics].
+         */
+        interface Graphic {
             /**
-             * The data class for the event page conditions.
+             * The tile ID. If the specified graphic is not a tile, this value is 0.
              */
-            interface Condition {
-                /**
-                 * The truth value indicating whether the first [Switch] condition is valid.
-                 */
-                switch1Valid: boolean;
+            tileId: number;
 
-                /**
-                 * The truth value indicating whether the second [Switch] condition is valid.
-                 */
-                switch2Valid: boolean;
-
-                /**
-                 * The truth value indicating whether the [Variable] condition is valid.
-                 */
-                variableValid: boolean;
-
-                /**
-                 * The truth value indicating whether the [Self Switch] condition is valid.
-                 */
-                selfSwitchValid: boolean;
-
-                /**
-                 * The truth value indicating whether the [Item] condition is valid.
-                 */
-                itemValid: boolean;
-
-                /**
-                 * The truth value indicating whether the [Actor] condition is valid.
-                 */
-                actorValid: boolean;
-
-                /**
-                 * The ID of that switch if the first [Switch] condition is valid.
-                 */
-                switch1Id: number;
-
-                /**
-                 * The ID of that switch if the second [Switch] condition is valid.
-                 */
-                switch2Id: number;
-
-                /**
-                 * The ID of that variable if the [Variable] condition is valid.
-                 */
-                variableId: number;
-
-                /**
-                 * The standard value of that variable (x and greater) if the [Variable] condition is valid.
-                 */
-                variableValue: number;
-
-                /**
-                 * The letter of that self switch ("A".."D") if the [Self Switch] condition is valid.
-                 */
-                selfSwitchCh: string;
-
-                /**
-                 * The ID of that item if the [Item] condition is valid.
-                 */
-                itemId: number;
-
-                /**
-                 * The ID of that actor if the [Actor] condition is valid.
-                 */
-                actorId: number;
-            }
             /**
-             * The data class for the Event page [Graphics].
+             * The file name of the character's graphic.
              */
-            interface Graphic {
-                /**
-                 * The tile ID. If the specified graphic is not a tile, this value is 0.
-                 */
-                tileId: number;
+            characterName: string;
 
-                /**
-                 * The file name of the character's graphic.
-                 */
-                characterName: string;
+            /**
+             * The index of the character's graphic file (0..7).
+             */
+            characterIndex: number;
 
-                /**
-                 * The index of the character's graphic file (0..7).
-                 */
-                characterIndex: number;
+            /**
+             * The direction in which the character is facing (2: down, 4: left, 6: right, 8: up).
+             */
+            direction: number;
 
-                /**
-                 * The direction in which the character is facing (2: down, 4: left, 6: right, 8: up).
-                 */
-                direction: number;
-
-                /**
-                 * The character's pattern (0..2).
-                 */
-                pattern: number;
-            }
+            /**
+             * The character's pattern (0..2).
+             */
+            pattern: number;
         }
     }
     /**
@@ -680,14 +678,14 @@ declare namespace RPG {
         animationId: number;
 
         /**
-         * Damage (RPG.UsableItem.Damage).
+         * Damage (RPG.Damage).
          */
-        damage: UsableItem.Damage;
+        damage: Damage;
 
         /**
-         * A list of use effects. An RPG.UsableItem.Effect array.
+         * A list of use effects. An RPG.Effect array.
          */
-        effects: Array<UsableItem.Effect>;
+        effects: Array<Effect>;
     }
     /**
      * The data class for skills.
@@ -1024,68 +1022,66 @@ declare namespace RPG {
          */
         scrollY: number;
     }
-    namespace UsableItem {
+    /**
+     * The data class for damage.
+     */
+    export interface Damage {
         /**
-         * The data class for damage.
+         * The type of damage.
+         *
+         * 0: None
+         * 1: HP damage
+         * 2: MP damage
+         * 3: HP recovery
+         * 4: MP recovery
+         * 5: HP drain
+         * 6: MP drain
          */
-        export interface Damage {
-            /**
-             * The type of damage.
-             *
-             * 0: None
-             * 1: HP damage
-             * 2: MP damage
-             * 3: HP recovery
-             * 4: MP recovery
-             * 5: HP drain
-             * 6: MP drain
-             */
-            type: number;
+        type: number;
 
-            /**
-             * The element ID.
-             */
-            elementId: number;
-
-            /**
-             * The formula.
-             */
-            formula: string;
-
-            /**
-             * The degree of variability.
-             */
-            variance: number;
-
-            /**
-             * Critical hit (true/false).
-             */
-            critical: boolean;
-        }
         /**
-         * The data class for use effects.
+         * The element ID.
          */
-        export interface Effect {
-            /**
-             * The use effect code.
-             */
-            code: number;
+        elementId: number;
 
-            /**
-             * The ID of data (state, parameter, and so on) according to the type of use effect.
-             */
-            dataId: number;
+        /**
+         * The formula.
+         */
+        formula: string;
 
-            /**
-             * Value 1 set according to the type of use effect.
-             */
-            value1: number;
+        /**
+         * The degree of variability.
+         */
+        variance: number;
 
-            /**
-             * Value 2 set according to the type of use effect.
-             */
-            value2: number;
-        }
+        /**
+         * Critical hit (true/false).
+         */
+        critical: boolean;
+    }
+    /**
+     * The data class for use effects.
+     */
+    export interface Effect {
+        /**
+         * The use effect code.
+         */
+        code: number;
+
+        /**
+         * The ID of data (state, parameter, and so on) according to the type of use effect.
+         */
+        dataId: number;
+
+        /**
+         * Value 1 set according to the type of use effect.
+         */
+        value1: number;
+
+        /**
+         * Value 2 set according to the type of use effect.
+         */
+        value2: number;
     }
     namespace Enemy {
         /**
@@ -1497,6 +1493,11 @@ declare namespace RPG {
         windowTone: Array<number>;
 
         /**
+         * The array of System.AttackMotion data.
+         */
+        attackMotions: Array<System.AttackMotion>;
+
+        /**
          * A list of elements. A string array using element IDs as subscripts, with the element in the 0 position being nil.
          */
         elements: Array<string>;
@@ -1750,8 +1751,8 @@ declare namespace RPG {
              * 8: Hit
              * 9: Evasion
              */
-
             params: Array<string>;
+
             /**
              * 0: Fight
              * 1: Escape
@@ -1811,6 +1812,17 @@ declare namespace RPG {
              * 4: Accessory
              */
             equips: Array<number>;
+        }
+        export interface AttackMotion {
+            /**
+             * The type of the motion.
+             */
+            type: number;
+
+            /**
+             * The ID of the weapon image.
+             */
+            weaponImageId: number;
         }
     }
     /**
