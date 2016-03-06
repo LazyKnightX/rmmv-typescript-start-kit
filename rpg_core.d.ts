@@ -897,20 +897,20 @@ declare var JsonEx: JsonExStatic;
 
 declare class ScreenSprite {
     /**
-     * The sprite which covers the entire game screen.
-     *
-     * @class ScreenSprite
-     * @constructor
-     */
-    constructor();
-
-    /**
      * The opacity of the sprite (0 to 255).
      *
      * @property opacity
      * @type Number
      */
     opacity: number;
+
+    /**
+     * The sprite which covers the entire game screen.
+     *
+     * @class ScreenSprite
+     * @constructor
+     */
+    constructor();
 
     /**
      * Sets black to the color of the screen sprite.
@@ -1065,6 +1065,9 @@ declare class Sprite extends PIXI.Sprite {
      * @type PIXI.DisplayObjectContainer
      */
     parent: PIXI.DisplayObjectContainer;
+
+    spriteId: number;
+    opaque: boolean;
 
     /**
      * The basic object that is rendered to the game screen.
@@ -1251,6 +1254,433 @@ declare class Sprite extends PIXI.Sprite {
 }
 
 declare class Stage {
+    // The interactive flag causes a memory leak.
+    interactive: boolean;
+
     constructor();
-    addChild(childe: any): void;
+
+    /**
+     * Adds a child to the container.
+     *
+     * @method addChild
+     * @param {PIXI.DisplayObject} child The child to add
+     * @return {PIXI.DisplayObject} The child that was added
+     */
+    addChild(child: PIXI.DisplayObject): PIXI.DisplayObject;
+
+    /**
+     * Adds a child to the container at a specified index.
+     *
+     * @method addChildAt
+     * @param {PIXI.DisplayObject} child The child to add
+     * @param {Number} index The index to place the child in
+     * @return {PIXI.DisplayObject} The child that was added
+     */
+    addChildAt(child: PIXI.DisplayObject, index: number): PIXI.DisplayObject;
+
+    /**
+     * Removes a child from the container.
+     *
+     * @method removeChild
+     * @param {PIXI.DisplayObject} child The child to remove
+     * @return {PIXI.DisplayObject} The child that was removed
+     */
+    removeChild(child: PIXI.DisplayObject): PIXI.DisplayObject;
+
+    /**
+     * Removes a child from the specified index position.
+     *
+     * @method removeChildAt
+     * @param {Number} index The index to get the child from
+     * @return {PIXI.DisplayObject} The child that was removed
+     */
+    removeChildAt(index: number): PIXI.DisplayObject;
+}
+
+declare class Tilemap extends PIXI.DisplayObjectContainer {
+    // Tile type checkers
+
+    static TILE_ID_B: number;
+    static TILE_ID_C: number;
+    static TILE_ID_D: number;
+    static TILE_ID_E: number;
+    static TILE_ID_A5: number;
+    static TILE_ID_A1: number;
+    static TILE_ID_A2: number;
+    static TILE_ID_A3: number;
+    static TILE_ID_A4: number;
+    static TILE_ID_MAX: number;
+
+    static FLOOR_AUTOTILE_TABLE: Array<Array<Array<number>>>;
+    static WALL_AUTOTILE_TABLE: Array<Array<Array<number>>>;
+    static WATERFALL_AUTOTILE_TABLE: Array<Array<Array<number>>>;
+
+
+    static isVisibleTile(tileId: number): boolean;
+    static isAutotile(tileId: number): boolean;
+    static getAutotileKind(tileId: number): number;
+    static getAutotileShape(tileId: number): number;
+    static makeAutotileId(kind: number, shape: number): number;
+    static isSameKindTile(tileID1: number, tileID2: number): boolean;
+    static isTileA1(tileId: number): boolean;
+    static isTileA2(tileId: number): boolean;
+    static isTileA3(tileId: number): boolean;
+    static isTileA4(tileId: number): boolean;
+    static isTileA5(tileId: number): boolean;
+    static isWaterTile(tileId: number): boolean;
+    static isWaterfallTile(tileId: number): boolean;
+    static isGroundTile(tileId: number): boolean;
+    static isShadowingTile(tileId: number): boolean;
+    static isRoofTile(tileId: number): boolean;
+    static isWallTopTile(tileId: number): boolean;
+    static isWallSideTile(tileId: number): boolean;
+    static isWallTile(tileId: number): boolean;
+    static isFloorTypeAutotile(tileId: number): boolean;
+    static isWallTypeAutotile(tileId: number): boolean;
+    static isWaterfallTypeAutotile(tileId: number): boolean;
+
+    /**
+     * The bitmaps used as a tileset.
+     *
+     * @property bitmaps
+     * @type Array
+     */
+    bitmaps: Array<Bitmap>;
+
+    /**
+     * The origin point of the tilemap for scrolling.
+     *
+     * @property origin
+     * @type Point
+     */
+    origin: Point;
+
+    /**
+     * The tileset flags.
+     *
+     * @property flags
+     * @type Array
+     */
+    flags: Array<number>;
+
+    /**
+     * The animation count for autotiles.
+     *
+     * @property animationCount
+     * @type Number
+     */
+    animationCount: number;
+
+    /**
+     * Whether the tilemap loops horizontal.
+     *
+     * @property horizontalWrap
+     * @type Boolean
+     */
+    horizontalWrap: boolean;
+
+    /**
+     * Whether the tilemap loops vertical.
+     *
+     * @property verticalWrap
+     * @type Boolean
+     */
+    verticalWrap: boolean;
+
+    /**
+     * The width of the screen in pixels.
+     *
+     * @property width
+     * @type Number
+     */
+    width: number;
+
+    /**
+     * The height of the screen in pixels.
+     *
+     * @property height
+     * @type Number
+     */
+    height: number;
+
+    /**
+     * The width of a tile in pixels.
+     *
+     * @property tileWidth
+     * @type Number
+     */
+    tileWidth: number;
+
+    /**
+     * The height of a tile in pixels.
+     *
+     * @property tileHeight
+     * @type Number
+     */
+    tileHeight: number;
+
+    //-----------------------------------------------------------------------------
+    /**
+     * The tilemap which displays 2D tile-based game map.
+     *
+     * @class Tilemap
+     * @constructor
+     */
+    constructor();
+
+    /**
+     * Sets the tilemap data.
+     *
+     * @method setData
+     * @param {Number} width The width of the map in number of tiles
+     * @param {Number} height The height of the map in number of tiles
+     * @param {Array} data The one dimensional array for the map data
+     */
+    setData(width: number, height: number, data: Array<number>);
+
+    /**
+     * Checks whether the tileset is ready to render.
+     *
+     * @method isReady
+     * @type Boolean
+     * @return {Boolean} True if the tilemap is ready
+     */
+    isReady(): boolean;
+
+    /**
+     * Updates the tilemap for each frame.
+     *
+     * @method update
+     */
+    update(): void;
+
+    /**
+     * Forces to repaint the entire static
+     *
+     * @method refresh
+     */
+    refresh(): void;
+
+    /**
+     * @method updateTransform
+     * @private
+     */
+    updateTransform(): void;
+
+    /**
+     * [read-only] The array of children of the sprite.
+     *
+     * @property children
+     * @type Array<PIXI.DisplayObject>
+     */
+    children: Array<PIXI.DisplayObject>;
+
+    /**
+     * [read-only] The object that contains the sprite.
+     *
+     * @property parent
+     * @type PIXI.DisplayObjectContainer
+     */
+    parent: PIXI.DisplayObjectContainer;
+
+    /**
+     * Adds a child to the container.
+     *
+     * @method addChild
+     * @param {PIXI.DisplayObject} child The child to add
+     * @return {PIXI.DisplayObject} The child that was added
+     */
+    addChild(child: PIXI.DisplayObject): PIXI.DisplayObject;
+
+    /**
+     * Adds a child to the container at a specified index.
+     *
+     * @method addChildAt
+     * @param {PIXI.DisplayObject} child The child to add
+     * @param {Number} index The index to place the child in
+     * @return {PIXI.DisplayObject} The child that was added
+     */
+    addChildAt(child: PIXI.DisplayObject, index: number): PIXI.DisplayObject;
+
+    /**
+     * Removes a child from the container.
+     *
+     * @method removeChild
+     * @param {PIXI.DisplayObject} child The child to remove
+     * @return {PIXI.DisplayObject} The child that was removed
+     */
+    removeChild(child: PIXI.DisplayObject): PIXI.DisplayObject;
+
+    /**
+     * Removes a child from the specified index position.
+     *
+     * @method removeChildAt
+     * @param {Number} index The index to get the child from
+     * @return {PIXI.DisplayObject} The child that was removed
+     */
+    removeChildAt(index: number): PIXI.DisplayObject;
+
+    protected _margin: number;
+    protected _width: number;
+    protected _height: number;
+    protected _tileWidth: number;
+    protected _tileHeight: number;
+    protected _mapWidth: number;
+    protected _mapHeight : number;
+    protected _mapData: Array<number>;
+    protected _layerWidth: number;
+    protected _layerHeight: number;
+    protected _lastTiles: any;//わからんちん
+    protected _lowerLayer: Sprite;
+    protected _upperLayer: Sprite;
+
+    /**
+     * @method _createLayers
+     * @private
+     */
+    protected _createLayers(): void;
+
+    /**
+     * @method _updateLayerPositions
+     * @param {Number} startX
+     * @param {Number} startY
+     * @private
+     */
+    protected _updateLayerPositions(startX: number, startY: number): void;
+
+    /**
+     * @method _paintAllTiles
+     * @param {Number} startX
+     * @param {Number} startY
+     * @private
+     */
+    protected _paintAllTiles(startX: number, startY: number): void;
+
+    /**
+     * @method _paintTiles
+     * @param {Number} startX
+     * @param {Number} startY
+     * @param {Number} x
+     * @param {Number} y
+     * @private
+     */
+    protected _paintTiles(startX: number, startY: number, x: number, y: number): void;
+
+    /**
+     * @method _readLastTiles
+     * @param {Number} i
+     * @param {Number} x
+     * @param {Number} y
+     * @private
+     */
+    protected _readLastTiles(i: number, x: number, y: number): Array<any>;//わからんちん
+
+    /**
+     * @method _writeLastTiles
+     * @param {Number} i
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Array} tiles
+     * @private
+     */
+    protected _writeLastTiles(i: number, x: number, y: number, tiles: any): void;//わからんちん
+
+    /**
+     * @method _drawTile
+     * @param {Bitmap} bitmap
+     * @param {Number} tileId
+     * @param {Number} dx
+     * @param {Number} dy
+     * @private
+     */
+    protected _drawTile(bitmap: Bitmap, tileId: number, dx: number, dy: number): void;
+
+    /**
+     * @method _drawNormalTile
+     * @param {Bitmap} bitmap
+     * @param {Number} tileId
+     * @param {Number} dx
+     * @param {Number} dy
+     * @private
+     */
+    protected _drawNormalTile(bitmap: Bitmap, tileId: number, dx: number, dy: number): void;
+
+    /**
+     * @method _drawAutotile
+     * @param {Bitmap} bitmap
+     * @param {Number} tileId
+     * @param {Number} dx
+     * @param {Number} dy
+     * @private
+     */
+    protected _drawAutotile(bitmap: Bitmap, tileId: number, dx: number, dy: number): void;
+
+    /**
+     * @method _drawTableEdge
+     * @param {Bitmap} bitmap
+     * @param {Number} tileId
+     * @param {Number} dx
+     * @param {Number} dy
+     * @private
+     */
+    protected _drawTableEdge(bitmap: Bitmap, tileId: number, dx: number, dy: number): void;
+
+    /**
+     * @method _drawShadow
+     * @param {Bitmap} bitmap
+     * @param {Number} shadowBits
+     * @param {Number} dx
+     * @param {Number} dy
+     * @private
+     */
+    protected _drawShadow(bitmap: Bitmap, shadowBits: number, dx: number, dy: number): void;
+
+    /**
+     * @method _readMapData
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Number} z
+     * @return {Number}
+     * @private
+     */
+    protected _readMapData(x: number, y: number, z: number): number;
+
+    /**
+     * @method _isHigherTile
+     * @param {Number} tileId
+     * @return {Boolean}
+     * @private
+     */
+    protected _isHigherTile(tileId: number): boolean;
+
+    /**
+     * @method _isTableTile
+     * @param {Number} tileId
+     * @return {Boolean}
+     * @private
+     */
+    protected _isTableTile(tileId: number): boolean;
+
+    /**
+     * @method _isOverpassPosition
+     * @param {Number} mx
+     * @param {Number} my
+     * @return {Boolean}
+     * @private
+     */
+    protected _isOverpassPosition(mx: number, my: number): boolean;
+
+    /**
+     * @method _sortChildren
+     * @private
+     */
+    protected _sortChildren(): void;
+
+    /**
+     * @method _compareChildOrder
+     * @param {Sprite} a
+     * @param {Sprite} b
+     * @private
+     */
+    protected _compareChildOrder(a: Sprite, b: Sprite): number;// *スプライトが唐突にZを持つ場合があるぞ
 }
