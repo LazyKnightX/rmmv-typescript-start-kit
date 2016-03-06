@@ -334,6 +334,31 @@ interface GraphicsStatic {
      */
     isInsideCanvas(x: number, y: number): boolean;
 
+    _width: number;
+    _height: number;
+    _rendererType: string;
+    _boxWidth: number;
+    _boxHeight: number;
+    _scale: number;
+    _realScale : number;
+    _errorPrinter: boolean;
+    _canvas: HTMLCanvasElement;
+    _video: HTMLVideoElement;
+    _upperCanvas: HTMLCanvasElement;
+    _renderer: PIXI.PixiRenderer;
+    _fpsMeter: FPSMeter;
+    _modeBox: HTMLDivElement;
+    _skipCount: number;
+    _maxSkip: number;
+    _rendered: boolean;
+    _loadingImage: HTMLImageElement;
+    _loadingCount: number;
+    _fpsMeterToggled: boolean;
+    _stretchEnabled: boolean;
+    _canUseDifferenceBlend: boolean;
+    _canUseSaturationBlend: boolean;
+    _hiddenCanvas: HTMLCanvasElement;
+
     /**
      * @static
      * @method _createAllElements
@@ -666,7 +691,7 @@ interface Array<T> {
      * @param {Array} array The array to compare to
      * @return {Boolean} True if the two arrays are same
      */
-    equals(array: any[]): boolean;
+    equals(array: Array<any>): boolean;
 }
 
 interface Math {
@@ -728,7 +753,7 @@ interface String {
      * @param {Any} ...args The objects to format
      * @return {String} A formatted string
      */
-    format(...args: any[]): string;
+    format(...args: Array<any>): string;
 
     /**
      * Makes a number string with leading zeros.
@@ -1151,6 +1176,16 @@ declare class Sprite extends PIXI.Sprite {
      * @return {PIXI.DisplayObject} The child that was removed
      */
     removeChildAt(index: number): PIXI.DisplayObject;
+
+    protected _bitmap: Bitmap;
+    protected _frame: Rectangle;
+    protected _realFrame: Rectangle;
+    protected _offset: Point;
+    protected _blendColor: Array<Number>;
+    protected _colorTone: Array<Number>;
+    protected _canvas: HTMLCanvasElement;
+    protected _context: CanvasRenderingContext2D;
+    protected _tintTexture: PIXI.BaseTexture;
 
     /**
      * @method _onBitmapLoad
