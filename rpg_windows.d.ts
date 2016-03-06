@@ -20,6 +20,11 @@ declare class Window_Base extends Window {
     protected _opening: boolean;
     protected _closing: boolean;
 
+    opacity: number;
+    backOpacity: number;
+    contents: Bitmap;
+    windowskin: Bitmap;
+
     constructor(x: number, y: number, width: number, height: number);
 
     lineHeight(): number;
