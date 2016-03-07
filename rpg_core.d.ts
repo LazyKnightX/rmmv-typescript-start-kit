@@ -886,6 +886,44 @@ interface JsonExStatic {
      * @return {Object} The reconstructed object
      */
     parse(json: string): any;
+
+    /**
+     * @static
+     * @method _encode
+     * @param {Object} value
+     * @param {Number} depth
+     * @return {Object}
+     * @private
+     */
+    _encode(value: any, depth: number): any;
+
+    /**
+     * @static
+     * @method _decode
+     * @param {Object} value
+     * @return {Object}
+     * @private
+     */
+    _decode(value: any): any;
+
+    /**
+     * @static
+     * @method _getConstructorName
+     * @param {Object} value
+     * @return {String}
+     * @private
+     */
+    _getConstructorName(value: any): string;
+
+    /**
+     * @static
+     * @method _resetPrototype
+     * @param {Object} value
+     * @param {Object} prototype
+     * @return {Object}
+     * @private
+     */
+    _resetPrototype(value: any, prototype: any): any;
 }
 
 /**
@@ -1257,6 +1295,12 @@ declare class Stage {
     // The interactive flag causes a memory leak.
     interactive: boolean;
 
+    /**
+     * The root object of the display tree.
+     *
+     * @class Stage
+     * @constructor
+     */
     constructor();
 
     /**
@@ -1314,7 +1358,6 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
     static FLOOR_AUTOTILE_TABLE: Array<Array<Array<number>>>;
     static WALL_AUTOTILE_TABLE: Array<Array<Array<number>>>;
     static WATERFALL_AUTOTILE_TABLE: Array<Array<Array<number>>>;
-
 
     static isVisibleTile(tileId: number): boolean;
     static isAutotile(tileId: number): boolean;
@@ -1419,7 +1462,6 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      */
     tileHeight: number;
 
-    //-----------------------------------------------------------------------------
     /**
      * The tilemap which displays 2D tile-based game map.
      *
@@ -1530,7 +1572,7 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
     protected _mapData: Array<number>;
     protected _layerWidth: number;
     protected _layerHeight: number;
-    protected _lastTiles: any;//わからんちん
+    protected _lastTiles: Array<Array<Array<Array<number>>>>;
     protected _lowerLayer: Sprite;
     protected _upperLayer: Sprite;
 
@@ -1573,7 +1615,7 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      * @param {Number} y
      * @private
      */
-    protected _readLastTiles(i: number, x: number, y: number): Array<any>;//わからんちん
+    protected _readLastTiles(i: number, x: number, y: number): Array<number>;
 
     /**
      * @method _writeLastTiles
@@ -1583,7 +1625,7 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      * @param {Array} tiles
      * @private
      */
-    protected _writeLastTiles(i: number, x: number, y: number, tiles: any): void;//わからんちん
+    protected _writeLastTiles(i: number, x: number, y: number, tiles: Array<number>): void;
 
     /**
      * @method _drawTile
