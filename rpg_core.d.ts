@@ -3,22 +3,403 @@
 // Definitions by: aaa<https://>, bbb<https://>
 // Definitions: https://
 
-// You must be Uncomment if not reference pixi.d.ts.
-// declare namespace PIXI {
-//     // aaa
-// }
 
-
-//
 declare class Bitmap {
-    constructor(width?: number, height?: number);
-    addLoadListener(listner: () => any): void;
-    adjustTone(r: number, g: number, b: number): void;
-    blt(source: Bitmap, sx: number, sy: number, sw: number , sh: number,
-        dx: number, dy: number, dw?: number, dh?: number): void;
-    fillAll(color: string);
-}
+    protected _canvas: HTMLCanvasElement;
+    protected _context: CanvasRenderingContext2D;
+    protected _baseTexture: PIXI.BaseTexture;
+    protected _image: HTMLImageElement;
+    protected _url: string;
+    protected _paintOpacity: number;
+    protected _smooth: boolean;
+    protected _loadListeners: () => void;
+    protected _isLoading: boolean;
+    protected _hasError: boolean;
 
+    /**
+     * The face name of the font.
+     *
+     * @property fontFace
+     * @type String
+     */
+    fontFace: string;
+
+    /**
+     * The size of the font in pixels.
+     *
+     * @property fontSize
+     * @type Number
+     */
+    fontSize: number;
+
+    /**
+     * Whether the font is italic.
+     *
+     * @property fontItalic
+     * @type Boolean
+     */
+    fontItalic: number;
+
+    /**
+     * The color of the text in CSS format.
+     *
+     * @property textColor
+     * @type String
+     */
+    textColor: string;
+
+    /**
+     * The color of the outline of the text in CSS format.
+     *
+     * @property outlineColor
+     * @type String
+     */
+    outlineColor: string;
+
+    /**
+     * The width of the outline of the text.
+     *
+     * @property outlineWidth
+     * @type Number
+     */
+    outlineWidth: number;
+
+    /**
+     * [read-only] The url of the image file.
+     *
+     * @property url
+     * @type String
+     */
+    url: string;
+
+    /**
+     * [read-only] The base texture that holds the image.
+     *
+     * @property baseTexture
+     * @type PIXI.BaseTexture
+     */
+    baseTexture: PIXI.BaseTexture;
+
+    /**
+     * [read-only] The bitmap canvas.
+     *
+     * @property canvas
+     * @type HTMLCanvasElement
+     */
+    canvas: HTMLCanvasElement;
+
+    /**
+     * [read-only] The 2d context of the bitmap canvas.
+     *
+     * @property context
+     * @type CanvasRenderingContext2D
+     */
+    context: CanvasRenderingContext2D;
+
+    /**
+     * [read-only] The width of the bitmap.
+     *
+     * @property width
+     * @type Number
+     */
+    width: number;
+
+    /**
+     * [read-only] The height of the bitmap.
+     *
+     * @property height
+     * @type Number
+     */
+    height: number;
+
+    /**
+     * [read-only] The rectangle of the bitmap.
+     *
+     * @property rect
+     * @type Rectangle
+     */
+    rect: Rectangle;
+
+    /**
+     * Whether the smooth scaling is applied.
+     *
+     * @property smooth
+     * @type Boolean
+     */
+    smooth: boolean;
+
+    /**
+     * The opacity of the drawing object in the range (0, 255).
+     *
+     * @property paintOpacity
+     * @type Number
+     */
+    paintOpacity: number;
+
+    /**
+     * The basic object that represents an image.
+     *
+     * @class Bitmap
+     * @constructor
+     * @param {Number} width The width of the bitmap
+     * @param {Number} height The height of the bitmap
+     */
+    constructor();
+    constructor(width: number, height: number);
+
+    /**
+     * Loads a image file and returns a new bitmap object.
+     *
+     * @static
+     * @method load
+     * @param {String} url The image url of the texture
+     * @return Bitmap
+     */
+    load(url: string): Bitmap;
+
+    /**
+     * Takes a snapshot of the game screen and returns a new bitmap object.
+     *
+     * @static
+     * @method snap
+     * @param {Stage} stage The stage object
+     * @return Bitmap
+     */
+    snap(stage: Stage): Bitmap;
+
+    /**
+     * Checks whether the bitmap is ready to render.
+     *
+     * @method isReady
+     * @return {Boolean} True if the bitmap is ready to render
+     */
+    isReady(): boolean;
+
+    /**
+     * Checks whether a loading error has occurred.
+     *
+     * @method isError
+     * @return {Boolean} True if a loading error has occurred
+     */
+    isError(): boolean;
+
+    /**
+     * Resizes the bitmap.
+     *
+     * @method resize
+     * @param {Number} width The new width of the bitmap
+     * @param {Number} height The new height of the bitmap
+     */
+    resize(width: number, height: number): void;
+
+    /**
+     * Performs a block transfer.
+     *
+     * @method blt
+     * @param {Bitmap} source The bitmap to draw
+     * @param {Number} sx The x coordinate in the source
+     * @param {Number} sy The y coordinate in the source
+     * @param {Number} sw The width of the source image
+     * @param {Number} sh The height of the source image
+     * @param {Number} dx The x coordinate in the destination
+     * @param {Number} dy The y coordinate in the destination
+     * @param {Number} [dw=sw] The width to draw the image in the destination
+     * @param {Number} [dh=sh] The height to draw the image in the destination
+     */
+    blt(source: Bitmap, sx: number, sy: number, sw: number, sh: number,
+                        dx: number, dy: number, dw: number, dh: number): void;
+
+    /**
+     * Returns pixel color at the specified point.
+     *
+     * @method getPixel
+     * @param {Number} x The x coordinate of the pixel in the bitmap
+     * @param {Number} y The y coordinate of the pixel in the bitmap
+     * @return {String} The pixel color (hex format)
+     */
+    getPixel(x: number, y: number): string;
+
+    /**
+     * Returns alpha pixel value at the specified point.
+     *
+     * @method getAlphaPixel
+     * @param {Number} x The x coordinate of the pixel in the bitmap
+     * @param {Number} y The y coordinate of the pixel in the bitmap
+     * @return {String} The alpha value
+     */
+    getAlphaPixel(x: number, y: number): string;
+
+    /**
+     * Clears the specified rectangle.
+     *
+     * @method clearRect
+     * @param {Number} x The x coordinate for the upper-left corner
+     * @param {Number} y The y coordinate for the upper-left corner
+     * @param {Number} width The width of the rectangle to clear
+     * @param {Number} height The height of the rectangle to clear
+     */
+    clearRect(x: number, y: number, width: number, height: number): void;
+
+    /**
+     * Clears the entire bitmap.
+     *
+     * @method clear
+     */
+    clear(): void;
+
+    /**
+     * Fills the specified rectangle.
+     *
+     * @method fillRect
+     * @param {Number} x The x coordinate for the upper-left corner
+     * @param {Number} y The y coordinate for the upper-left corner
+     * @param {Number} width The width of the rectangle to clear
+     * @param {Number} height The height of the rectangle to clear
+     * @param {String} color The color of the rectangle in CSS format
+     */
+    fillRect(x: number, y: number, width: number, height: number, color: string): void;
+
+    /**
+     * Fills the entire bitmap.
+     *
+     * @method fillAll
+     * @param {String} color The color of the rectangle in CSS format
+     */
+    fillAll(color: string): void;
+
+    /**
+     * Draws the rectangle with a gradation.
+     *
+     * @method gradientFillRect
+     * @param {Number} x The x coordinate for the upper-left corner
+     * @param {Number} y The y coordinate for the upper-left corner
+     * @param {Number} width The width of the rectangle to clear
+     * @param {Number} height The height of the rectangle to clear
+     * @param {String} color1 The start color of the gradation
+     * @param {String} color2 The end color of the gradation
+     * @param {Boolean} vertical Whether it draws a vertical gradient
+     */
+    gradientFillRect(x: number, y: number, width: number, height: number,
+                     color1: string, color2: string, vertical: boolean): void;
+
+    /**
+     * Draw the filled circle.
+     *
+     * @method drawCircle
+     * @param {Number} x The x coordinate of the center of the circle
+     * @param {Number} y The y coordinate of the center of the circle
+     * @param {Number} radius The radius of the circle
+     * @param {String} color The color of the circle in CSS format
+     */
+    drawCircle(x: number, y: number, radius: number, color: string): void;
+
+    /**
+     * Draws the outline text to the bitmap.
+     *
+     * @method drawText
+     * @param {String} text The text that will be drawn
+     * @param {Number} x The x coordinate for the left of the text
+     * @param {Number} y The y coordinate for the top of the text
+     * @param {Number} maxWidth The maximum allowed width of the text
+     * @param {Number} lineHeight The height of the text line
+     * @param {String} align The alignment of the text
+     */
+    drawText(text: String, x: number, y: number,
+             maxWidth: number, lineHeight: number, align: String): void;
+
+    /**
+     * Returns the width of the specified text.
+     *
+     * @method measureTextWidth
+     * @param {String} text The text to be measured
+     * @return {Number} The width of the text in pixels
+     */
+    measureTextWidth(text: string): number;
+
+    /**
+     * Changes the color tone of the entire bitmap.
+     *
+     * @method adjustTone
+     * @param {Number} r The red strength in the range (-255, 255)
+     * @param {Number} g The green strength in the range (-255, 255)
+     * @param {Number} b The blue strength in the range (-255, 255)
+     */
+    adjustTone(r: number, g: number, b: number): void;
+
+    /**
+     * Rotates the hue of the entire bitmap.
+     *
+     * @method rotateHue
+     * @param {Number} offset The hue offset in 360 degrees
+     */
+    rotateHue(offset: number): void;
+
+    /**
+     * Applies a blur effect to the bitmap.
+     *
+     * @method blur
+     */
+    blur(): void;
+
+    /**
+     * Add a callback function that will be called when the bitmap is loaded.
+     *
+     * @method addLoadListener
+     * @param {Function} listner The callback function
+     */
+    addLoadListener(listner: () => void): void;
+
+    /**
+     * @method _makeFontNameText
+     * @return {String} FontNameText
+     * @private
+     */
+    protected _makeFontNameText(): string;
+
+    /**
+     * @method _drawTextOutline
+     * @param {String} text
+     * @param {Number} tx
+     * @param {Number} ty
+     * @param {Number} maxWidth
+     * @private
+     */
+    protected _drawTextOutline(text: number, tx: number, ty: number, maxWidth: number): void;
+
+    /**
+     * @method _drawTextBody
+     * @param {String} text
+     * @param {Number} tx
+     * @param {Number} ty
+     * @param {Number} maxWidth
+     * @private
+     */
+    protected _drawTextBody(text: string, tx: number, ty: number, maxWidth: number): void;
+
+    /**
+     * @method _onLoad
+     * @private
+     */
+    protected _onLoad(): void;
+
+    /**
+     * @method _callLoadListeners
+     * @private
+     */
+    protected _callLoadListeners(): void;
+
+    /**
+     * @method _onError
+     * @private
+     */
+    protected _onError(): void;
+
+    /**
+     * @method _setDirty
+     * @private
+     */
+    protected _setDirty(): void;
+}
 
 /**
  * The static class that carries out graphics processing.
@@ -1724,5 +2105,5 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      * @param {Sprite} b
      * @private
      */
-    protected _compareChildOrder(a: Sprite, b: Sprite): number;// *スプライトが唐突にZを持つ場合があるぞ
+    protected _compareChildOrder(a: Sprite, b: Sprite): number;
 }
