@@ -123,7 +123,7 @@ declare namespace RPG {
          */
         events: Array<Event>;
 
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     namespace Map {
         /**
@@ -199,7 +199,7 @@ declare namespace RPG {
          */
         note: string;
 
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     /**
      * The data class for the event page.
@@ -521,7 +521,7 @@ declare namespace RPG {
          * The array of Trait data.
          */
         traits: Array<Trait>;
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     /**
      * The data class for class.
@@ -577,7 +577,7 @@ declare namespace RPG {
          * The array of Trait data.
          */
         traits: Array<Trait>;
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     /**
      * A superclass of actor, class, skill, item, weapon, armor, enemy, and state.
@@ -609,7 +609,7 @@ declare namespace RPG {
          * The text of the note.
          */
         note: string;
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     /**
      * The Superclass of Skill and Item.
@@ -862,7 +862,7 @@ declare namespace RPG {
          * The text of the note.
          */
         note: string;
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     /**
      * The data class for state.
@@ -989,7 +989,7 @@ declare namespace RPG {
         traits: Array<Trait>;
         releaseByDamage?: boolean;
         description?: string;
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     export interface Trait {
         /**
@@ -1429,7 +1429,7 @@ declare namespace RPG {
          * The text of the note.
          */
         note: string;
-        meta: {[key: string]: string | boolean};
+        meta: {[key: string]: any};
     }
     /**
      * The data class for common events.
