@@ -1039,7 +1039,6 @@ interface GraphicsStatic {
 }
 declare var Graphics: GraphicsStatic;
 
-
 interface Html5AudioStatic {
     _initialized: boolean;
     _unlocked: boolean;
@@ -1281,8 +1280,8 @@ interface Html5AudioStatic {
      * @private
      */
     _applyTweenValue(volume: number): void;
-
 }
+declare var Html5Audio: Html5AudioStatic;
 
 /**
  * This is not a class, but contains some methods that will be added to the
