@@ -1039,6 +1039,251 @@ interface GraphicsStatic {
 }
 declare var Graphics: GraphicsStatic;
 
+
+interface Html5AudioStatic {
+    _initialized: boolean;
+    _unlocked: boolean;
+    _audioElement: HTMLAudioElement;
+    _gainTweenInterval: number;
+    _tweenGain: number;
+    _tweenTargetGain: number;
+    _tweenGainStep: number;
+    _staticSePath: boolean;
+    _volume: number;
+    _loadListeners: Array<() => void>;
+    _hasError: boolean;
+    _autoPlay: boolean;
+    _isLoading: boolean;
+    _buffered: boolean;
+
+    /**
+     * [read-only] The url of the audio file.
+     *
+     * @property url
+     * @type String
+     */
+    url: string;
+
+    /**
+     * The volume of the audio.
+     *
+     * @property volume
+     * @type Number
+     */
+    volume: number;
+
+    /**
+     * Sets up the Html5 Audio.
+     *
+     * @static
+     * @method setup
+     * @param {String} url The url of the audio file
+     */
+    setup(url: string): void;
+
+    /**
+     * Initializes the audio system.
+     *
+     * @static
+     * @method initialize
+     * @return {Boolean} True if the audio system is available
+     */
+    initialize(): void;
+
+    /**
+     * Clears the audio data.
+     *
+     * @static
+     * @method clear
+     */
+    clear(): void;
+
+    /**
+     * Set the URL of static se.
+     *
+     * @static
+     * @param {String} url
+     */
+    setStaticSe(url: string): void;
+
+    /**
+     * Checks whether the audio data is ready to play.
+     *
+     * @static
+     * @method isReady
+     * @return {Boolean} True if the audio data is ready to play
+     */
+    isReady(): boolean;
+
+    /**
+     * Checks whether a loading error has occurred.
+     *
+     * @static
+     * @method isError
+     * @return {Boolean} True if a loading error has occurred
+     */
+    isError(): boolean;
+
+    /**
+     * Checks whether the audio is playing.
+     *
+     * @static
+     * @method isPlaying
+     * @return {Boolean} True if the audio is playing
+     */
+    isPlaying(): boolean;
+
+    /**
+     * Plays the audio.
+     *
+     * @static
+     * @method play
+     * @param {Boolean} loop Whether the audio data play in a loop
+     * @param {Number} offset The start position to play in seconds
+     */
+    play(loop: boolean, offset: number): void;
+
+    /**
+     * Stops the audio.
+     *
+     * @static
+     * @method stop
+     */
+    stop(): void;
+
+    /**
+     * Performs the audio fade-in.
+     *
+     * @static
+     * @method fadeIn
+     * @param {Number} duration Fade-in time in seconds
+     */
+    fadeIn(duration: number): void;
+
+    /**
+     * Performs the audio fade-out.
+     *
+     * @static
+     * @method fadeOut
+     * @param {Number} duration Fade-out time in seconds
+     */
+    fadeOut(duration: number): void;
+
+    /**
+     * Gets the seek position of the audio.
+     *
+     * @static
+     * @method seek
+     */
+    seek(): void;
+
+    /**
+     * Add a callback function that will be called when the audio data is loaded.
+     *
+     * @static
+     * @method addLoadListener
+     * @param {Function} listner The callback function
+     */
+    addLoadListener(listner: () => void): void;
+
+    /**
+     * @static
+     * @method _setupEventHandlers
+     * @private
+     */
+    _setupEventHandlers(): void;
+
+    /**
+     * @static
+     * @method _onTouchStart
+     * @private
+     */
+    _onTouchStart(): void;
+
+    /**
+     * @static
+     * @method _onVisibilityChange
+     * @private
+     */
+    _onVisibilityChange(): void;
+
+    /**
+     * @static
+     * @method _onLoadedData
+     * @private
+     */
+    _onLoadedData(): void;
+
+    /**
+     * @static
+     * @method _onError
+     * @private
+     */
+    _onError(): void;
+
+    /**
+     * @static
+     * @method _onEnded
+     * @private
+     */
+    _onEnded(): void;
+
+    /**
+     * @static
+     * @method _onHide
+     * @private
+     */
+    _onHide(): void;
+
+    /**
+     * @static
+     * @method _onShow
+     * @private
+     */
+    _onShow(): void;
+
+    /**
+     * @static
+     * @method _load
+     * @param {String} url
+     * @private
+     */
+    _load(url: string): void;
+
+    /**
+     * @static
+     * @method _startPlaying
+     * @param {Boolean} loop
+     * @param {Number} offset
+     * @private
+     */
+    _startPlaying(loop: boolean, offset: number): void;
+
+    /**
+     * @static
+     * @method _onLoad
+     * @private
+     */
+    _onLoad(): void;
+
+    /**
+     * @static
+     * @method _startGainTween
+     * @params {Number} duration
+     * @private
+     */
+    _startGainTweenfunction(duration: number): void;
+
+    /**
+     * @static
+     * @method _applyTweenValue
+     * @param {Number} volume
+     * @private
+     */
+    _applyTweenValue(volume: number): void;
+
+}
+
 /**
  * This is not a class, but contains some methods that will be added to the
  * standard Javascript objects.
@@ -2106,4 +2351,381 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      * @private
      */
     protected _compareChildOrder(a: Sprite, b: Sprite): number;
+}
+
+declare class WebAudio {
+    static _context: AudioContext;
+    static _masterGainNode: GainNode;
+    static _initialized: boolean;
+    static _unlocked: boolean;
+
+    /**
+     * Initializes the audio system.
+     *
+     * @static
+     * @method initialize
+     * @param {Boolean} noAudio Flag for the no-audio mode
+     * @return {Boolean} True if the audio system is available
+     */
+    static initialize(noAudio?: boolean): boolean;
+
+    /**
+     * Checks whether the browser can play ogg files.
+     *
+     * @static
+     * @method canPlayOgg
+     * @return {Boolean} True if the browser can play ogg files
+     */
+    static canPlayOgg(): boolean;
+
+    /**
+     * Checks whether the browser can play m4a files.
+     *
+     * @static
+     * @method canPlayM4a
+     * @return {Boolean} True if the browser can play m4a files
+     */
+    static canPlayM4a(): boolean;
+
+    /**
+     * @static
+     * @method _createContext
+     * @private
+     */
+    static _createContext(): void;
+
+    /**
+     * @static
+     * @method _detectCodecs
+     * @private
+     */
+    static _detectCodecs(): void;
+
+    /**
+     * @static
+     * @method _createMasterGainNode
+     * @private
+     */
+    static _createMasterGainNode(): void;
+
+    /**
+     * @static
+     * @method _setupEventHandlers
+     * @private
+     */
+    static _setupEventHandlers(): void;
+
+    /**
+     * @static
+     * @method _onTouchStart
+     * @private
+     */
+    static _onTouchStart(): void;
+
+    /**
+     * @static
+     * @method _onVisibilityChange
+     * @private
+     */
+    static _onVisibilityChange(): void;
+
+    /**
+     * @static
+     * @method _onHide
+     * @private
+     */
+    static _onHide(): void;
+
+    /**
+     * @static
+     * @method _onShow
+     * @private
+     */
+    static _onShow(): void;
+
+    /**
+     * @static
+     * @method _shouldMuteOnHide
+     * @private
+     */
+    static _shouldMuteOnHide(): void;
+
+    /**
+     * @static
+     * @method _fadeIn
+     * @param {Number} duration
+     * @private
+     */
+    static _fadeIn(duration: number): void;
+
+    /**
+     * @static
+     * @method _fadeOut
+     * @param {Number} duration
+     * @private
+     */
+    static _fadeOut(duration: number): void;
+
+    protected _buffer: AudioNode;
+    protected _sourceNode: AudioBufferSourceNode;
+    protected _gainNode: GainNode;
+    protected _pannerNode: PannerNode;
+    protected _totalTime: number;
+    protected _sampleRate: number;
+    protected _loopStart: number;
+    protected _loopLength: number;
+    protected _startTime: number;
+    protected _volume: number;
+    protected _pitch: number;
+    protected _pan: number;
+    protected _endTimer: number;
+    protected _loadListeners: Array<() => void>;
+    protected _stopListeners: Array<() => void>;
+    protected _hasError: boolean;
+    protected _autoPlay: boolean;
+
+    /**
+     * [read-only] The url of the audio file.
+     *
+     * @property url
+     * @type String
+     */
+    url: string;
+
+    /**
+     * The volume of the audio.
+     *
+     * @property volume
+     * @type Number
+     */
+    volume: number;
+
+    /**
+     * The pitch of the audio.
+     *
+     * @property pitch
+     * @type Number
+     */
+    pitch: number;
+
+    /**
+     * The pan of the audio.
+     *
+     * @property pan
+     * @type Number
+     */
+    pan: number;
+
+    /**
+     * The audio object of Web Audio API.
+     *
+     * @class WebAudio
+     * @constructor
+     * @param {String} url The url of the audio file
+     */
+    constructor(url: string);
+
+    /**
+     * Clears the audio data.
+     *
+     * @method clear
+     */
+    clear(): void;
+
+    /**
+     * Checks whether the audio data is ready to play.
+     *
+     * @method isReady
+     * @return {Boolean} True if the audio data is ready to play
+     */
+    isReady(): boolean;
+
+    /**
+     * Checks whether a loading error has occurred.
+     *
+     * @method isError
+     * @return {Boolean} True if a loading error has occurred
+     */
+    isError(): boolean;
+
+    /**
+     * Checks whether the audio is playing.
+     *
+     * @method isPlaying
+     * @return {Boolean} True if the audio is playing
+     */
+    isPlaying(): boolean;
+
+    /**
+     * Plays the audio.
+     *
+     * @method play
+     * @param {Boolean} loop Whether the audio data play in a loop
+     * @param {Number} offset The start position to play in seconds
+     */
+    play(loop: boolean, offset: number): void;
+
+    /**
+     * Stops the audio.
+     *
+     * @method stop
+     */
+    stop(): void;
+
+    /**
+     * Performs the audio fade-in.
+     *
+     * @method fadeIn
+     * @param {Number} duration Fade-in time in seconds
+     */
+    fadeIn(duration: number): void;
+
+    /**
+     * Performs the audio fade-out.
+     *
+     * @method fadeOut
+     * @param {Number} duration Fade-out time in seconds
+     */
+    fadeOut(duration: number): void;
+
+    /**
+     * Gets the seek position of the audio.
+     *
+     * @method seek
+     */
+    seek(): void;
+
+    /**
+     * Add a callback function that will be called when the audio data is loaded.
+     *
+     * @method addLoadListener
+     * @param {Function} listner The callback function
+     */
+    addLoadListener(listner: () => void): void;
+
+    /**
+     * Add a callback function that will be called when the playback is stopped.
+     *
+     * @method addStopListener
+     * @param {Function} listner The callback function
+     */
+    addStopListener(listner: () => void): void;
+
+    /**
+     * @method _load
+     * @param {String} url
+     * @private
+     */
+    protected _load(url: string): void;
+
+    /**
+     * @method _onXhrLoad
+     * @param {XMLHttpRequest} xhr
+     * @private
+     */
+    protected _onXhrLoad(xhr: XMLHttpRequest): void;
+
+    /**
+     * @method _startPlaying
+     * @param {Boolean} loop
+     * @param {Number} offset
+     * @private
+     */
+    protected _startPlaying(loop: boolean, offset: number): void;
+
+    /**
+     * @method _createNodes
+     * @private
+     */
+    protected _createNodes(): void;
+
+    /**
+     * @method _connectNodes
+     * @private
+     */
+    protected _connectNodes(): void;
+
+    /**
+     * @method _removeNodes
+     * @private
+     */
+    protected _removeNodes(): void;
+
+    /**
+     * @method _createEndTimer
+     * @private
+     */
+    protected _createEndTimer(): void;
+
+    /**
+     * @method _removeEndTimer
+     * @private
+     */
+    protected _removeEndTimer(): void;
+
+    /**
+     * @method _updatePanner
+     * @private
+     */
+    protected _updatePanner(): void;
+
+    /**
+     * @method _onLoad
+     * @private
+     */
+    protected _onLoad(): void;
+
+    /**
+     * @method _readLoopComments
+     * @param {Uint8Array} array
+     * @private
+     */
+    protected _readLoopComments(array: Uint8Array): void;
+
+    /**
+     * @method _readOgg
+     * @param {Uint8Array} array
+     * @private
+     */
+    protected _readOgg(array: Uint8Array): void;
+
+    /**
+     * @method _readMp4
+     * @param {Uint8Array} array
+     * @private
+     */
+    protected _readMp4(array: Uint8Array): void;
+
+    /**
+     * @method _readMetaData
+     * @param {Uint8Array} array
+     * @param {Number} index
+     * @param {Number} size
+     * @private
+     */
+    protected _readMetaData(array: Uint8Array, index: number, size: number): void;
+
+    /**
+     * @method _readLittleEndian
+     * @param {Uint8Array} array
+     * @param {Number} index
+     * @private
+     */
+    protected _readLittleEndian(array: Uint8Array, index: number): void;
+
+    /**
+     * @method _readBigEndian
+     * @param {Uint8Array} array
+     * @param {Number} index
+     * @private
+     */
+    protected _readBigEndian(array: Uint8Array, index: number): void;
+
+    /**
+     * @method _readFourCharacters
+     * @param {Uint8Array} array
+     * @param {Number} index
+     * @private
+     */
+    protected _readFourCharacters(array: Uint8Array, index: number): void;
 }
