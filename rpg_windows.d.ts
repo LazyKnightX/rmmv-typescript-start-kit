@@ -364,6 +364,8 @@ declare class Window_MenuStatus extends Window_Selectable {
  * The window for selecting a target actor on the item and skill screens.
  */
 declare class Window_MenuActor extends Window_MenuStatus {
+    constructor();
+
     selectForItem(item: RPG.BaseItem): void;
 }
 
@@ -375,6 +377,8 @@ declare class Window_MenuActor extends Window_MenuStatus {
  */
 declare class Window_ItemCategory extends Window_HorzCommand {
     protected _itemWindow: Window_ItemList;
+
+    constructor();
 
     setItemWindow(itemWindow: Window_ItemList): void;
 }
@@ -545,6 +549,8 @@ declare class Window_EquipItem extends Window_ItemList {
 declare class Window_Status extends Window_Selectable {
     protected _actor: Game_Actor;
 
+    constructor();
+
     setActor(actor: Game_Actor): void;
     drawBlock1(y: number): void;
     drawBlock2(y: number): void;
@@ -567,6 +573,8 @@ declare class Window_Status extends Window_Selectable {
  * The window for changing various settings on the options screen.
  */
 declare class Window_Options extends Window_Command {
+    constructor();
+
     updatePlacement(): void;
     addGeneralOptions(): void;
     addVolumeOptions(): void;
@@ -886,6 +894,8 @@ declare class Window_Message extends Window_Base {
     protected _numberWindow: Window_NumberInput;
     protected _itemWindow: Window_EventItem;
 
+    constructor();
+
     initMembers(): void;
     subWindows(): Array<Window_Base>;
     createSubWindows(): void;
@@ -934,6 +944,8 @@ declare class Window_ScrollText extends Window_Base {
     protected _text: string;
     protected _allTextHeight: number;
 
+    constructor();
+
     startMessage(): void;
     refresh(): void;
     updateMessage(): void;
@@ -951,6 +963,8 @@ declare class Window_ScrollText extends Window_Base {
  */
 declare class Window_MapName extends Window_Base {
     protected _showCount: number;
+
+    constructor();
 
     windowWidth(): number;
     windowHeight(): number;
@@ -978,6 +992,8 @@ declare class Window_BattleLog extends Window_Selectable {
     protected _waitMode: string;
     protected _baseLineStack: Array<number>;
     protected _spriteset: Spriteset_Battle;
+
+    constructor();
 
     setSpriteset(spriteset: Spriteset_Battle): void;
     windowWidth(): number;
@@ -1065,6 +1081,8 @@ declare class Window_BattleLog extends Window_Selectable {
  * The window for selecting whether to fight or escape on the battle screen.
  */
 declare class Window_PartyCommand extends Window_Command {
+    constructor();
+
     setup(): void;
 }
 
@@ -1076,6 +1094,8 @@ declare class Window_PartyCommand extends Window_Command {
  */
 declare class Window_ActorCommand extends Window_Command {
     protected _actor: Game_Actor;
+
+    constructor();
 
     addAttackCommand(): void;
     addSkillCommands(): void;
@@ -1092,6 +1112,8 @@ declare class Window_ActorCommand extends Window_Command {
  * The window for displaying the status of party members on the battle screen.
  */
 declare class Window_BattleStatus extends Window_Selectable {
+    constructor();
+
     windowWidth(): number;
     windowHeight(): number;
     numVisibleRows(): number;
@@ -1167,6 +1189,8 @@ declare class Window_BattleItem extends Window_ItemList {
 declare class Window_TitleCommand extends Window_Command {
     protected static _lastCommandSymbol: string;
 
+    constructor();
+
     updatePlacement(): void;
     isContinueEnabled(): boolean;
     initCommandPosition(): void;
@@ -1180,6 +1204,8 @@ declare class Window_TitleCommand extends Window_Command {
  * The window for selecting "Go to Title" on the game end screen.
  */
 declare class Window_GameEnd extends Window_Command {
+    constructor();
+
     updatePlacement(): void;
 }
 
