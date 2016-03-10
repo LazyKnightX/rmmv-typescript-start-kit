@@ -41,3 +41,9 @@ rpg maker mv d.ts
 * Sound
 * Storage
 * Text
+
+## Additional Interfaces
+* TouchInputEvents
+* BaseItem
+* UsableItem
+* EquipItem
