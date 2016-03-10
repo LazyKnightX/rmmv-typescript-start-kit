@@ -1039,6 +1039,12 @@ interface GraphicsStatic {
 }
 declare var Graphics: GraphicsStatic;
 
+/**
+ * The static class that handles HTML5 Audio.
+ *
+ * @class Html5Audio
+ * @constructor
+ */
 interface Html5AudioStatic {
     _initialized: boolean;
     _unlocked: boolean;
@@ -1284,6 +1290,254 @@ interface Html5AudioStatic {
 declare var Html5Audio: Html5AudioStatic;
 
 /**
+ * The static class that handles input data from the keyboard and gamepads.
+ *
+ * @class Input
+ */
+interface InputStatic {
+    _currentState: {[key: string]: boolean};
+    _previousState: {[key: string]: boolean};
+    _gamepadStates: Array<Array<boolean>>;
+    _latestButton: string;
+    _pressedTime: number;
+    _dir4: number;
+    _dir8: number;
+    _preferredAxis: string;
+    _date: number;
+
+    /**
+     * The wait time of the key repeat in frames.
+     *
+     * @static
+     * @property keyRepeatWait
+     * @type Number
+     */
+    keyRepeatWait: number;
+
+    /**
+     * The interval of the key repeat in frames.
+     *
+     * @static
+     * @property keyRepeatInterval
+     * @type Number
+     */
+    keyRepeatInterval: number;
+
+    /**
+     * A hash table to convert from a virtual key code to a mapped key name.
+     *
+     * @static
+     * @property keyMapper
+     * @type Object
+     */
+    keyMapper: {[key: number]: string};
+
+    /**
+     * A hash table to convert from a gamepad button to a mapped key name.
+     *
+     * @static
+     * @property gamepadMapper
+     * @type Object
+     */
+    gamepadMapper: {[key: number]: string};
+
+    /**
+     * [read-only] The four direction value as a number of the numpad, or 0 for neutral.
+     *
+     * @static
+     * @property dir4
+     * @type Number
+     */
+    dir4: number;
+
+    /**
+     * [read-only] The eight direction value as a number of the numpad, or 0 for neutral.
+     *
+     * @static
+     * @property dir8
+     * @type Number
+     */
+    dir8: number;
+
+    /**
+     * [read-only] The time of the last input in milliseconds.
+     *
+     * @static
+     * @property date
+     * @type Number
+     */
+    date: number;
+
+    /**
+     * Initializes the input system.
+     *
+     * @static
+     * @method initialize
+     */
+    initialize(): void;
+
+    /**
+     * Clears all the input data.
+     *
+     * @static
+     * @method clear
+     */
+    clear(): void;
+
+    /**
+     * Updates the input data.
+     *
+     * @static
+     * @method update
+     */
+    update(): void;
+
+    /**
+     * Checks whether a key is currently pressed down.
+     *
+     * @static
+     * @method isPressed
+     * @param {String} keyName The mapped name of the key
+     * @return {Boolean} True if the key is pressed
+     */
+    isPressed(keyName: string): boolean;
+
+    /**
+     * Checks whether a key is just pressed.
+     *
+     * @static
+     * @method isTriggered
+     * @param {String} keyName The mapped name of the key
+     * @return {Boolean} True if the key is triggered
+     */
+    isTriggered(keyName: string): boolean;
+
+    /**
+     * Checks whether a key is just pressed or a key repeat occurred.
+     *
+     * @static
+     * @method isRepeated
+     * @param {String} keyName The mapped name of the key
+     * @return {Boolean} True if the key is repeated
+     */
+    isRepeated(keyName: string): boolean;
+
+    /**
+     * Checks whether a key is kept depressed.
+     *
+     * @static
+     * @method isLongPressed
+     * @param {String} keyName The mapped name of the key
+     * @return {Boolean} True if the key is long-pressed
+     */
+    isLongPressed(keyName: string): boolean;
+
+    /**
+     * @static
+     * @method _wrapNwjsAlert
+     * @private
+     */
+    _wrapNwjsAlert(): void;
+
+    /**
+     * @static
+     * @method _setupEventHandlers
+     * @private
+     */
+    _setupEventHandlers(): void;
+
+    /**
+     * @static
+     * @method _onKeyDown
+     * @param {KeyboardEvent} event
+     * @private
+     */
+    _onKeyDown(event: KeyboardEvent): void;
+
+    /**
+     * @static
+     * @method _shouldPreventDefault
+     * @param {Number} keyCode
+     * @return {Boolean}
+     * @private
+     */
+    _shouldPreventDefault(keyCode: number): boolean;
+
+    /**
+     * @static
+     * @method _onKeyUp
+     * @param {KeyboardEvent} event
+     * @private
+     */
+    _onKeyUp(event: KeyboardEvent): void;
+
+    /**
+     * @static
+     * @method _onLostFocus
+     * @private
+     */
+    _onLostFocus(): void;
+
+    /**
+     * @static
+     * @method _pollGamepads
+     * @private
+     */
+    _pollGamepads(): void;
+
+    /**
+     * @static
+     * @method _updateGamepadState
+     * @param {Gamepad} gamepad
+     * @private
+     */
+    _updateGamepadState(gamepad: Gamepad): void;
+
+    /**
+     * @static
+     * @method _updateDirection
+     * @private
+     */
+    _updateDirection(): void;
+
+    /**
+     * @static
+     * @method _signX
+     * @return {Number}
+     * @private
+     */
+    _signX(): number;
+
+    /**
+     * @static
+     * @method _signY
+     * @return {Number}
+     * @private
+     */
+    _signY(): number;
+
+    /**
+     * @static
+     * @method _makeNumpadDirection
+     * @param {Number} x
+     * @param {Number} y
+     * @return {Number}
+     * @private
+     */
+    _makeNumpadDirection(x: number, y: number): number;
+
+    /**
+     * @static
+     * @method _isEscapeCompatible
+     * @param {String} keyName
+     * @return {Boolean}
+     * @private
+     */
+    _isEscapeCompatible(keyName: string): boolean;
+}
+declare var Input: InputStatic;
+
+/**
  * This is not a class, but contains some methods that will be added to the
  * standard Javascript objects.
  *
@@ -1471,6 +1725,11 @@ declare class Rectangle extends PIXI.Rectangle {
     height: number;
 }
 
+/**
+ * The static class that handles JSON with object information.
+ *
+ * @class JsonEx
+ */
 interface JsonExStatic {
     /**
      * The maximum depth of objects.
@@ -2351,6 +2610,418 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      */
     protected _compareChildOrder(a: Sprite, b: Sprite): number;
 }
+
+interface TouchInputEvents {
+    trigger: boolean;
+    cancelled: boolean;
+    moved: boolean;
+    released: boolean;
+    wheelX: number;
+    wheelY: number;
+}
+
+interface TouchInputStatic {
+    _mousePressed: boolean;
+    _screenPressed: boolean;
+    _pressedTime: number;
+    _events: TouchInputEvents;
+    _triggered: boolean;
+    _cancelled: boolean;
+    _moved: boolean;
+    _released: boolean;
+    _wheelX: number;
+    _wheelY: number;
+    _x: number;
+    _y: number;
+    _date: number;
+
+    /**
+     * The wait time of the pseudo key repeat in frames.
+     *
+     * @static
+     * @property keyRepeatWait
+     * @type Number
+     */
+    keyRepeatWait: number;
+
+    /**
+     * The interval of the pseudo key repeat in frames.
+     *
+     * @static
+     * @property keyRepeatInterval
+     * @type Number
+     */
+    keyRepeatInterval: number;
+
+    /**
+     * [read-only] The horizontal scroll amount.
+     *
+     * @static
+     * @property wheelX
+     * @type Number
+     */
+    wheelX: number;
+
+    /**
+     * [read-only] The vertical scroll amount.
+     *
+     * @static
+     * @property wheelY
+     * @type Number
+     */
+    wheelY: number;
+
+    /**
+     * [read-only] The x coordinate on the canvas area of the latest touch event.
+     *
+     * @static
+     * @property x
+     * @type Number
+     */
+    x: number;
+
+    /**
+     * [read-only] The y coordinate on the canvas area of the latest touch event.
+     *
+     * @static
+     * @property y
+     * @type Number
+     */
+    y: number;
+
+    /**
+     * [read-only] The time of the last input in milliseconds.
+     *
+     * @static
+     * @property date
+     * @type Number
+     */
+    date: number;
+
+    /**
+     * Initializes the touch system.
+     *
+     * @static
+     * @method initialize
+     */
+    initialize(): void;
+
+    /**
+     * Clears all the touch data.
+     *
+     * @static
+     * @method clear
+     */
+    clear(): void;
+
+    /**
+     * Updates the touch data.
+     *
+     * @static
+     * @method update
+     */
+    update(): void;
+
+    /**
+     * Checks whether the mouse button or touchscreen is currently pressed down.
+     *
+     * @static
+     * @method isPressed
+     * @return {Boolean} True if the mouse button or touchscreen is pressed
+     */
+    isPressed(): boolean;
+
+    /**
+     * Checks whether the left mouse button or touchscreen is just pressed.
+     *
+     * @static
+     * @method isTriggered
+     * @return {Boolean} True if the mouse button or touchscreen is triggered
+     */
+    isTriggered(): boolean;
+
+    /**
+     * Checks whether the left mouse button or touchscreen is just pressed
+     * or a pseudo key repeat occurred.
+     *
+     * @static
+     * @method isRepeated
+     * @return {Boolean} True if the mouse button or touchscreen is repeated
+     */
+    isRepeated(): boolean;
+
+    /**
+     * Checks whether the left mouse button or touchscreen is kept depressed.
+     *
+     * @static
+     * @method isLongPressed
+     * @return {Boolean} True if the left mouse button or touchscreen is long-pressed
+     */
+    isLongPressed(): boolean;
+
+    /**
+     * Checks whether the right mouse button is just pressed.
+     *
+     * @static
+     * @method isCancelled
+     * @return {Boolean} True if the right mouse button is just pressed
+     */
+    isCancelled(): boolean;
+
+    /**
+     * Checks whether the mouse or a finger on the touchscreen is moved.
+     *
+     * @static
+     * @method isMoved
+     * @return {Boolean} True if the mouse or a finger on the touchscreen is moved
+     */
+    isMoved(): boolean;
+
+    /**
+     * Checks whether the left mouse button or touchscreen is released.
+     *
+     * @static
+     * @method isReleased
+     * @return {Boolean} True if the mouse button or touchscreen is released
+     */
+    isReleased(): boolean;
+
+    /**
+     * @static
+     * @method _setupEventHandlers
+     * @private
+     */
+    _setupEventHandlers(): void;
+
+    /**
+     * @static
+     * @method _onMouseDown
+     * @param {MouseEvent} event
+     * @private
+     */
+    _onMouseDown(event: MouseEvent): void;
+
+    /**
+     * @static
+     * @method _onLeftButtonDown
+     * @param {MouseEvent} event
+     * @private
+     */
+    _onLeftButtonDown(event: MouseEvent): void;
+
+    /**
+     * @static
+     * @method _onMiddleButtonDown
+     * @param {MouseEvent} event
+     * @private
+     */
+    _onMiddleButtonDown(event: MouseEvent): void;
+
+    /**
+     * @static
+     * @method _onRightButtonDown
+     * @param {MouseEvent} event
+     * @private
+     */
+    _onRightButtonDown(event: MouseEvent): void;
+
+    /**
+     * @static
+     * @method _onMouseMove
+     * @param {MouseEvent} event
+     * @private
+     */
+    _onMouseMove(event: MouseEvent): void;
+
+    /**
+     * @static
+     * @method _onMouseUp
+     * @param {MouseEvent} event
+     * @private
+     */
+    _onMouseUp (event: MouseEvent): void;
+
+    /**
+     * @static
+     * @method _onWheel
+     * @param {WheelEvent} event
+     * @private
+     */
+    _onWheel(event: WheelEvent): void;
+
+    /**
+     * @static
+     * @method _onTouchStart
+     * @param {TouchEvent} event
+     * @private
+     */
+    _onTouchStart(event: TouchEvent): void;
+
+    /**
+     * @static
+     * @method _onTouchMove
+     * @param {TouchEvent} event
+     * @private
+     */
+    _onTouchMove(event: TouchEvent): void;
+
+    /**
+     * @static
+     * @method _onTouchEnd
+     * @param {TouchEvent} event
+     * @private
+     */
+    _onTouchEnd(event: TouchEvent): void;
+
+    /**
+     * @static
+     * @method _onTouchCancel
+     * @param {TouchEvent} event
+     * @private
+     */
+    _onTouchCancel(event: TouchEvent): void;
+
+    /**
+     * @static
+     * @method _onPointerDown
+     * @param {PointerEvent} event
+     * @private
+     */
+    _onPointerDown(event: PointerEvent): void;
+
+    /**
+     * @static
+     * @method _onTrigger
+     * @param {Number} x
+     * @param {Number} y
+     * @private
+     */
+    _onTrigger(x: number, y: number): void;
+
+    /**
+     * @static
+     * @method _onCancel
+     * @param {Number} x
+     * @param {Number} y
+     * @private
+     */
+    _onCancel(x: number, y: number): void;
+
+    /**
+     * @static
+     * @method _onMove
+     * @param {Number} x
+     * @param {Number} y
+     * @private
+     */
+    _onMove(x: number, y: number): void;
+
+    /**
+     * @static
+     * @method _onRelease
+     * @param {Number} x
+     * @param {Number} y
+     * @private
+     */
+    _onRelease(x: number, y: number): void;
+}
+declare var TouchInput: TouchInputStatic;
+
+/**
+ * The static class that defines utility methods.
+ *
+ * @class Utils
+ */
+interface UtilsStatic {
+    /**
+     * The name of the RPG Maker. 'MV' in the current version.
+     *
+     * @static
+     * @property RPGMAKER_NAME
+     * @type String
+     * @final
+     */
+    RPGMAKER_NAME: string;
+
+    /**
+     * The version of the RPG Maker.
+     *
+     * @static
+     * @property RPGMAKER_VERSION
+     * @type String
+     * @final
+     */
+    RPGMAKER_VERSION: string;
+
+    /**
+     * Checks whether the option is in the query string.
+     *
+     * @static
+     * @method isOptionValid
+     * @param {String} name The option name
+     * @return {Boolean} True if the option is in the query string
+     */
+    isOptionValid(name: string): boolean;
+
+    /**
+     * Checks whether the platform is NW.js.
+     *
+     * @static
+     * @method isNwjs
+     * @return {Boolean} True if the platform is NW.js
+     */
+    isNwjs(): boolean;
+
+    /**
+     * Checks whether the platform is a mobile device.
+     *
+     * @static
+     * @method isMobileDevice
+     * @return {Boolean} True if the platform is a mobile device
+     */
+    isMobileDevice(): boolean;
+
+    /**
+     * Checks whether the browser is Mobile Safari.
+     *
+     * @static
+     * @method isMobileSafari
+     * @return {Boolean} True if the browser is Mobile Safari
+     */
+    isMobileSafari(): boolean;
+
+    /**
+     * Checks whether the browser is Android Chrome.
+     *
+     * @static
+     * @method isAndroidChrome
+     * @return {Boolean} True if the browser is Android Chrome
+     */
+    isAndroidChrome(): boolean;
+
+    /**
+     * Checks whether the browser can read files in the game folder.
+     *
+     * @static
+     * @method canReadGameFiles
+     * @return {Boolean} True if the browser can read files in the game folder
+     */
+    canReadGameFiles(): boolean;
+
+    /**
+     * Makes a CSS color string from RGB values.
+     *
+     * @static
+     * @method rgbToCssColor
+     * @param {Number} r The red value in the range (0, 255)
+     * @param {Number} g The green value in the range (0, 255)
+     * @param {Number} b The blue value in the range (0, 255)
+     * @return {String} CSS color string
+     */
+    rgbToCssColor(r: number, g: number, b: number): string;
+}
+declare var Utils: UtilsStatic;
+
 
 declare class WebAudio {
     static _context: AudioContext;
