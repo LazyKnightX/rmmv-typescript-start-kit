@@ -4,12 +4,9 @@ rpg maker mv d.ts
 ## Core
 
 ### ToDo
-* Input
 * TilingSprite
 * ToneFilter
 * ToneSprite
-* TouchInput
-* Utils
 * Weather
 * Window
 * WindowLayer
@@ -18,6 +15,7 @@ rpg maker mv d.ts
 * Bitmap
 * Graphics
 * Html5Audio
+* Input
 * JsExtensions
 * JsonEx
 * Point
@@ -26,11 +24,13 @@ rpg maker mv d.ts
 * Sprite
 * Stage
 * Tilemap
+* TouchInput
+* Utils
 * WebAudio
 
 ## Managers
 
-### Todo
+### ToDo
 * Audio
 * Battle
 * Config
