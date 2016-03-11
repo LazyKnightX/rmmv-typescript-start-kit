@@ -888,6 +888,9 @@ declare class Window_Message extends Window_Base {
     protected _waitCount: number;
     protected _faceBitmap: Bitmap;
     protected _textState: TextState;
+    protected _pauseSkip: boolean;
+    protected _showFast: boolean;
+    protected _lineShowFast: boolean;
 
     protected _goldWindow: Window_Gold;
     protected _choiceWindow: Window_ChoiceList;
