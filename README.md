@@ -19,6 +19,8 @@ rpg maker mv d.ts
 * Text
 
 ## Additional Interfaces
+* ToneFilterUniforms
+* ToneFilterUniformsMatrix
 * TouchInputEvents
 * BaseItem
 * UsableItem
