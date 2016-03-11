@@ -2,23 +2,26 @@
 rpg maker mv d.ts
 
 ## Core
-* Window
+* Window -> _Window
 
 ## Managers
 
 ### ToDo
-* Audio
 * Battle
 * Config
 * Data
 * Image
 * Plugin
 * Scene
-* Sound
 * Storage
+
+### Done
+* Audio
+* Sound
 * Text
 
 ## Additional Interfaces
+* AudioParameters
 * ToneFilterUniforms
 * ToneFilterUniformsMatrix
 * TouchInputEvents
