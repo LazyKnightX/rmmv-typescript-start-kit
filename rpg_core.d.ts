@@ -272,7 +272,7 @@ declare class Bitmap {
      * @param {Boolean} vertical Whether it draws a vertical gradient
      */
     gradientFillRect(x: number, y: number, width: number, height: number,
-                     color1: string, color2: string, vertical: boolean): void;
+                     color1: string, color2: string, vertical?: boolean): void;
 
     /**
      * Draw the filled circle.
