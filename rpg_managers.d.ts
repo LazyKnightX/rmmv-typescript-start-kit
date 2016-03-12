@@ -1,3 +1,5 @@
+
+
 interface AudioParameters {
     name: string;
     volume: number;
@@ -76,6 +78,142 @@ interface AudioManagerStatic {
 }
 declare var AudioManager: AudioManagerStatic;
 
+declare var $dataActors: Array<RPG.Actor>;
+declare var $dataClasses: Array<RPG.Class>;
+declare var $dataSkills: Array<RPG.Skill>;
+declare var $dataItems: Array<RPG.Item>;
+declare var $dataWeapons: Array<RPG.Weapon>;
+declare var $dataArmors: Array<RPG.Armor>;
+declare var $dataEnemies: Array<RPG.Enemy>;
+declare var $dataTroops: Array<RPG.Troop>;
+declare var $dataStates: Array<RPG.State>;
+declare var $dataAnimations: Array<RPG.Animation>;
+declare var $dataTilesets: Array<RPG.Tileset>;
+declare var $dataCommonEvents: Array<RPG.CommonEvent>;
+declare var $dataSystem: RPG.System;
+declare var $dataMapInfos: Array<RPG.MapInfo>;
+declare var $dataMap: RPG.Map;
+declare var $gameTemp: Game_Temp;
+declare var $gameSystem: Game_System;
+declare var $gameScreen: Game_Screen;
+declare var $gameTimer: Game_Timer;
+declare var $gameMessage: Game_Message;
+declare var $gameSwitches: Game_Switches;
+declare var $gamevariables: Game_Variables;
+declare var $gameSelfSwitches: Game_SelfSwitches;
+declare var $gameActors: Game_Actors;
+declare var $gameParty: Game_Party;
+declare var $gameTroop: Game_Troop;
+declare var $gameMap: Game_Map;
+declare var $gamePlayer: Game_Player;
+declare var $testEvent: Array<RPG.EventCommand>;
+
+interface DatabaseFile {
+    name: string;
+    src: string;
+}
+
+interface SaveFileInfo {
+    globalId: string;
+    title: string;
+    characters: Array<Array<any>>;// ?
+    faces: Array<Array<any>>;// ?
+    playtime: string;
+    timestamp: number;
+}
+
+interface SaveContents {
+    system: Game_System;
+    screen: Game_Screen;
+    timer: Game_Timer;
+    switches: Game_Switches;
+    variables: Game_Variables;
+    selfSwitches: Game_SelfSwitches;
+    actors: Game_Actors;
+    party: Game_Party;
+    map: Game_Map;
+    player: Game_Party;
+}
+
+/**
+ * DataManager
+ *
+ * The static class that manages the database and game objects.
+ */
+
+interface DataManagerStatic {
+    _globalId: string;
+    _lastAccessedId: number;
+    _errorUrl: string;
+    _databaseFiles: Array<DatabaseFile>;
+
+    maxSavefiles: number;
+
+    loadDatabase(): void;
+    loadDataFile(name: string, src: string): void;
+    isDatabaseLoaded(): boolean;
+    loadMapData(mapId: number): void;
+    makeEmptyMap(): void;
+    isMapLoaded(): boolean;
+    onLoad(object: RPG.Map): void;
+    extractMetadata(data: any): void;//noteとmetaをもつDBオブジェクト
+    checkError(): void;
+    isBattleTest(): boolean;
+    isEventTest(): boolean;
+    isSkill(): boolean;
+    isItem(): boolean;
+    isWeapon(): boolean;
+    isArmor(): boolean;
+    createGameObjects(): void;
+    setupNewGame(): void;
+    setupBattleTest(): void;
+    setupEventTest(): void;
+    loadGlobalInfo(): Array<any>;
+    saveGlobalInfo(info: Array<any>): void;
+    isThisGameFile(savefileId: number): boolean;
+    isAnySavefileExists(): boolean;
+    latestSavefileId(): number;
+    loadAllSavefileImages(): void;
+    loadSavefileImages(info: SaveFileInfo): void;
+    saveGame(savefileId: number): boolean;
+    loadGame(savefileId: number): boolean;
+    loadSavefileInfo(savefileId: number): any;
+    lastAccessedSavefileId(): number;
+    saveGameWithoutRescue(savefileId: number): boolean;
+    loadGameWithoutRescue(savefileId: number): boolean;
+    selectSavefileForNewGame(): void;
+    makeSavefileInfo(): void;
+    makeSaveContents(): SaveContents;
+    extractSaveContents(contents: SaveContents);
+}
+declare var DataManager: DataManagerStatic;
+
+interface PluginSettings {
+    name: string;
+    status: string;
+    description: string;
+    parameters: {[key: string]: string};
+}
+/**
+ * PluginManager
+ *
+ * The static class that manages the plugins.
+ */
+interface PluginManagerStatic {
+    _path: string;
+    _scripts: Array<string>;
+    _errorUrls: Array<string>;
+    _parameters: {[key: string]: {[key: string]: string}};
+
+    setup(plugins: Array<PluginSettings>): void;
+    checkErrors(): void;
+    parameters(name: string): any;
+    setParameters(name: string, parameters: {[key: string]: string}): void;
+    loadScript(name: string): void;
+    onError(e: Event): void;
+}
+declare var PluginManager: PluginManagerStatic;
+
 /**
  * SoundManager
  *
@@ -112,6 +250,40 @@ interface SoundManagerStatic {
     playUseSkill: void;
 }
 declare var SoundManager: SoundManagerStatic;
+
+/**
+ * StorageManager
+ *
+ * The static class that manages storage for saving game data.
+ */
+interface StorageManagerStatic {
+    save(savefileId: number, json: string): void;
+    load(savefileId: number): string;
+    exists(savefileId: number): boolean;
+    remove(savefileId: number): void;
+    backup(savefileId: number): void;
+    backupExists(savefileId: number): boolean;
+    cleanBackup(savefileId: number): boolean;
+    restoreBackup(savefileId: number): void;
+    isLocalMode(): boolean;
+    saveToLocalFile(savefileId: number, json: string): void;
+    loadFromLocalFile(savefileId: number): string;
+    loadFromLocalBackupFile(savefileId: number): string;
+    localFileBackupExists(savefileId: number): boolean;
+    localFileExists(savefileId: number): boolean;
+    removeLocalFile(savefileId: number): void;
+    saveToWebStorage(savefileId: number, json: string): void;
+    loadFromWebStorage(savefileId: number): string;
+    loadFromWebStorageBackup(savefileId: number): string;
+    webStorageBackupExists(savefileId: number): boolean;
+    webStorageExists(savefileId: number): boolean;
+    removeWebStorage(savefileId: number): void;
+    localFileDirectoryPath(): string;
+    localFilePath(savefileId: number): string;
+    webStorageKey(savefileId: number): string;
+}
+declare var StorageManager: StorageManagerStatic;
+
 
 /**
  * TextManager
