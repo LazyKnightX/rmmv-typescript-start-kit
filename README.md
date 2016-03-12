@@ -9,19 +9,23 @@ rpg maker mv d.ts
 ### ToDo
 * Battle
 * Config
-* Data
 * Image
-* Plugin
 * Scene
-* Storage
 
 ### Done
 * Audio
+* Data
+* Plugin
 * Sound
+* Storage
 * Text
 
 ## Additional Interfaces
 * AudioParameters
+* DatabaseFile
+* PluginSettings
+* SaveContents
+* SaveFileInfo
 * ToneFilterUniforms
 * ToneFilterUniformsMatrix
 * TouchInputEvents
