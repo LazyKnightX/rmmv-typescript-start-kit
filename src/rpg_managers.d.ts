@@ -1,12 +1,6 @@
 
 
-interface AudioParameters {
-    name: string;
-    volume: number;
-    pitch: number;
-    pan: number;
-    pos: number;
-}
+
 
 /**
  * AudioManager
@@ -18,8 +12,8 @@ interface AudioManagerStatic {
     _bgsVolume: number;
     _meVolume: number;
     _seVolume: number;
-    _currentBgm: AudioParameters;
-    _currentBgs: AudioParameters;
+    _currentBgm: MV.AudioParameters;
+    _currentBgs: MV.AudioParameters;
     _bgmBuffer: Html5AudioStatic | WebAudio;
     _bgsBuffer: Html5AudioStatic | WebAudio;
     _meBuffer: Html5AudioStatic | WebAudio;
@@ -33,43 +27,43 @@ interface AudioManagerStatic {
     meVolume: number;
     seVolume: number;
 
-    playBgm(bgm: AudioParameters, pos?: number): void;
-    replayBgm(bgm: AudioParameters): void;
-    isCurrentBgm(bgm: AudioParameters): boolean;
-    updateBgmParameters(bgm: AudioParameters): void;
-    updateCurrentBgm(bgm: AudioParameters, pos: number): void;
+    playBgm(bgm: MV.AudioParameters, pos?: number): void;
+    replayBgm(bgm: MV.AudioParameters): void;
+    isCurrentBgm(bgm: MV.AudioParameters): boolean;
+    updateBgmParameters(bgm: MV.AudioParameters): void;
+    updateCurrentBgm(bgm: MV.AudioParameters, pos: number): void;
     stopBgm(): void;
     fadeOutBgm(duration: number): void;
     fadeInBgm(duration: number): void;
 
-    playBgs(bgs: AudioParameters, pos?: number): void;
-    replayBgs(bgs: AudioParameters): void;
-    isCurrentBgs(bgs: AudioParameters): boolean;
-    updateBgsParameters(bgs: AudioParameters): void;
-    updateCurrentBgs(bgs: AudioParameters, pos: number): void;
+    playBgs(bgs: MV.AudioParameters, pos?: number): void;
+    replayBgs(bgs: MV.AudioParameters): void;
+    isCurrentBgs(bgs: MV.AudioParameters): boolean;
+    updateBgsParameters(bgs: MV.AudioParameters): void;
+    updateCurrentBgs(bgs: MV.AudioParameters, pos: number): void;
     stopBgs(): void;
     fadeOutBgs(duration: number): void;
     fadeInBgs(duration: number): void;
-    playMe(me: AudioParameters): void;
-    updateMeParameters(me: AudioParameters): void;
+    playMe(me: MV.AudioParameters): void;
+    updateMeParameters(me: MV.AudioParameters): void;
     fadeOutMe(duration: number): void;
     stopMe(): void;
-    playMe(me: AudioParameters): void;
-    updateMeParameters(me: AudioParameters): void;
+    playMe(me: MV.AudioParameters): void;
+    updateMeParameters(me: MV.AudioParameters): void;
     fadeOutMe(duration: number): void;
     stopMe(): void;
-    playSe(se: AudioParameters): void;
-    updateSeParameters(buffer: AudioParameters, se: AudioParameters): void;
+    playSe(se: MV.AudioParameters): void;
+    updateSeParameters(buffer: MV.AudioParameters, se: MV.AudioParameters): void;
     stopSe(): void;
-    playStaticSe(se: AudioParameters): void;
-    loadStaticSe(se: AudioParameters): void;
-    isStaticSe(se: AudioParameters): boolean;
+    playStaticSe(se: MV.AudioParameters): void;
+    loadStaticSe(se: MV.AudioParameters): void;
+    isStaticSe(se: MV.AudioParameters): boolean;
     stopAll(): void;
-    saveBgm(): AudioParameters;
-    saveBgs(): AudioParameters;
-    makeEmptyAudioObject(): AudioParameters;
+    saveBgm(): MV.AudioParameters;
+    saveBgs(): MV.AudioParameters;
+    makeEmptyAudioObject(): MV.AudioParameters;
     createBuffer(): Html5AudioStatic | WebAudio;
-    updateBufferParameters(buffer: AudioParameters, configVolume: number, audio: AudioParameters): void;
+    updateBufferParameters(buffer: MV.AudioParameters, configVolume: number, audio: MV.AudioParameters): void;
     audioFileExt(): string;
     shouldUseHtml5Audio(): boolean;
     checkErrors(): void;
@@ -77,12 +71,6 @@ interface AudioManagerStatic {
     checkWebAudioError(webAudio: Html5AudioStatic | WebAudio): void;
 }
 declare var AudioManager: AudioManagerStatic;
-
-interface BattleRewards {
-    gold: number;
-    exp: number;
-    items: Array<RPG.BaseItem>;
-}
 
 /**
  * BattleManager
@@ -99,8 +87,8 @@ interface BattleManagerStatic {
     _surprise: boolean;
     _actorIndex: number;
     _actionForcedBattler: Game_Battler;
-    _mapBgm: AudioParameters;
-    _mapBgs: AudioParameters;
+    _mapBgm: MV.AudioParameters;
+    _mapBgs: MV.AudioParameters;
     _actionBattlers: Array<Game_Battler>;
     _subject: Game_Battler;
     _action: Game_Action;
@@ -110,7 +98,7 @@ interface BattleManagerStatic {
     _spriteset: Spriteset_Battle;
     _escapeRatio: number;
     _escaped: boolean;
-    _rewards: BattleRewards;
+    _rewards: MV.BattleRewards;
 
     setup(troopId: number, canEscape: boolean, canLose: boolean): void;
     initMembers(): void;
@@ -253,8 +241,8 @@ interface DatabaseFile {
 interface SaveFileInfo {
     globalId: string;
     title: string;
-    characters: Array<Array<any>>;// ?
-    faces: Array<Array<any>>;// ?
+    characters: Array<Array<any>>;
+    faces: Array<Array<any>>;
     playtime: string;
     timestamp: number;
 }
@@ -292,7 +280,7 @@ interface DataManagerStatic {
     makeEmptyMap(): void;
     isMapLoaded(): boolean;
     onLoad(object: RPG.Map): void;
-    extractMetadata(data: any): void;//noteとmetaをもつDBオブジェクト
+    extractMetadata(data: any): void;// noteとmetaをもつDBオブジェクト
     checkError(): void;
     isBattleTest(): boolean;
     isEventTest(): boolean;

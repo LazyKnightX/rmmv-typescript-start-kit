@@ -386,7 +386,7 @@ declare class Window_ItemList extends Window_Selectable {
 
     setCategory(category: string): void;
     item(): RPG.BaseItem;
-    includes(item: RPG.BaseItem): any;
+    includes(item: RPG.BaseItem): boolean;
     needsNumber(): boolean;
     isEnabled(item: RPG.BaseItem): boolean;
     selectLast(): void;
@@ -716,15 +716,13 @@ declare class Window_ShopStatus extends Window_Base {
     drawActorEquipInfo(x: number, y: number, actor: Game_Actor): void;
     drawActorParamChange(x: number, y: number, actor: Game_Actor, item1: RPG.EquipItem): void;
     paramId(): number;
-    currentEquippedItem(actor: Game_Actor, etypeId: any): void;
+    currentEquippedItem(actor: Game_Actor, etypeId: number): RPG.EquipItem;
     updatePage(): void;
     isPageChangeEnabled(): boolean;
     isPageChangeRequested(): boolean;
     isTouchedInsideFrame(): boolean;
     changePage(): void;
 }
-
-
 
 /**
  * -----------------------------------------------------------------------------

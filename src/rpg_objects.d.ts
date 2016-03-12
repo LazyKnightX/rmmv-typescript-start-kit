@@ -299,8 +299,10 @@ declare class Game_Screen {
     updateWeather(): void;
     updatePictures(): void;
     startFlashForDamage(): void;
-    showPicture(pictureId: number, name: string, origin: number, x: number, y: number, scaleX: number, scaleY: number, opacity: number, blendMode: number): void;
-    movePicture(pictureId: number, origin: number, x: number, y: number, scaleX: number, scaleY: number, opacity: number, blendMode: number, duration: number): void;
+    showPicture(pictureId: number, name: string, origin: number, x: number, y: number,
+                scaleX: number, scaleY: number, opacity: number, blendMode: number): void;
+    movePicture(pictureId: number, origin: number, x: number, y: number,
+                scaleX: number, scaleY: number, opacity: number, blendMode: number, duration: number): void;
     rotatePicture(pictureId: number, speed: number): void;
     tintPicture(pictureId: number, tone: Array<number>, duration: number): void;
     erasePicture(pictureId: number): void;

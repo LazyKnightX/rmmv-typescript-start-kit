@@ -368,7 +368,7 @@ declare class Scene_GameEnd extends Scene_MenuBase {
 declare class Scene_Shop extends Scene_MenuBase {
     protected _goods: Array<Array<any>>;
     protected _purchaseOnly: boolean;
-    protected _item: any;
+    protected _item: RPG.BaseItem;
 
     protected _goldWindow: Window_Gold;
     protected _commandWindow: Window_ShopCommand;

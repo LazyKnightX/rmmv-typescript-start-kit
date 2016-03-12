@@ -1,7 +1,30 @@
 declare namespace MV {
-    export interface Hoge {
-        Hogeeeee: string;
-        Hoeeeeee: number;
+    interface Uniforms {
+        matrix: Matrix;
+    }
+    interface Matrix {
+        type: string;
+        value: Array<number>;
+    }
+    interface TouchInputEvents {
+        trigger: boolean;
+        cancelled: boolean;
+        moved: boolean;
+        released: boolean;
+        wheelX: number;
+        wheelY: number;
+    }
+    interface AudioParameters {
+        name: string;
+        volume: number;
+        pitch: number;
+        pan: number;
+        pos: number;
+    }
+    interface BattleRewards {
+        gold: number;
+        exp: number;
+        items: Array<RPG.BaseItem>;
     }
     export interface BattlerAnimation {
         animationId: number;

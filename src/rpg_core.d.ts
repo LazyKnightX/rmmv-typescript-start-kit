@@ -2725,18 +2725,11 @@ declare class TilingSprite extends PIXI.TilingSprite {
     protected _refresh(): void;
 }
 
-interface ToneFilterUniforms {
-    matrix: ToneFilterUniformsMatrix;
-}
 
-interface ToneFilterUniformsMatrix {
-    type: string;
-    value: Array<number>;
-}
 
 declare class ToneFilter extends PIXI.AbstractFilter {
     passes: Array<boolean>;
-    uniforms: ToneFilterUniforms;
+    uniforms: MV.Uniforms;
     fragmentSrc: Array<string>;
 
     /**
@@ -2835,20 +2828,13 @@ declare class ToneSprite extends PIXI.DisplayObject {
     protected _renderWebGL(renderSession: PIXI.WebGLRenderer): void;
 }
 
-interface TouchInputEvents {
-    trigger: boolean;
-    cancelled: boolean;
-    moved: boolean;
-    released: boolean;
-    wheelX: number;
-    wheelY: number;
-}
+
 
 interface TouchInputStatic {
     _mousePressed: boolean;
     _screenPressed: boolean;
     _pressedTime: number;
-    _events: TouchInputEvents;
+    _events: MV.TouchInputEvents;
     _triggered: boolean;
     _cancelled: boolean;
     _moved: boolean;

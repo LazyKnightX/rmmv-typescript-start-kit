@@ -61,7 +61,7 @@ declare class Sprite_Character extends Sprite_Base {
     initMembers(): void;
     setCharacter(character: Game_Character): void;
     isTile(): boolean;
-    tilesetBitmap(tileId: any): Bitmap;
+    tilesetBitmap(tileId: number): Bitmap;
     updateBitmap(): void;
     isImageChanged(): boolean;
     setTileBitmap(): void;
@@ -269,7 +269,7 @@ declare class Sprite_Animation extends Sprite {
     protected _duplicated: boolean;
 
     initMembers(): void;
-    setup(target: Sprite_Battler, animation: any, mirror: boolean, delay: number): void;
+    setup(target: Sprite_Battler, animation: RPG.Animation, mirror: boolean, delay: number): void;
     remove(): void;
     setupRate(): void;
     setupDuration(): void;
@@ -313,7 +313,7 @@ declare class Sprite_Damage extends Sprite {
     digitWidth(): number;
     digitHeight(): number;
     createMiss(): void;
-    createDigits(baseRow: number, value: any): void;
+    createDigits(baseRow: number, value: number): void;
     createChildSprite(): Sprite;
     updateChild(sprite: Sprite): void;
     updateFlash(): void;
