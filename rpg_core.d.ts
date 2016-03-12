@@ -199,7 +199,7 @@ declare class Bitmap {
      * @param {Number} [dh=sh] The height to draw the image in the destination
      */
     blt(source: Bitmap, sx: number, sy: number, sw: number, sh: number,
-                        dx: number, dy: number, dw: number, dh: number): void;
+                        dx: number, dy: number, dw?: number, dh?: number): void;
 
     /**
      * Returns pixel color at the specified point.
@@ -3751,7 +3751,7 @@ declare class _Window extends PIXI.DisplayObjectContainer {
      * @property origin
      * @type Point
      */
-    torigin: Point;
+    origin: Point;
 
     /**
      * The active state for the window.
@@ -3918,7 +3918,7 @@ declare class _Window extends PIXI.DisplayObjectContainer {
      *
      * @method update
      */
-    update(): number;
+    update(): void;
 
     /**
      * Sets the x, y, width, and height all at once.
