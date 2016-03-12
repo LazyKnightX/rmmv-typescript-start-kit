@@ -130,10 +130,7 @@ declare class Sprite_Battler extends Sprite_Base {
     inHomePosition(): boolean;
 }
 
-interface Motion {
-    index: number;
-    loop: boolean;
-}
+
 /**
  * -----------------------------------------------------------------------------
  * Sprite_Actor
@@ -142,28 +139,28 @@ interface Motion {
  */
 declare class Sprite_Actor extends Sprite_Battler {
     static MOTIONS: {
-        walk: Motion,
-        wait: Motion,
-        chant: Motion,
-        guard: Motion,
-        damage: Motion,
-        evade: Motion,
-        thrust: Motion,
-        swing: Motion,
-        missile: Motion,
-        skill: Motion,
-        spell: Motion,
-        item: Motion,
-        escape: Motion,
-        victory: Motion,
-        dying: Motion,
-        abnormal: Motion,
-        sleep: Motion,
-        dead: Motion,
+        walk: MV.Motion,
+        wait: MV.Motion,
+        chant: MV.Motion,
+        guard: MV.Motion,
+        damage: MV.Motion,
+        evade: MV.Motion,
+        thrust: MV.Motion,
+        swing: MV.Motion,
+        missile: MV.Motion,
+        skill: MV.Motion,
+        spell: MV.Motion,
+        item: MV.Motion,
+        escape: MV.Motion,
+        victory: MV.Motion,
+        dying: MV.Motion,
+        abnormal: MV.Motion,
+        sleep: MV.Motion,
+        dead: MV.Motion,
     };
 
     protected _battlerName: string;
-    protected _motion: Motion;
+    protected _motion: MV.Motion;
     protected _motionCount: number;
     protected _pattern: number;
     protected _mainSprite: Sprite_Base;

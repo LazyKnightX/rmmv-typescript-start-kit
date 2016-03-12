@@ -1,10 +1,4 @@
 
-interface TextState {
-    index: number;
-    x: number;
-    y: number;
-    left: number;
-}
 /**
  * -----------------------------------------------------------------------------
  * Window_Base
@@ -79,17 +73,17 @@ declare class Window_Base extends _Window {
     convertEscapeCharacters(text: string): string;
     actorName(n: number): string;
     partyMemberName(n: number): string;
-    processCharacter(textState: TextState): void;
-    processNormalCharacter(textState: TextState): void;
-    processNewLine(textState: TextState): void;
-    processNewPage(textState: TextState): void;
-    obtainEscapeCode(textState: TextState): string;
-    obtainEscapeParam(textState: TextState): number;
-    processEscapeCharacter(code: string, textState: TextState): void;
-    processDrawIcon(iconIndex: number, textState: TextState): void;
+    processCharacter(textState: MV.TextState): void;
+    processNormalCharacter(textState: MV.TextState): void;
+    processNewLine(textState: MV.TextState): void;
+    processNewPage(textState: MV.TextState): void;
+    obtainEscapeCode(textState: MV.TextState): string;
+    obtainEscapeParam(textState: MV.TextState): number;
+    processEscapeCharacter(code: string, textState: MV.TextState): void;
+    processDrawIcon(iconIndex: number, textState: MV.TextState): void;
     makeFontBigger(): void;
     makeFontSmaller(): void;
-    calcTextHeight(textState: TextState, all: boolean): number;
+    calcTextHeight(textState: MV.TextState, all: boolean): number;
     drawIcon(iconIndex: number, x: number, y: number): void;
     drawFace(faceName: string, faceIndex: number, x: number, y: number, width?: number, height?: number): void;
     drawCharacter(characterName: string, characterIndex: number, x: number, y: number): void;
@@ -223,12 +217,7 @@ declare class Window_Selectable extends Window_Base {
     refresh(): void;
 }
 
-interface CommandItem {
-    name: string;
-    symbol: string;
-    enabled: boolean;
-    ext: any;
-}
+
 /**
  * -----------------------------------------------------------------------------
  * Window_Command
@@ -236,7 +225,7 @@ interface CommandItem {
  * The superclass of windows for selecting a command.
  */
 declare class Window_Command extends Window_Selectable {
-    protected _list: Array<CommandItem>;
+    protected _list: Array<MV.CommandItem>;
 
     constructor(x: number, y: number);
 
@@ -249,7 +238,7 @@ declare class Window_Command extends Window_Selectable {
     commandName(index: number): string;
     commandSymbol(index: number): string;
     isCommandEnabled(index: number): boolean;
-    currentData(): CommandItem;
+    currentData(): MV.CommandItem;
     currentSymbol(): string;
     currentExt(): any;
     findSymbol(symbol: string): number;
@@ -735,12 +724,7 @@ declare class Window_ShopStatus extends Window_Base {
     changePage(): void;
 }
 
-interface ItemRect {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-}
+
 
 /**
  * -----------------------------------------------------------------------------
@@ -763,8 +747,8 @@ declare class Window_NameEdit extends Window_Base {
     faceWidth(): number;
     charWidth(): number;
     left(): number;
-    itemRect(index: number): ItemRect;
-    underlineRect(index: number): ItemRect;
+    itemRect(index: number): MV.ItemRect;
+    underlineRect(index: number): MV.ItemRect;
     underlineColor(): string;
     drawUnderline(index: number): void;
     drawChar(index: number): void;
@@ -796,7 +780,7 @@ declare class Window_NameInput extends Window_Selectable {
     character(): string;
     isPageChange(): boolean;
     isOk(): boolean;
-    itemRect(index: number): ItemRect;
+    itemRect(index: number): MV.ItemRect;
     processJump(): void;
     processBack(): void;
     onNameAdd(): void;
@@ -887,7 +871,7 @@ declare class Window_Message extends Window_Base {
     protected _positionType: number;
     protected _waitCount: number;
     protected _faceBitmap: Bitmap;
-    protected _textState: TextState;
+    protected _textState: MV.TextState;
     protected _pauseSkip: boolean;
     protected _showFast: boolean;
     protected _lineShowFast: boolean;
@@ -923,15 +907,15 @@ declare class Window_Message extends Window_Base {
     doesContinue(): boolean;
     areSettingsChanged(): boolean;
     updateShowFast(): void;
-    newPage(textState: TextState): void;
+    newPage(textState: MV.TextState): void;
     loadMessageFace(): void;
     drawMessageFace(): void;
     newLineX(): number;
-    processNewLine(textState: TextState): void;
-    processNewPage(textState: TextState): void;
-    isEndOfText(textState: TextState): boolean;
-    needsNewPage(textState: TextState): boolean;
-    processEscapeCharacter(code: string, textState: TextState): void;
+    processNewLine(textState: MV.TextState): void;
+    processNewPage(textState: MV.TextState): void;
+    isEndOfText(textState: MV.TextState): boolean;
+    needsNewPage(textState: MV.TextState): boolean;
+    processEscapeCharacter(code: string, textState: MV.TextState): void;
     startWait(count: number): void;
     startPause(): void;
 }
@@ -977,10 +961,7 @@ declare class Window_MapName extends Window_Base {
     drawBackground(x: number, y: number, width: number, height: number): void;
 }
 
-interface BattleLogMethod {
-    name: string;
-    params: any;
-}
+
 /**
  * -----------------------------------------------------------------------------
  * Window_BattleLog
@@ -990,7 +971,7 @@ interface BattleLogMethod {
  */
 declare class Window_BattleLog extends Window_Selectable {
     protected _lines: Array<string>;
-    protected _methods: Array<BattleLogMethod>;
+    protected _methods: Array<MV.BattleLogMethod>;
     protected _waitCount: number;
     protected _waitMode: string;
     protected _baseLineStack: Array<number>;
@@ -1043,7 +1024,7 @@ declare class Window_BattleLog extends Window_Selectable {
     animationBaseDelay(): number;
     animationNextDelay(): number;
     drawBackground(): void;
-    backRect(): ItemRect;
+    backRect(): MV.ItemRect;
     backColor(): string;
     backPaintOpacity(): number;
     drawLineText(index: number): void;

@@ -795,11 +795,7 @@ declare class Game_BattlerBase {
     canGuard(): boolean;
 }
 
-interface BattlerAnimation {
-    animationId: number;
-    mirror: boolean;
-    delay: number;
-}
+
 
 /**
  * -----------------------------------------------------------------------------
@@ -814,7 +810,7 @@ declare class Game_Battler extends Game_BattlerBase {
     protected _result: Game_ActionResult;
     protected _actionState: string;
     protected _lastTargetIndex: number;
-    protected _animations: Array<BattlerAnimation>;
+    protected _animations: Array<MV.BattlerAnimation>;
     protected _damagePopup: boolean;
     protected _effectType: string;
     protected _motionType: string;
@@ -842,7 +838,7 @@ declare class Game_Battler extends Game_BattlerBase {
     effectType(): string;
     motionType(): string;
     weaponImageId(): number;
-    shiftAnimation(): BattlerAnimation;
+    shiftAnimation(): MV.BattlerAnimation;
     startAnimation(animationId: number, mirror: boolean, delay: number): void;
     startDamagePopup(): void;
     startWeaponAnimation(weaponImageId: number): void;
