@@ -212,7 +212,6 @@ declare class Scene_ItemBase extends Scene_MenuBase {
  */
 declare class Scene_Item extends Scene_ItemBase {
     protected _categoryWindow: Window_ItemCategory;
-    protected _helpWindow: Window_SkillType;
 
     createCategoryWindow(): void;
     createItemWindow(): void;
@@ -230,7 +229,6 @@ declare class Scene_Item extends Scene_ItemBase {
  */
 declare class Scene_Skill extends Scene_ItemBase {
     protected _skillTypeWindow: Window_SkillType;
-    protected _helpWindow: Window_SkillType;
 
     createSkillTypeWindow(): void;
     createStatusWindow(): void;
@@ -253,7 +251,6 @@ declare class Scene_Equip extends Scene_MenuBase {
     protected _commandWindow: Window_EquipCommand;
     protected _slotWindow: Window_EquipSlot;
     protected _itemWindow: Window_EquipItem;
-    protected _helpWindow: Window_SkillType;
 
     createStatusWindow(): void;
     createCommandWindow(): void;
@@ -303,7 +300,6 @@ declare class Scene_Options extends Scene_MenuBase {
  */
 declare class Scene_File extends Scene_MenuBase {
     protected _listWindow: Window_SavefileList;
-    protected _helpWindow: Window_SkillType;
 
     savefileId(): void;
     createHelpWindow(): void;
