@@ -78,6 +78,143 @@ interface AudioManagerStatic {
 }
 declare var AudioManager: AudioManagerStatic;
 
+interface BattleRewards {
+    gold: number;
+    exp: number;
+    items: Array<RPG.BaseItem>;
+}
+
+/**
+ * BattleManager
+ *
+ * The static class that manages battle progress.
+ */
+interface BattleManagerStatic {
+    _phase: string;
+    _canEscape: boolean;
+    _canLose: boolean;
+    _battleTest: boolean;
+    _eventCallback: () => void;
+    _preemptive: boolean;
+    _surprise: boolean;
+    _actorIndex: number;
+    _actionForcedBattler: Game_Battler;
+    _mapBgm: AudioParameters;
+    _mapBgs: AudioParameters;
+    _actionBattlers: Array<Game_Battler>;
+    _subject: Game_Battler;
+    _action: Game_Action;
+    _targets: Array<Game_Battler>;
+    _logWindow: Window_BattleLog;
+    _statusWindow: Window_BattleStatus;
+    _spriteset: Spriteset_Battle;
+    _escapeRatio: number;
+    _escaped: boolean;
+    _rewards: BattleRewards;
+
+    setup(troopId: number, canEscape: boolean, canLose: boolean): void;
+    initMembers(): void;
+    isBattleTest(): boolean;
+    setBattleTest(battleTest: boolean): void;
+    setEventCallback(callback: () => void): void;
+    setLogWindow(logWindow: Window_BattleLog): void;
+    setStatusWindow(statusWindow: Window_BattleStatus): void;
+    setSpriteset(spriteset: Spriteset_Battle): void;
+    onEncounter(): void;
+    ratePreemptive(): number;
+    rateSurprise(): number;
+    saveBgmAndBgs(): void;
+    playBattleBgm(): void;
+    playVictoryMe(): void;
+    playDefeatMe(): void;
+    replayBgmAndBgs(): void;
+    makeEscapeRatio(): void;
+    update(): void;
+    updateEvent(): boolean;
+    updateEventMain(): boolean;
+    isBusy(): boolean;
+    isInputting(): boolean;
+    isInTurn(): boolean;
+    isTurnEnd(): boolean;
+    isAborting(): boolean;
+    isBattleEnd(): boolean;
+    canEscape(): boolean;
+    canLose(): boolean;
+    isEscaped(): boolean;
+    actor(): Game_Actor;
+    clearActor(): void;
+    changeActor(newActorIndex: number, lastActorActionState: string): void;
+    startBattle(): void;
+    displayStartMessages(): void;
+    startInput(): void;
+    inputtingAction(): Game_Action;
+    selectNextCommand(): void;
+    selectPreviousCommand(): void;
+    refreshStatus(): void;
+    startTurn(): void;
+    updateTurn(): void;
+    processTurn(): void;
+    endTurn(): void;
+    updateTurnEnd(): void;
+    getNextSubject(): Game_Battler;
+    allBattleMembers(): Array<Game_Battler>;
+    makeActionOrders(): void;
+    startAction(): void;
+    updateAction(): void;
+    endAction(): void;
+    invokeAction(): void;
+    invokeNormalAction(): void;
+    invokeCounterAttack(): void;
+    invokeMagicReflection(): void;
+    applySubstitute(target: Game_Battler): Game_Battler;
+    checkSubstitute(target: Game_Battler): boolean;
+    isActionForced(): boolean;
+    forceAction(battler: Game_Battler): void;
+    processForcedAction(): void;
+    abort(): void;
+    checkBattleEnd(): boolean;
+    checkAbort(): boolean;
+    processVictory(): void;
+    processEscape(): boolean;
+    processAbort(): void;
+    processDefeat(): void;
+    endBattle(result: number): void;
+    updateBattleEnd(): void;
+    makeRewards(): void;
+    displayVictoryMessage(): void;
+    displayDefeatMessage(): void;
+    displayEscapeSuccessMessage(): void;
+    displayEscapeFailureMessage(): void;
+    displayRewards(): void;
+    displayExp(): void;
+    displayGold(): void;
+    displayDropItems(): void;
+    gainRewards(): void;
+    gainExp(): void;
+    gainGold(): void;
+    gainDropItems(): void;
+}
+declare var BattleManager: BattleManagerStatic;
+
+interface ConfigData {
+    alwaysDash: boolean;
+    commandRemember: boolean;
+    bgmVolume: number;
+    bgsVolume: number;
+    meVolume: number;
+    seVolume: number;
+}
+
+interface ConfigManagerStatic extends ConfigData {
+    load(): void;
+    save(): void;
+    makeData(): ConfigData;
+    applyData(config: ConfigData): void;
+    readFlag(config: ConfigData, name: string): boolean;
+    readVolume(config: ConfigData, name: string): number;
+}
+declare var ConfigManager: ConfigManagerStatic;
+
 declare var $dataActors: Array<RPG.Actor>;
 declare var $dataClasses: Array<RPG.Class>;
 declare var $dataSkills: Array<RPG.Skill>;
@@ -140,7 +277,6 @@ interface SaveContents {
  *
  * The static class that manages the database and game objects.
  */
-
 interface DataManagerStatic {
     _globalId: string;
     _lastAccessedId: number;
@@ -188,12 +324,45 @@ interface DataManagerStatic {
 }
 declare var DataManager: DataManagerStatic;
 
+/**
+ * ImageManager
+ *
+ * The static class that loads images, creates bitmap objects and retains them.
+ */
+interface ImageManagerStatic {
+    _cache: {[key: string]: Bitmap};
+
+    loadAnimation(filename: string, hue: number): Bitmap;
+    loadBattleback1(filename: string, hue: number): Bitmap;
+    loadBattleback2(filename: string, hue: number): Bitmap;
+    loadEnemy(filename: string, hue: number): Bitmap;
+    loadCharacter(filename: string, hue: number): Bitmap;
+    loadFace(filename: string, hue: number): Bitmap;
+    loadParallax(filename: string, hue: number): Bitmap;
+    loadPicture(filename: string, hue: number): Bitmap;
+    loadSvActor(filename: string, hue: number): Bitmap;
+    loadSvEnemy(filename: string, hue: number): Bitmap;
+    loadSystem(filename: string, hue: number): Bitmap;
+    loadTileset(filename: string, hue: number): Bitmap;
+    loadTitle1(filename: string, hue: number): Bitmap;
+    loadTitle2(filename: string, hue: number): Bitmap;
+    loadBitmap(folder: string, filename: string, hue: number, smooth: boolean): Bitmap;
+    loadEmptyBitmap(path: string, hue: number): Bitmap;
+    clear(): void;
+    isReady(): boolean;
+    isObjectCharacter(filename: string): boolean;
+    isBigCharacter(filename: string): boolean;
+    isZeroParallax(filename: string): boolean;
+}
+declare var ImageManager: ImageManagerStatic;
+
 interface PluginSettings {
     name: string;
     status: string;
     description: string;
     parameters: {[key: string]: string};
 }
+
 /**
  * PluginManager
  *
@@ -215,11 +384,79 @@ interface PluginManagerStatic {
 declare var PluginManager: PluginManagerStatic;
 
 /**
+ * SceneManager
+ *
+ * The static class that manages scene transitions.
+ */
+interface SceneManagerStatic {
+    _scene: Scene_Base;
+    _nextScene: Scene_Base;
+    _stack: Array<() => void>;
+    _stopped: boolean;
+    _sceneStarted: boolean;
+    _exiting: boolean;
+    _previousClass: () => void;
+    _backgroundBitmap: Bitmap;
+    _screenWidth: number;
+    _screenHeight: number;
+    _boxWidth: number;
+    _boxHeight: number;
+    _deltaTime: number;
+    _currentTime: number;
+    _accumulator: number;
+
+    run(sceneClass: () => void): void;
+    initialize(): void;
+    initGraphics(): void;
+    preferableRendererType(): string;
+    shouldUseCanvasRenderer(): boolean;
+    checkWebGL(): void;
+    checkFileAccess(): void;
+    initAudio(): void;
+    initInput(): void;
+    initNwjs(): void;
+    checkPluginErrors(): void;
+    setupErrorHandlers(): void;
+    requestUpdate(): void;
+    update(): void;
+    terminate(): void;
+    onError(e: Event): void;
+    onKeyDown(event: KeyboardEvent): void;
+    catchException(e: Event): void;
+    tickStart(): void;
+    tickEnd(): void;
+    updateInputData(): void;
+    updateMain(): void;
+    changeScene(): void;
+    updateScene(): void;
+    renderScene(): void;
+    onSceneCreate(): void;
+    onSceneStart(): void;
+    onSceneLoading(): void;
+    isSceneChanging(): boolean;
+    isCurrentSceneBusy(): boolean;
+    isCurrentSceneStarted(): boolean;
+    isNextScene(sceneClass: () => void): boolean;
+    isPreviousScene(sceneClass: () => void): boolean;
+    goto(sceneClass: () => void): void;
+    push(sceneClass: () => void): void;
+    pop(): void;
+    exit(): void;
+    clearStack(): void;
+    stop(): void;
+    prepareNextScene(): void;
+    snap(): Bitmap;
+    snapForBackground(): void;
+    backgroundBitmap(): Bitmap;
+}
+declare var SceneManager: SceneManagerStatic;
+
+
+/**
  * SoundManager
  *
  * The static class that plays sound effects defined in the database.
  */
-
 interface SoundManagerStatic {
     preloadImportantSounds(): void;
     loadSystemSound(n: number): void;
@@ -283,7 +520,6 @@ interface StorageManagerStatic {
     webStorageKey(savefileId: number): string;
 }
 declare var StorageManager: StorageManagerStatic;
-
 
 /**
  * TextManager
