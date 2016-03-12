@@ -11,7 +11,7 @@ interface TextState {
  *
  * The superclass of all windows within the game.
  */
-declare class Window_Base extends Window {
+declare class Window_Base extends _Window {
     protected static _iconWidth: number;
     protected static _iconHeight: number;
     protected static _faceWidth: number;
