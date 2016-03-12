@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_managers.js
+// rpg_managers.js v1.1.0
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -330,11 +330,13 @@ DataManager.maxSavefiles = function() {
 
 DataManager.saveGame = function(savefileId) {
     try {
+        StorageManager.backup(savefileId);
         return this.saveGameWithoutRescue(savefileId);
     } catch (e) {
         console.error(e);
         try {
             StorageManager.remove(savefileId);
+            StorageManager.restoreBackup(savefileId);
         } catch (e2) {
         }
         return false;
@@ -592,6 +594,72 @@ StorageManager.remove = function(savefileId) {
     }
 };
 
+StorageManager.backup = function(savefileId) {
+    if (this.exists(savefileId)) {
+        if (this.isLocalMode()) {
+            var data = this.loadFromLocalFile(savefileId);
+            var compressed = LZString.compressToBase64(data);
+            var fs = require('fs');
+            var dirPath = this.localFileDirectoryPath();
+            var filePath = this.localFilePath(savefileId) + ".bak";
+            if (!fs.existsSync(dirPath)) {
+                fs.mkdirSync(dirPath);
+            }
+            fs.writeFileSync(filePath, compressed);
+        } else {
+            var data = this.loadFromWebStorage(savefileId);
+            var compressed = LZString.compressToBase64(data);
+            var key = this.webStorageKey(savefileId) + "bak";
+            localStorage.setItem(key, compressed);
+        }
+    }
+};
+
+StorageManager.backupExists = function(savefileId) {
+    if (this.isLocalMode()) {
+        return this.localFileBackupExists(savefileId);
+    } else {
+        return this.webStorageBackupExists(savefileId);
+    }
+};
+
+StorageManager.cleanBackup = function(savefileId) {
+	if (this.backupExists(savefileId)) {
+		if (this.isLocalMode()) {
+			var fs = require('fs');
+            var dirPath = this.localFileDirectoryPath();
+            var filePath = this.localFilePath(savefileId);
+            fs.unlinkSync(filePath + ".bak");
+		} else {
+		    var key = this.webStorageKey(savefileId);
+			localStorage.removeItem(key + "bak");
+		}
+	}
+};
+
+StorageManager.restoreBackup = function(savefileId) {
+    if (this.backupExists(savefileId)) {
+        if (this.isLocalMode()) {
+            var data = this.loadFromLocalBackupFile(savefileId);
+            var compressed = LZString.compressToBase64(data);
+            var fs = require('fs');
+            var dirPath = this.localFileDirectoryPath();
+            var filePath = this.localFilePath(savefileId);
+            if (!fs.existsSync(dirPath)) {
+                fs.mkdirSync(dirPath);
+            }
+            fs.writeFileSync(filePath, compressed);
+            fs.unlinkSync(filePath + ".bak");
+        } else {
+            var data = this.loadFromWebStorageBackup(savefileId);
+            var compressed = LZString.compressToBase64(data);
+            var key = this.webStorageKey(savefileId);
+            localStorage.setItem(key, compressed);
+            localStorage.removeItem(key + "bak","");
+        }
+    }
+};
+
 StorageManager.isLocalMode = function() {
     return Utils.isNwjs();
 };
@@ -617,6 +685,21 @@ StorageManager.loadFromLocalFile = function(savefileId) {
     return LZString.decompressFromBase64(data);
 };
 
+StorageManager.loadFromLocalBackupFile = function(savefileId) {
+    var data = null;
+    var fs = require('fs');
+    var filePath = this.localFilePath(savefileId) + ".bak";
+    if (fs.existsSync(filePath)) {
+        data = fs.readFileSync(filePath, { encoding: 'utf8' });
+    }
+    return LZString.decompressFromBase64(data);
+};
+
+StorageManager.localFileBackupExists = function(savefileId) {
+    var fs = require('fs');
+    return fs.existsSync(this.localFilePath(savefileId) + ".bak");
+};
+
 StorageManager.localFileExists = function(savefileId) {
     var fs = require('fs');
     return fs.existsSync(this.localFilePath(savefileId));
@@ -640,6 +723,17 @@ StorageManager.loadFromWebStorage = function(savefileId) {
     var key = this.webStorageKey(savefileId);
     var data = localStorage.getItem(key);
     return LZString.decompressFromBase64(data);
+};
+
+StorageManager.loadFromWebStorageBackup = function(savefileId) {
+    var key = this.webStorageKey(savefileId) + "bak";
+    var data = localStorage.getItem(key);
+    return LZString.decompressFromBase64(data);
+};
+
+StorageManager.webStorageBackupExists = function(savefileId) {
+    var key = this.webStorageKey(savefileId) + "bak";
+    return !!localStorage.getItem(key);
 };
 
 StorageManager.webStorageExists = function(savefileId) {
@@ -1454,6 +1548,14 @@ function SceneManager() {
     throw new Error('This is a static class');
 }
 
+/*
+ * Gets the current time in ms.
+ * @private
+ */
+SceneManager._getTimeInMs = function() {
+    return performance.now();
+};
+
 SceneManager._scene             = null;
 SceneManager._nextScene         = null;
 SceneManager._stack             = [];
@@ -1466,6 +1568,9 @@ SceneManager._screenWidth       = 816;
 SceneManager._screenHeight      = 624;
 SceneManager._boxWidth          = 816;
 SceneManager._boxHeight         = 624;
+SceneManager._deltaTime = 1.0 / 60.0;
+SceneManager._currentTime = SceneManager._getTimeInMs();
+SceneManager._accumulator = 0.0;
 
 SceneManager.run = function(sceneClass) {
     try {
@@ -1572,7 +1677,6 @@ SceneManager.requestUpdate = function() {
 SceneManager.update = function() {
     try {
         this.tickStart();
-        this.updateInputData();
         this.updateMain();
         this.tickEnd();
     } catch (e) {
@@ -1598,16 +1702,16 @@ SceneManager.onError = function(e) {
 SceneManager.onKeyDown = function(event) {
     if (!event.ctrlKey && !event.altKey) {
         switch (event.keyCode) {
-        case 116:   // F5
-            if (Utils.isNwjs()) {
-                location.reload();
-            }
-            break;
-        case 119:   // F8
-            if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-                require('nw.gui').Window.get().showDevTools();
-            }
-            break;
+            case 116:   // F5
+                if (Utils.isNwjs()) {
+                    location.reload();
+                }
+                break;
+            case 119:   // F8
+                if (Utils.isNwjs() && Utils.isOptionValid('test')) {
+                    require('nw.gui').Window.get().showDevTools();
+                }
+                break;
         }
     }
 };
@@ -1637,8 +1741,19 @@ SceneManager.updateInputData = function() {
 };
 
 SceneManager.updateMain = function() {
-    this.changeScene();
-    this.updateScene();
+
+    var newTime = this._getTimeInMs();
+    var fTime =  (newTime - this._currentTime) / 1000;
+    if (fTime > 0.25) fTime = 0.25;
+    this._currentTime = newTime;
+    this._accumulator += fTime;
+
+    while (this._accumulator >= this._deltaTime) {
+        this.updateInputData();
+        this.changeScene();
+        this.updateScene();
+        this._accumulator -= this._deltaTime;
+    }
     this.renderScene();
     this.requestUpdate();
 };
@@ -1766,6 +1881,7 @@ SceneManager.snapForBackground = function() {
 SceneManager.backgroundBitmap = function() {
     return this._backgroundBitmap;
 };
+
 
 //-----------------------------------------------------------------------------
 // BattleManager
@@ -2272,7 +2388,6 @@ BattleManager.processVictory = function() {
 };
 
 BattleManager.processEscape = function() {
-    $gameParty.removeBattleStates();
     $gameParty.performEscape();
     SoundManager.playEscape();
     var success = this._preemptive ? true : (Math.random() < this._escapeRatio);
@@ -2290,6 +2405,7 @@ BattleManager.processEscape = function() {
 };
 
 BattleManager.processAbort = function() {
+    $gameParty.removeBattleStates();
     this.replayBgmAndBgs();
     this.endBattle(1);
 };
