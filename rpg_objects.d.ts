@@ -606,68 +606,68 @@ declare class Game_BattlerBase {
     protected _buffs: Array<number>;
     protected _buffTurns: Array<number>;
 
-    /** Hit Points */
-    readonly hp: number;
-    /** Magic Points */
-    readonly mp: number;
-    /** Tactical Points */
-    readonly tp: number;
-    /** Maximum Hit Points */
-    readonly mhp: number;
-    /** Maximum Magic Points */
-    readonly mmp: number;
-    /** ATtacK power */
-    readonly atk: number;
-    /** DEFense power */
-    readonly def: number;
-    /** Magic ATtack power */
-    readonly mat: number;
-    /** Magic DeFense power */
-    readonly mdf: number;
-    /** AGIlity */
-    readonly agi: number;
-    /** LUcK */
-    readonly luk: number;
-    /** HIT rate */
-    readonly hit: number;
-    /** EVAsion rate */
-    readonly eva: number;
-    /** CRItical rate */
-    readonly cri: number;
-    /** Critical EVasion rate */
-    readonly cev: number;
-    /** Magic EVasion rate */
-    readonly mev: number;
-    /** Magic ReFlection rate */
-    readonly mrf: number;
-    /** CouNTer attack rate */
-    readonly cnt: number;
-    /** Hp ReGeneration rate */
-    readonly hrg: number;
-    /** Mp ReGeneration rate */
-    readonly mrg: number;
-    /** Tp ReGeneration rate */
-    readonly trg: number;
-    /** TarGet Rate */
-    readonly tgr: number;
-    /** Ggweqrtg*xzuaRD effect rate */
-    readonly grd: number;
-    /** RECovery effect rate */
-    readonly rec: number;
-    /** PHArmacology */
-    readonly pha: number;
-    /** Mp Cost Rate */
-    readonly mcr: number;
-    /** Tp Charge Rate */
-    readonly tcr: number;
-    /** Physical Damage Rate */
-    readonly pdr: number;
-    /** Magical Damage Rate */
-    readonly mdr: number;
-    /** Floor Damage Rate */
-    readonly fdr: number;
-    /** EXperience Rate */
-    readonly exr: number;
+    /** [read-only] Hit Points */
+    hp: number;
+    /** [read-only] Magic Points */
+    mp: number;
+    /** [read-only] Tactical Points */
+    tp: number;
+    /** [read-only] Maximum Hit Points */
+    mhp: number;
+    /** [read-only] Maximum Magic Points */
+    mmp: number;
+    /** [read-only] ATtacK power */
+    atk: number;
+    /** [read-only] DEFense power */
+    def: number;
+    /** [read-only] Magic ATtack power */
+    mat: number;
+    /** [read-only] Magic DeFense power */
+    mdf: number;
+    /** [read-only] AGIlity */
+    agi: number;
+    /** [read-only] LUcK */
+    luk: number;
+    /** [read-only] HIT rate */
+    hit: number;
+    /** [read-only] EVAsion rate */
+    eva: number;
+    /** [read-only] CRItical rate */
+    cri: number;
+    /** [read-only] Critical EVasion rate */
+    cev: number;
+    /** [read-only] Magic EVasion rate */
+    mev: number;
+    /** [read-only] Magic ReFlection rate */
+    mrf: number;
+    /** [read-only] CouNTer attack rate */
+    cnt: number;
+    /** [read-only] Hp ReGeneration rate */
+    hrg: number;
+    /** [read-only] Mp ReGeneration rate */
+    mrg: number;
+    /** [read-only] Tp ReGeneration rate */
+    trg: number;
+    /** [read-only] TarGet Rate */
+    tgr: number;
+    /** [read-only] Ggweqrtg*xzuaRD effect rate */
+    grd: number;
+    /** [read-only] RECovery effect rate */
+    rec: number;
+    /** [read-only] PHArmacology */
+    pha: number;
+    /** [read-only] Mp Cost Rate */
+    mcr: number;
+    /** [read-only] Tp Charge Rate */
+    tcr: number;
+    /** [read-only] Physical Damage Rate */
+    pdr: number;
+    /** [read-only] Magical Damage Rate */
+    mdr: number;
+    /** [read-only] Floor Damage Rate */
+    fdr: number;
+    /** [read-only] EXperience Rate */
+    exr: number;
 
     initMembers(): void;
     clearParamPlus(): void;
@@ -942,7 +942,8 @@ declare class Game_Actor extends Game_Battler {
     protected _lastCommandSymbol: string;
     protected _stateSteps: {[stateId: number]: number};
 
-    readonly level: number;
+    /** [read-only] */
+    level: number;
 
     constructor(actorId: number);
 
@@ -1487,8 +1488,10 @@ declare class Game_CharacterBase {
     protected _jumpPeak: number;
     protected _movementSuccess: boolean;
 
-    readonly x: number;
-    readonly y: number;
+    /** [read-only] */
+    x: number;
+    /** [read-only] */
+    y: number;
 
     initMembers(): void;
     pos(x: number, y: number): boolean;
