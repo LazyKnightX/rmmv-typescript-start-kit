@@ -9,6 +9,26 @@
 
 declare class Bitmap {
     /**
+     * Loads a image file and returns a new bitmap object.
+     *
+     * @static
+     * @method load
+     * @param {String} url The image url of the texture
+     * @return Bitmap
+     */
+    static load(url: string): Bitmap;
+
+    /**
+     * Takes a snapshot of the game screen and returns a new bitmap object.
+     *
+     * @static
+     * @method snap
+     * @param {Stage} stage The stage object
+     * @return Bitmap
+     */
+    static snap(stage: Stage): Bitmap;
+
+    /**
      * The face name of the font.
      *
      * @property fontFace
@@ -138,26 +158,6 @@ declare class Bitmap {
      */
     constructor();
     constructor(width: number, height: number);
-
-    /**
-     * Loads a image file and returns a new bitmap object.
-     *
-     * @static
-     * @method load
-     * @param {String} url The image url of the texture
-     * @return Bitmap
-     */
-    load(url: string): Bitmap;
-
-    /**
-     * Takes a snapshot of the game screen and returns a new bitmap object.
-     *
-     * @static
-     * @method snap
-     * @param {Stage} stage The stage object
-     * @return Bitmap
-     */
-    snap(stage: Stage): Bitmap;
 
     /**
      * Checks whether the bitmap is ready to render.
