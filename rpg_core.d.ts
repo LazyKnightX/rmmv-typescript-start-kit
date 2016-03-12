@@ -3,6 +3,10 @@
 // Definitions by: aaa<https://>, bbb<https://>
 // Definitions: https://
 
+/// <reference path="../pixi/pixi.d.ts"/>
+/// <reference path="../lz-string/lz-string.d.ts"/>
+/// <reference path="../fpsmeter/FPSMeter.d.ts"/>
+
 declare class Bitmap {
     /**
      * The face name of the font.
