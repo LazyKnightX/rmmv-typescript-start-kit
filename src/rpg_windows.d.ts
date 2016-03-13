@@ -745,8 +745,7 @@ declare class Window_NameEdit extends Window_Base {
     faceWidth(): number;
     charWidth(): number;
     left(): number;
-    itemRect(index: number): MV.ItemRect;
-    underlineRect(index: number): MV.ItemRect;
+    underlineRect(index: number): Rectangle;
     underlineColor(): string;
     drawUnderline(index: number): void;
     drawChar(index: number): void;
@@ -778,7 +777,6 @@ declare class Window_NameInput extends Window_Selectable {
     character(): string;
     isPageChange(): boolean;
     isOk(): boolean;
-    itemRect(index: number): MV.ItemRect;
     processJump(): void;
     processBack(): void;
     onNameAdd(): void;
@@ -1022,7 +1020,7 @@ declare class Window_BattleLog extends Window_Selectable {
     animationBaseDelay(): number;
     animationNextDelay(): number;
     drawBackground(): void;
-    backRect(): MV.ItemRect;
+    backRect(): Rectangle;
     backColor(): string;
     backPaintOpacity(): number;
     drawLineText(index: number): void;

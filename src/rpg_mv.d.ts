@@ -26,34 +26,28 @@ declare namespace MV {
         exp: number;
         items: Array<RPG.BaseItem>;
     }
-    export interface BattlerAnimation {
+    interface BattlerAnimation {
         animationId: number;
         mirror: boolean;
         delay: number;
     }
-    export interface CommandItem {
+    interface CommandItem {
         name: string;
         symbol: string;
         enabled: boolean;
         ext: any;
     }
-    export interface ItemRect {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    }
-    export interface TextState {
+    interface TextState {
         index: number;
         x: number;
         y: number;
         left: number;
     }
-    export interface BattleLogMethod {
+    interface BattleLogMethod {
         name: string;
         params: any;
     }
-    export interface Motion {
+    interface Motion {
         index: number;
         loop: boolean;
     }
