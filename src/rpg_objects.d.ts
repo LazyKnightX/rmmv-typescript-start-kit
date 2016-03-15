@@ -1739,7 +1739,7 @@ declare class Game_Player extends Game_Character {
     startMapEvent(x: number, y: number, triggers: Array<number>, normal: boolean): void;
     moveByInput(): void;
     canMove(): boolean;
-    getInputDirection(): void;
+    getInputDirection(): number;
     executeMove(direction: number): void;
     update(sceneActive?: boolean): void;
     updateDashing(): void;
