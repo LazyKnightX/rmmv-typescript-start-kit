@@ -1,8 +1,20 @@
 declare namespace RPG {
+    export interface MetaData {
+        /**
+         * The text of the note.
+         */
+        note: string;
+
+        /**
+         * The Meta.
+         */
+        meta: {[key: string]: any};
+    }
+
     /**
      * The data class for maps.
      */
-    export interface Map {
+    export interface Map extends MetaData {
         /**
          * The map's display name.
          */
@@ -109,11 +121,6 @@ declare namespace RPG {
         parallaxShow: boolean;
 
         /**
-         * The text of the note.
-         */
-        note: string;
-
-        /**
          * The map data. A 3-dimensional tile ID array (Table).
          */
         data: Array<number>;
@@ -122,9 +129,8 @@ declare namespace RPG {
          * The array of RPG.Event data.
          */
         events: Array<Event>;
-
-        meta: {[key: string]: any};
     }
+
     namespace Map {
         /**
          * The data class for the encounter settings.
@@ -146,6 +152,7 @@ declare namespace RPG {
             regionSet: Array<number>;
         }
     }
+
     /**
      * The data class for map information.
      */
@@ -165,10 +172,11 @@ declare namespace RPG {
          */
         order: number;
     }
+
     /**
      * The data class for map events.
      */
-    export interface Event {
+    export interface Event extends MetaData {
         /**
          * The event ID.
          */
@@ -193,14 +201,8 @@ declare namespace RPG {
          * The event pages. RPG.EventPage array.
          */
         pages: Array<EventPage>;
-
-        /**
-         * The text of the note.
-         */
-        note: string;
-
-        meta: {[key: string]: any};
     }
+
     /**
      * The data class for the event page.
      */
@@ -270,6 +272,7 @@ declare namespace RPG {
          */
         list: Array<EventCommand>;
     }
+
     namespace EventPage {
         /**
          * The data class for the event page conditions.
@@ -340,6 +343,7 @@ declare namespace RPG {
              */
             actorId: number;
         }
+
         /**
          * The data class for the Event page [Graphics].
          */
@@ -370,6 +374,7 @@ declare namespace RPG {
             pattern: number;
         }
     }
+
     /**
      * The data class for the Event command.
      */
@@ -389,6 +394,7 @@ declare namespace RPG {
          */
         parameters: Array<any>;
     }
+
     /**
      * The data class for the Move route.
      */
@@ -413,6 +419,7 @@ declare namespace RPG {
          */
         list: Array<MoveCommand>;
     }
+
     /**
      * The data class for the Move command.
      */
@@ -427,31 +434,11 @@ declare namespace RPG {
          */
         parameters: Array<any>;
     }
-    namespace Class {
-        /**
-         * The data class for a class's [Skills to Learn].
-         */
-        export interface Learning {
-            /**
-             * The data class for a class's [Skills to Learn].
-             */
-            level: number;
 
-            /**
-             * The ID of the skill to learn.
-             */
-            skillId: number;
-
-            /**
-             * The text of the note.
-             */
-            note: string;
-        }
-    }
     /**
      * The data class for actors.
      */
-    export interface Actor {
+    export interface Actor extends MetaData {
         /**
          * The ID.
          */
@@ -513,20 +500,15 @@ declare namespace RPG {
         profile: string;
 
         /**
-         * The text of the note.
-         */
-        note: string;
-
-        /**
          * The array of Trait data.
          */
         traits: Array<Trait>;
-        meta: {[key: string]: any};
     }
+
     /**
      * The data class for class.
      */
-    export interface Class {
+    export interface Class extends MetaData {
         /**
          * The ID.
          */
@@ -569,22 +551,34 @@ declare namespace RPG {
         learnings: Array<Class.Learning>;
 
         /**
-         * The text of the note.
-         */
-        note: string;
-
-        /**
          * The array of Trait data.
          */
         traits: Array<Trait>;
-        meta: {[key: string]: any};
     }
+
+    namespace Class {
+        /**
+         * The data class for a class's [Skills to Learn].
+         */
+        export interface Learning extends MetaData {
+            /**
+             * The data class for a class's [Skills to Learn].
+             */
+            level: number;
+
+            /**
+             * The ID of the skill to learn.
+             */
+            skillId: number;
+        }
+    }
+
     /**
      * A superclass of actor, class, skill, item, weapon, armor, enemy, and state.
      *
      * Some items are unnecessary depending on the type of data, but they are included for convenience sake.
      */
-    export interface BaseItem {
+    export interface BaseItem extends MetaData {
         /**
          * The item ID.
          */
@@ -604,16 +598,11 @@ declare namespace RPG {
          * The description text.
          */
         description: string;
-
-        /**
-         * The text of the note.
-         */
-        note: string;
-        meta: {[key: string]: any};
     }
     /**
      * The Superclass of Skill and Item.
      */
+
     export interface UsableItem extends BaseItem {
         /**
          * The scope of effects.
@@ -690,6 +679,7 @@ declare namespace RPG {
     /**
      * The data class for skills.
      */
+
     export interface Skill extends UsableItem {
         /**
          * Skill type ID.
@@ -748,6 +738,7 @@ declare namespace RPG {
          */
         consumable: boolean;
     }
+
     /**
      * A superclass of weapons and armor.
      */
@@ -787,6 +778,7 @@ declare namespace RPG {
          */
         traits: Array<Trait>;
     }
+
     /**
      * The data class for weapons.
      */
@@ -801,6 +793,7 @@ declare namespace RPG {
          */
         animationId: number;
     }
+
     /**
      * The data class for armor.
      */
@@ -810,10 +803,11 @@ declare namespace RPG {
          */
         atypeId: number;
     }
+
     /**
      * The data class for enemies.
      */
-    export interface Enemy {
+    export interface Enemy extends MetaData {
         /**
          * The file name of the enemy's battler graphic.
          */
@@ -857,17 +851,77 @@ declare namespace RPG {
          * The enemy's action pattern. An array of RPG.Enemy.Action.
          */
         actions: Array<Enemy.Action>;
+    }
+
+    namespace Enemy {
+        /**
+         * The data class for enemy [Drop Items].
+         */
+        export interface DropItem {
+            /**
+             * The type of dropped item.
+             *
+             * 0: None
+             * 1: Item
+             * 2: Weapon
+             * 3: Armor
+             */
+            kind: number;
+
+            /**
+             * The ID of the data depending on the type of dropped item (item, weapon, or armor).
+             */
+            dataId: number;
+
+            /**
+             * N of the probability that the item will be dropped, 1/N.
+             */
+            denominator: number;
+        }
 
         /**
-         * The text of the note.
+         * The data class for enemy [Actions].
          */
-        note: string;
-        meta: {[key: string]: any};
+        export interface Action {
+            /**
+             * The ID of skills to be employed as actions.
+             */
+            skillId: number;
+
+            /**
+             * The type of condition.
+             *
+             * 0: Always
+             * 1: Turn No.
+             * 2: HP
+             * 3: MP
+             * 4: State
+             * 5: Party Level
+             * 6: Switch
+             */
+            conditionType: number;
+
+            /**
+             * The first parameter of the condition.
+             */
+            conditionParam1: number;
+
+            /**
+             * The second parameter of the condition.
+             */
+            conditionParam2: number;
+
+            /**
+             * The action's priority rating (1..10).
+             */
+            rating: number;
+        }
     }
+
     /**
      * The data class for state.
      */
-    export interface State {
+    export interface State extends MetaData {
         /**
          * The ID.
          */
@@ -979,18 +1033,13 @@ declare namespace RPG {
         overlay: number;
 
         /**
-         * The text of the note.
-         */
-        note: string;
-
-        /**
          * The array of Trait data.
          */
         traits: Array<Trait>;
         releaseByDamage?: boolean;
         description?: string;
-        meta: {[key: string]: any};
     }
+
     export interface Trait {
         /**
          * The trait code.
@@ -1022,6 +1071,7 @@ declare namespace RPG {
          */
         scrollY: number;
     }
+
     /**
      * The data class for damage.
      */
@@ -1059,6 +1109,7 @@ declare namespace RPG {
          */
         critical: boolean;
     }
+
     /**
      * The data class for use effects.
      */
@@ -1083,69 +1134,7 @@ declare namespace RPG {
          */
         value2: number;
     }
-    namespace Enemy {
-        /**
-         * The data class for enemy [Drop Items].
-         */
-        export interface DropItem {
-            /**
-             * The type of dropped item.
-             *
-             * 0: None
-             * 1: Item
-             * 2: Weapon
-             * 3: Armor
-             */
-            kind: number;
 
-            /**
-             * The ID of the data depending on the type of dropped item (item, weapon, or armor).
-             */
-            dataId: number;
-
-            /**
-             * N of the probability that the item will be dropped, 1/N.
-             */
-            denominator: number;
-        }
-        /**
-         * The data class for enemy [Actions].
-         */
-        export interface Action {
-            /**
-             * The ID of skills to be employed as actions.
-             */
-            skillId: number;
-
-            /**
-             * The type of condition.
-             *
-             * 0: Always
-             * 1: Turn No.
-             * 2: HP
-             * 3: MP
-             * 4: State
-             * 5: Party Level
-             * 6: Switch
-             */
-            conditionType: number;
-
-            /**
-             * The first parameter of the condition.
-             */
-            conditionParam1: number;
-
-            /**
-             * The second parameter of the condition.
-             */
-            conditionParam2: number;
-
-            /**
-             * The action's priority rating (1..10).
-             */
-            rating: number;
-        }
-    }
     /**
      * The data class for enemy troops.
      */
@@ -1170,6 +1159,7 @@ declare namespace RPG {
          */
         pages: Array<RPG.Troop.Page>;
     }
+
     namespace Troop {
         /**
          * The data class for enemy troop members.
@@ -1195,6 +1185,7 @@ declare namespace RPG {
              */
             hidden: boolean;
         }
+
         /**
          * The data class for battle events (pages).
          */
@@ -1214,6 +1205,7 @@ declare namespace RPG {
              */
             list: Array<EventCommand>;
         }
+
         namespace Page {
             /**
              * The data class of battle event [Conditions].
@@ -1281,6 +1273,7 @@ declare namespace RPG {
             }
         }
     }
+
     /**
      * The data class for animation.
      */
@@ -1335,6 +1328,7 @@ declare namespace RPG {
          */
         timings: Array<Animation.Timing>;
     }
+
     namespace Animation {
         /**
          * The data class for the timing of an animation's SE and flash effects.
@@ -1366,10 +1360,11 @@ declare namespace RPG {
             flashDuration: number;
         }
     }
+
     /**
      * The data class for tile sets.
      */
-    export interface Tileset {
+    export interface Tileset extends MetaData {
         /**
          * The ID of the tile set.
          */
@@ -1424,13 +1419,8 @@ declare namespace RPG {
          * We recommend an Internet search using keywords such as "hexadecimal bit operations" when necessary.
          */
         flags: Array<number>;
-
-        /**
-         * The text of the note.
-         */
-        note: string;
-        meta: {[key: string]: any};
     }
+
     /**
      * The data class for common events.
      */
@@ -1682,6 +1672,7 @@ declare namespace RPG {
          */
         editMapId: number;
     }
+
     namespace System {
         /**
          * The data class for vehicles.
@@ -1717,6 +1708,7 @@ declare namespace RPG {
              */
             startY: number;
         }
+
         /**
          * The data class for terminology.
          */
@@ -1788,6 +1780,7 @@ declare namespace RPG {
              */
             messages: {[key: string]: string};
         }
+
         /**
          * The data class for the actors used in battle tests.
          */
@@ -1813,6 +1806,7 @@ declare namespace RPG {
              */
             equips: Array<number>;
         }
+
         export interface AttackMotion {
             /**
              * The type of the motion.
@@ -1825,6 +1819,7 @@ declare namespace RPG {
             weaponImageId: number;
         }
     }
+
     /**
      * The data class for audio file.
      */
@@ -1849,7 +1844,4 @@ declare namespace RPG {
          */
         volume: number;
     }
-}
-declare module 'rpg_library' {
-    export = RPG;
 }

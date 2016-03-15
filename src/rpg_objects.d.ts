@@ -475,7 +475,7 @@ declare class Game_Action {
     itemTargetCandidates(): Array<Game_Battler>;
     evaluateWithTarget(target: Game_Battler): number;
     testApply(target: Game_Battler): boolean;
-    hasItemAnyValidEffects(target: Game_Battler): void;
+    hasItemAnyValidEffects(target: Game_Battler): boolean;
     testItemEffect(target: Game_Battler, effect: RPG.Effect): boolean;
     itemCnt(target: Game_Battler): number;
     itemMrf(target: Game_Battler): number;
@@ -1358,7 +1358,7 @@ declare class Game_Map {
     data(): Array<number>;
     isLoopHorizontal(): boolean;
     isLoopVertical(): boolean;
-    isDashDisabled(): void;
+    isDashDisabled(): boolean;
     encounterList(): Array<RPG.Map.Encounter>;
     encounterStep(): number;
     isOverworld(): boolean;
@@ -1528,7 +1528,7 @@ declare class Game_CharacterBase {
     direction(): number;
     setDirection(d: number): void;
     isTile(): boolean;
-    isObjectCharacter(): number;
+    isObjectCharacter(): boolean;
     shiftY(): number;
     scrolledX(): number;
     scrolledY(): number;

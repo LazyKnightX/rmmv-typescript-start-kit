@@ -972,7 +972,7 @@ interface GraphicsStatic {
      * @return {Boolean}
      * @private
      */
-    _isVideoVisible(): void;
+    _isVideoVisible(): boolean;
 
     /**
      * @static
@@ -2815,14 +2815,14 @@ declare class ToneSprite extends PIXI.DisplayObject {
 
     /**
      * @method _renderCanvas
-     * @param {Object} renderSession
+     * @param {PIXI.CanvasRenderer} renderSession
      * @private
      */
     protected _renderCanvas(renderSession: PIXI.CanvasRenderer): void;
 
     /**
      * @method _renderWebGL
-     * @param {Object} renderSession
+     * @param {PIXI.WebGLRenderer} renderSession
      * @private
      */
     protected _renderWebGL(renderSession: PIXI.WebGLRenderer): void;
@@ -3958,8 +3958,8 @@ declare class _Window extends PIXI.DisplayObjectContainer {
      * Adds a child between the background and contents.
      *
      * @method addChildToBack
-     * @param {Object} child The child to add
-     * @return {Object} The child that was added
+     * @param {PIXI.DisplayObject} child The child to add
+     * @return {PIXI.DisplayObject} The child that was added
      */
     addChildToBack(child: PIXI.DisplayObject): PIXI.DisplayObject;
 
@@ -4264,7 +4264,7 @@ declare class WindowLayer extends PIXI.DisplayObjectContainer {
 
     /**
      * @method _webglMaskRect
-     * @param {Object} renderSession
+     * @param {PIXI.WebGLRenderer} renderSession
      * @param {Number} x
      * @param {Number} y
      * @param {Number} w

@@ -1,7 +1,3 @@
-
-
-
-
 /**
  * AudioManager
  *
@@ -280,7 +276,7 @@ interface DataManagerStatic {
     makeEmptyMap(): void;
     isMapLoaded(): boolean;
     onLoad(object: RPG.Map): void;
-    extractMetadata(data: any): void;// noteとmetaをもつDBオブジェクト
+    extractMetadata(data: RPG.MetaData): void;
     checkError(): void;
     isBattleTest(): boolean;
     isEventTest(): boolean;
