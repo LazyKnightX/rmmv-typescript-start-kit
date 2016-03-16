@@ -269,7 +269,7 @@ declare class Sprite_Animation extends Sprite {
     protected _duplicated: boolean;
 
     initMembers(): void;
-    setup(target: Sprite_Battler, animation: RPG.Animation, mirror: boolean, delay: number): void;
+    setup(target: Sprite_Base, animation: RPG.Animation, mirror: boolean, delay: number): void;
     remove(): void;
     setupRate(): void;
     setupDuration(): void;

@@ -820,6 +820,11 @@ declare class Game_Battler extends Game_BattlerBase {
     protected _motionRefresh: boolean;
     protected _selected: boolean;
 
+    name(): string;
+    battlerName(): string;
+    index(): number;
+    friendsUnit(): Game_Unit;
+    opponentsUnit(): Game_Unit;
     clearAnimations(): void;
     clearDamagePopup(): void;
     clearWeaponAnimation(): void;
@@ -948,7 +953,6 @@ declare class Game_Actor extends Game_Battler {
     setup(actorId: number): void;
     actorId(): number;
     actor(): RPG.Actor;
-    name(): string;
     setName(name: string): void;
     nickname(): string;
     setNickname(nickname: string): void;
@@ -956,7 +960,6 @@ declare class Game_Actor extends Game_Battler {
     setProfile(profile: string): void;
     faceName(): string;
     faceIndex(): number;
-    battlerName(): string;
     clearStates(): void;
     eraseState(stateId: number): void;
     resetStateCounts(stateId: number): void;
@@ -994,7 +997,6 @@ declare class Game_Actor extends Game_Battler {
     refresh(): void;
     friendsUnit(): Game_Party;
     opponentsUnit(): Game_Troop;
-    index(): number;
     isBattleMember(): boolean;
     isFormationChangeOk(): boolean;
     currentClass(): RPG.Class;
@@ -1032,7 +1034,6 @@ declare class Game_Actor extends Game_Battler {
     makeActionList(): Array<Game_Action>;
     makeAutoBattleActions(): void;
     makeConfusionActions(): void;
-    makeActions(): void;
     onPlayerWalk(): void;
     updateStateSteps(state: RPG.State): void;
     showAddedStates(): void;
@@ -1075,7 +1076,6 @@ declare class Game_Enemy extends Game_Battler {
     setup(enemyId: number, x: number, y: number): void;
     friendsUnit(): Game_Troop;
     opponentsUnit(): Game_Party;
-    index(): number;
     isBattleMember(): boolean;
     enemyId(): number;
     enemy(): RPG.Enemy;
@@ -1087,10 +1087,8 @@ declare class Game_Enemy extends Game_Battler {
     isSpriteVisible(): boolean;
     screenX(): number;
     screenY(): number;
-    battlerName(): string;
     battlerHue(): number;
     originalName(): string;
-    name(): string;
     isLetterEmpty(): boolean;
     setLetter(letter: string): void;
     setPlural(plural: boolean): void;
@@ -1105,7 +1103,6 @@ declare class Game_Enemy extends Game_Battler {
     isActionValid(action: RPG.Enemy.Action): boolean;
     selectAction(actionList: Array<RPG.Enemy.Action>, ratingZero: number): RPG.Enemy.Action;
     selectAllActions(actionList: Array<RPG.Enemy.Action>): void;
-    makeActions(): void;
 }
 
 /**
