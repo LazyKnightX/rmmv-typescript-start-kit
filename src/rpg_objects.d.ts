@@ -1180,6 +1180,7 @@ declare class Game_Party extends Game_Unit {
     aliveMembers(): Array<Game_Actor>;
     deadMembers(): Array<Game_Actor>;
     movableMembers(): Array<Game_Actor>;
+    battleMembers(): Array<Game_Actor>;
     initAllItems(): void;
     exists(): boolean;
     size(): number;
