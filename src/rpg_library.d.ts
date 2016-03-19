@@ -490,6 +490,11 @@ declare namespace RPG {
         faceIndex: number;
 
         /**
+         * The file name of the actor's battler graphic.
+         */
+        battlerName: string;
+
+        /**
          * The actor's initial equipment. An array of weapon IDs or armor IDs with the following subscripts:
          */
         equips: Array<number>;
