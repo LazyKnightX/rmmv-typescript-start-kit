@@ -1274,7 +1274,7 @@ declare class Game_Troop extends Game_Unit {
     makeUniqueNames(): void;
     letterTable(): Array<string>;
     enemyNames(): Array<string>;
-    meetsConditions(page: RPG.EventPage): boolean;
+    meetsConditions(page: RPG.BattleEventPage): boolean;
     setupBattleEvent(): void;
     increaseTurn(): void;
     expTotal(): number;

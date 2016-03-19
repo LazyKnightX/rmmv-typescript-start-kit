@@ -206,16 +206,16 @@ declare namespace RPG {
     /**
      * The data class for the event page.
      */
-    interface EventPage {
+    export interface EventPage {
         /**
          * The event condition (RPG.EventPage.Condition).
          */
-        conditions: Array<EventPage.Condition>;
+        conditions: EventPage.Conditions;
 
         /**
-         * The event graphic (RPG.EventPage.Graphic) .
+         * The event graphic (RPG.EventPage.Image) .
          */
-        image: EventPage.Graphic;
+        image: EventPage.Image;
 
         /**
          * The type of movement (0: fixed, 1: random, 2: approach, 3: custom).
@@ -277,7 +277,7 @@ declare namespace RPG {
         /**
          * The data class for the event page conditions.
          */
-        interface Condition {
+        export interface Conditions {
             /**
              * The truth value indicating whether the first [Switch] condition is valid.
              */
@@ -347,7 +347,7 @@ declare namespace RPG {
         /**
          * The data class for the Event page [Graphics].
          */
-        interface Graphic {
+        export interface Image {
             /**
              * The tile ID. If the specified graphic is not a tile, this value is 0.
              */
@@ -372,6 +372,93 @@ declare namespace RPG {
              * The character's pattern (0..2).
              */
             pattern: number;
+        }
+    }
+
+    /**
+     * The data class for the event page.
+     */
+    export interface BattleEventPage {
+         /**
+          * The event condition (RPG.EventPage.Condition).
+          */
+         conditions: BattleEventPage.Conditions;
+
+         /**
+          * A list of event commands. An RPG.EventCommand array.
+          */
+         list: Array<EventCommand>;
+
+         /**
+          * The span.
+          */
+         span: number;
+    }
+
+    namespace BattleEventPage {
+        /**
+         * The data class for the event page conditions.
+         */
+        export interface Conditions {
+            /**
+             * The percentage of actor HP.
+             */
+            actorHp: number;
+
+            /**
+             * The ID of that actor if the [Actor] condition is valid.
+             */
+            actorId: number;
+
+            /**
+             * The truth value indicating whether the [Actor] condition is valid.
+             */
+            actorValid: boolean;
+
+            /**
+             * The percentage of enemy HP.
+             */
+            enemyHp: number;
+
+            /**
+             * The enemy index.
+             */
+            enemyIndex: number;
+
+            /**
+             * The truth value indicating whether the [Enemy] condition is valid.
+             */
+            enemyValid: boolean;
+
+            /**
+             * The ID of that switch if the [Switch] condition is valid.
+             */
+            switchId: number;
+
+            /**
+             * The truth value indicating whether the [Switch] condition is valid.
+             */
+            switchValid: boolean;
+
+            /**
+             * The turn condition value A.
+             */
+            turnA: number;
+
+            /**
+             * The turn condition value B.
+             */
+            turnB: number;
+
+            /**
+             * The boolean value indicating whether the "turn end" is valid.
+             */
+            turnEnding: boolean;
+
+            /**
+             * The boolean value indicating whether the "turn" is valid.
+             */
+            turnValid: boolean;
         }
     }
 

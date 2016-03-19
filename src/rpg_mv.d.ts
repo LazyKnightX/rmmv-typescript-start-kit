@@ -1,12 +1,12 @@
 declare namespace MV {
-    interface Uniforms {
+    export interface Uniforms {
         matrix: Matrix;
     }
-    interface Matrix {
+    export interface Matrix {
         type: string;
         value: Array<number>;
     }
-    interface TouchInputEvents {
+    export interface TouchInputEvents {
         trigger: boolean;
         cancelled: boolean;
         moved: boolean;
@@ -14,40 +14,40 @@ declare namespace MV {
         wheelX: number;
         wheelY: number;
     }
-    interface AudioParameters {
+    export interface AudioParameters {
         name: string;
         volume: number;
         pitch: number;
         pan: number;
         pos: number;
     }
-    interface BattleRewards {
+    export interface BattleRewards {
         gold: number;
         exp: number;
         items: Array<RPG.BaseItem>;
     }
-    interface BattlerAnimation {
+    export interface BattlerAnimation {
         animationId: number;
         mirror: boolean;
         delay: number;
     }
-    interface CommandItem {
+    export interface CommandItem {
         name: string;
         symbol: string;
         enabled: boolean;
         ext: any;
     }
-    interface TextState {
+    export interface TextState {
         index: number;
         x: number;
         y: number;
         left: number;
     }
-    interface BattleLogMethod {
+    export interface BattleLogMethod {
         name: string;
         params: any;
     }
-    interface Motion {
+    export interface Motion {
         index: number;
         loop: boolean;
     }
