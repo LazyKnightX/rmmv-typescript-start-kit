@@ -9,6 +9,8 @@ declare class Sprite_Base extends Sprite {
     protected _effectTarget: Sprite_Base;
     protected _hiding: boolean;
 
+    constructor();
+
     hide(): void;
     show(): void;
     updateVisibility(): void;
