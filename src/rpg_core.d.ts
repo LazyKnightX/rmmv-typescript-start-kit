@@ -3730,7 +3730,7 @@ declare class Weather extends PIXI.DisplayObjectContainer {
     protected _rebornSprite(sprite: Sprite): void;
 }
 
-declare class _Window extends PIXI.DisplayObjectContainer {
+declare abstract class _Window extends PIXI.DisplayObjectContainer {
     /**
      * The origin point of the window for scrolling.
      *
