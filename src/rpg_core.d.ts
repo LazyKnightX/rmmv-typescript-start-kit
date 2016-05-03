@@ -1,4 +1,4 @@
-// Type definitions for RPG Maker MV JS Library v1.1.0
+// Type definitions for RPG Maker MV JS Library v1.2.0
 // Project: http://
 // Definitions by: aaa<https://>, bbb<https://>
 // Definitions: https://
@@ -2723,6 +2723,11 @@ declare class TilingSprite extends PIXI.TilingSprite {
      * @private
      */
     protected _refresh(): void;
+
+     * @method generateTilingTexture
+     * @param {Boolean} arg
+     */
+    generateTilingTexture(arg: boolean): void;
 }
 
 
