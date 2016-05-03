@@ -2724,6 +2724,7 @@ declare class TilingSprite extends PIXI.TilingSprite {
      */
     protected _refresh(): void;
 
+    /**
      * @method generateTilingTexture
      * @param {Boolean} arg
      */
