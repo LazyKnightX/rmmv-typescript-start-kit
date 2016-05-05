@@ -1,4 +1,4 @@
-// Type definitions for RPG Maker MV JS Library v1.1.0
+// Type definitions for RPG Maker MV JS Library v1.2.0
 // Project: http://
 // Definitions by: aaa<https://>, bbb<https://>
 // Definitions: https://
@@ -2723,6 +2723,12 @@ declare class TilingSprite extends PIXI.TilingSprite {
      * @private
      */
     protected _refresh(): void;
+
+    /**
+     * @method generateTilingTexture
+     * @param {Boolean} arg
+     */
+    generateTilingTexture(arg: boolean): void;
 }
 
 
@@ -3730,7 +3736,7 @@ declare class Weather extends PIXI.DisplayObjectContainer {
     protected _rebornSprite(sprite: Sprite): void;
 }
 
-declare class _Window extends PIXI.DisplayObjectContainer {
+declare abstract class _Window extends PIXI.DisplayObjectContainer {
     /**
      * The origin point of the window for scrolling.
      *
@@ -9440,6 +9446,8 @@ declare class Sprite_Base extends Sprite {
     protected _animationSprites: Array<Sprite_Animation>;
     protected _effectTarget: Sprite_Base;
     protected _hiding: boolean;
+
+    constructor();
 
     hide(): void;
     show(): void;
