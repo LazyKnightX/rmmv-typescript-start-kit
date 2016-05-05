@@ -180,22 +180,13 @@ interface BattleManagerStatic {
 }
 declare var BattleManager: BattleManagerStatic;
 
-interface ConfigData {
-    alwaysDash: boolean;
-    commandRemember: boolean;
-    bgmVolume: number;
-    bgsVolume: number;
-    meVolume: number;
-    seVolume: number;
-}
-
-interface ConfigManagerStatic extends ConfigData {
+interface ConfigManagerStatic extends MV.ConfigData {
     load(): void;
     save(): void;
-    makeData(): ConfigData;
-    applyData(config: ConfigData): void;
-    readFlag(config: ConfigData, name: string): boolean;
-    readVolume(config: ConfigData, name: string): number;
+    makeData(): MV.ConfigData;
+    applyData(config: MV.ConfigData): void;
+    readFlag(config: MV.ConfigData, name: string): boolean;
+    readVolume(config: MV.ConfigData, name: string): number;
 }
 declare var ConfigManager: ConfigManagerStatic;
 
@@ -229,33 +220,6 @@ declare var $gameMap: Game_Map;
 declare var $gamePlayer: Game_Player;
 declare var $testEvent: Array<RPG.EventCommand>;
 
-interface DatabaseFile {
-    name: string;
-    src: string;
-}
-
-interface SaveFileInfo {
-    globalId: string;
-    title: string;
-    characters: Array<Array<any>>;
-    faces: Array<Array<any>>;
-    playtime: string;
-    timestamp: number;
-}
-
-interface SaveContents {
-    system: Game_System;
-    screen: Game_Screen;
-    timer: Game_Timer;
-    switches: Game_Switches;
-    variables: Game_Variables;
-    selfSwitches: Game_SelfSwitches;
-    actors: Game_Actors;
-    party: Game_Party;
-    map: Game_Map;
-    player: Game_Party;
-}
-
 /**
  * DataManager
  *
@@ -265,7 +229,7 @@ interface DataManagerStatic {
     _globalId: string;
     _lastAccessedId: number;
     _errorUrl: string;
-    _databaseFiles: Array<DatabaseFile>;
+    _databaseFiles: Array<MV.DatabaseFile>;
 
     maxSavefiles: number;
 
@@ -294,7 +258,7 @@ interface DataManagerStatic {
     isAnySavefileExists(): boolean;
     latestSavefileId(): number;
     loadAllSavefileImages(): void;
-    loadSavefileImages(info: SaveFileInfo): void;
+    loadSavefileImages(info: MV.SaveFileInfo): void;
     saveGame(savefileId: number): boolean;
     loadGame(savefileId: number): boolean;
     loadSavefileInfo(savefileId: number): any;
@@ -303,8 +267,8 @@ interface DataManagerStatic {
     loadGameWithoutRescue(savefileId: number): boolean;
     selectSavefileForNewGame(): void;
     makeSavefileInfo(): void;
-    makeSaveContents(): SaveContents;
-    extractSaveContents(contents: SaveContents);
+    makeSaveContents(): MV.SaveContents;
+    extractSaveContents(contents: MV.SaveContents);
 }
 declare var DataManager: DataManagerStatic;
 
@@ -340,13 +304,6 @@ interface ImageManagerStatic {
 }
 declare var ImageManager: ImageManagerStatic;
 
-interface PluginSettings {
-    name: string;
-    status: string;
-    description: string;
-    parameters: {[key: string]: string};
-}
-
 /**
  * PluginManager
  *
@@ -358,7 +315,7 @@ interface PluginManagerStatic {
     _errorUrls: Array<string>;
     _parameters: {[key: string]: {[key: string]: string}};
 
-    setup(plugins: Array<PluginSettings>): void;
+    setup(plugins: Array<MV.PluginSettings>): void;
     checkErrors(): void;
     parameters(name: string): any;
     setParameters(name: string, parameters: {[key: string]: string}): void;

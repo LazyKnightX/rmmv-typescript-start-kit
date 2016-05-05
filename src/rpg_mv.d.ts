@@ -51,4 +51,42 @@ declare namespace MV {
         index: number;
         loop: boolean;
     }
+    export interface ConfigData {
+        alwaysDash: boolean;
+        commandRemember: boolean;
+        bgmVolume: number;
+        bgsVolume: number;
+        meVolume: number;
+        seVolume: number;
+    }
+    export interface DatabaseFile {
+        name: string;
+        src: string;
+    }
+    export interface SaveFileInfo {
+        globalId: string;
+        title: string;
+        characters: Array<Array<any>>;
+        faces: Array<Array<any>>;
+        playtime: string;
+        timestamp: number;
+    }
+    export interface SaveContents {
+        system: Game_System;
+        screen: Game_Screen;
+        timer: Game_Timer;
+        switches: Game_Switches;
+        variables: Game_Variables;
+        selfSwitches: Game_SelfSwitches;
+        actors: Game_Actors;
+        party: Game_Party;
+        map: Game_Map;
+        player: Game_Party;
+    }
+    export interface PluginSettings {
+        name: string;
+        status: string;
+        description: string;
+        parameters: {[key: string]: string};
+    }
 }
