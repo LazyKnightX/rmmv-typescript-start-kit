@@ -779,7 +779,7 @@ interface GraphicsStatic {
      * @method _defaultStretchMode
      * @private
      */
-    _defaultStretchMode(): void;
+    _defaultStretchMode(): boolean;
 
     /**
      * @static
