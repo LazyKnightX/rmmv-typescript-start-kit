@@ -911,10 +911,10 @@ interface GraphicsStatic {
     /**
      * @static
      * @method _centerElement
-     * @param {HTMLElement} element
+     * @param {HTMLCanvasElement} element
      * @private
      */
-    _centerElement(element: HTMLElement): void;
+    _centerElement(element: HTMLCanvasElement): void;
 
     /**
      * @static
