@@ -211,7 +211,7 @@ declare var $gameScreen: Game_Screen;
 declare var $gameTimer: Game_Timer;
 declare var $gameMessage: Game_Message;
 declare var $gameSwitches: Game_Switches;
-declare var $gamevariables: Game_Variables;
+declare var $gameVariables: Game_Variables;
 declare var $gameSelfSwitches: Game_SelfSwitches;
 declare var $gameActors: Game_Actors;
 declare var $gameParty: Game_Party;
