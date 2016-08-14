@@ -207,7 +207,7 @@ declare class Sprite_Actor extends Sprite_Battler {
 declare class Sprite_Enemy extends Sprite_Battler {
     protected _enemy: Game_Enemy;
     protected _appeared: boolean;
-    protected _battlerName: String;
+    protected _battlerName: string;
     protected _battlerHue: number;
     protected _effectType: string;
     protected _effectDuration: number;
@@ -269,6 +269,7 @@ declare class Sprite_Animation extends Sprite {
     protected _cellSprites: Array<Sprite>;
     protected _screenFlashSprite: ScreenSprite;
     protected _duplicated: boolean;
+    protected _reduceArtifacts: boolean;
 
     initMembers(): void;
     setup(target: Sprite_Base, animation: RPG.Animation, mirror: boolean, delay: number): void;
@@ -415,7 +416,8 @@ declare class Sprite_Balloon extends Sprite_Base {
  */
 declare class Sprite_Picture extends Sprite {
     protected _pictureId: number;
-    protected _pictureName: String;
+    protected _pictureName: string;
+    protected _isPicture: boolean;
 
     constructor(pictureId: number);
 
@@ -501,7 +503,7 @@ declare class Spriteset_Base extends Sprite {
  */
 declare class Spriteset_Map extends Spriteset_Base {
     protected _parallax: TilingSprite;
-    protected _tilemap: Tilemap;
+    protected _tilemap: Tilemap | ShaderTilemap;
     protected _tileset: RPG.Tileset;
     protected _characterSprites: Array<Sprite_Character>;
     protected _shadowSprite: Sprite;

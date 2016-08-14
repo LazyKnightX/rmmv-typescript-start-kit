@@ -149,6 +149,12 @@ declare class Bitmap {
     paintOpacity: number;
 
     /**
+     * Cache entry, for images. In all cases _url is the same as cacheEntry.key
+     * @type CacheEntry
+     */
+    cacheEntry: CacheEntry;
+
+    /**
      * The basic object that represents an image.
      *
      * @class Bitmap
@@ -296,8 +302,8 @@ declare class Bitmap {
      * @param {Number} lineHeight The height of the text line
      * @param {String} align The alignment of the text
      */
-    drawText(text: String, x: number, y: number,
-             maxWidth: number, lineHeight: number, align: String): void;
+    drawText(text: string, x: number, y: number,
+             maxWidth: number, lineHeight: number, align: string): void;
 
     /**
      * Returns the width of the specified text.
@@ -340,6 +346,28 @@ declare class Bitmap {
      * @param {Function} listner The callback function
      */
     addLoadListener(listner: () => void): void;
+
+    /**
+     * touch the resource
+     * @method touch
+     */
+    touch(): void;
+
+    /**
+     * Performs a block transfer, using assumption that original image was not modified (no hue)
+     *
+     * @method blt
+     * @param {Bitmap} source The bitmap to draw
+     * @param {Number} sx The x coordinate in the source
+     * @param {Number} sy The y coordinate in the source
+     * @param {Number} sw The width of the source image
+     * @param {Number} sh The height of the source image
+     * @param {Number} dx The x coordinate in the destination
+     * @param {Number} dy The y coordinate in the destination
+     * @param {Number} [dw=sw] The width to draw the image in the destination
+     * @param {Number} [dh=sh] The height to draw the image in the destination
+     */
+    bltImage(source: Bitmap, sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number, dh: number): void;
 
     protected _canvas: HTMLCanvasElement;
     protected _context: CanvasRenderingContext2D;
@@ -427,7 +455,7 @@ interface GraphicsStatic {
      * @type Number
      * @final
      */
-    BLEND_NORMAL: PIXI.blendModes;
+    BLEND_NORMAL: number;
 
     /**
      * The alias of PIXI.blendModes.ADD.
@@ -437,7 +465,7 @@ interface GraphicsStatic {
      * @type Number
      * @final
      */
-    BLEND_ADD: PIXI.blendModes;
+    BLEND_ADD: number;
 
     /**
      * The alias of PIXI.blendModes.MULTIPLY.
@@ -447,7 +475,7 @@ interface GraphicsStatic {
      * @type Number
      * @final
      */
-    BLEND_MULTIPLY: PIXI.blendModes;
+    BLEND_MULTIPLY: number;
 
     /**
      * The alias of PIXI.blendModes.SCREEN.
@@ -457,7 +485,7 @@ interface GraphicsStatic {
      * @type Number
      * @final
      */
-    BLEND_SCREEN: PIXI.blendModes;
+    BLEND_SCREEN: number;
 
     /**
      * The width of the game screen.
@@ -718,6 +746,13 @@ interface GraphicsStatic {
      */
     isInsideCanvas(x: number, y: number): boolean;
 
+    /**
+     * Calls pixi.js garbage collector
+     */
+    callGC(): void;
+
+
+
     _width: number;
     _height: number;
     _rendererType: string;
@@ -729,7 +764,7 @@ interface GraphicsStatic {
     _canvas: HTMLCanvasElement;
     _video: HTMLVideoElement;
     _upperCanvas: HTMLCanvasElement;
-    _renderer: PIXI.PixiRenderer;
+    _renderer: PIXI.SystemRenderer;
     _fpsMeter: FPSMeter;
     _modeBox: HTMLDivElement;
     _skipCount: number;
@@ -1820,7 +1855,7 @@ interface JsonExStatic {
  */
 declare var JsonEx: JsonExStatic;
 
-declare class ScreenSprite {
+declare class ScreenSprite extends PIXI.Sprite {
     /**
      * The opacity of the sprite (0 to 255).
      *
@@ -1861,12 +1896,11 @@ declare class ScreenSprite {
      */
     setColor(r?: number, g?: number, b?: number): void;
 
-    /**
-     * @method _renderCanvas
-     * @param {PIXI.CanvasRenderer} renderSession
-     * @private
-     */
-    protected _renderCanvas(renderSession: PIXI.CanvasRenderer): void;
+    protected _graphics: PIXI.Graphics;
+    protected _red: number;
+    protected _green: number;
+    protected _blue: number;
+    protected _colorText: string;
 }
 
 declare class Sprite extends PIXI.Sprite {
@@ -1971,9 +2005,9 @@ declare class Sprite extends PIXI.Sprite {
      * Sets the filters for the sprite.
      *
      * @property filters
-     * @type Array<PIXI.AbstractFilter>
+     * @type Array<PIXI.Filter>
      */
-    filters: Array<PIXI.AbstractFilter>;
+    filters: Array<PIXI.Filter>;
 
     /**
      * [read-only] The array of children of the sprite.
@@ -1989,10 +2023,11 @@ declare class Sprite extends PIXI.Sprite {
      * @property parent
      * @type PIXI.DisplayObjectContainer
      */
-    parent: PIXI.DisplayObjectContainer;
+    parent: PIXI.Container;
 
     spriteId: number;
     opaque: boolean;
+    voidFilter: PIXI.Filter;
 
     /**
      * The basic object that is rendered to the game screen.
@@ -2116,6 +2151,13 @@ declare class Sprite extends PIXI.Sprite {
     protected _tintTexture: PIXI.BaseTexture;
 
     /**
+     * use heavy renderer that will reduce border artifacts and apply advanced blendModes
+     * @type {boolean}
+     * @private
+     */
+    protected _isPicture: boolean;
+
+    /**
      * @method _onBitmapLoad
      * @private
      */
@@ -2165,20 +2207,41 @@ declare class Sprite extends PIXI.Sprite {
 
     /**
      * @method _renderCanvas
-     * @param {PIXI.CanvasRenderer} renderSession
+     * @param {PIXI.CanvasRenderer} renderer
      * @private
      */
-    protected _renderCanvas(renderSessio: PIXI.CanvasRenderer): void;
+    protected _renderCanvas_PIXI(renderer: PIXI.CanvasRenderer): void;
 
     /**
      * @method _renderWebGL
-     * @param {PIXI.WebGLRenderer} renderSession
+     * @param {PIXI.WebGLRenderer} renderer
      * @private
      */
-    protected _renderWebGL(renderSession: PIXI.WebGLRenderer): void;
+    protected _renderWebGL_PIXI(renderer: PIXI.WebGLRenderer): void;
+
+    /**
+     * @method _renderCanvas
+     * @param {PIXI.CanvasRenderer} renderer
+     * @private
+     */
+    protected _renderCanvas(renderer: PIXI.CanvasRenderer): void;
+
+    /**
+     * @method _renderWebGL
+     * @param {PIXI.WebGLRenderer} renderer
+     * @private
+     */
+    protected _renderWebGL(renderer: PIXI.WebGLRenderer): void;
+
+    /**
+     * checks if we need to speed up custom blendmodes
+     * @param renderer
+     * @private
+     */
+    protected _speedUpCustomBlendModes(renderer: PIXI.WebGLRenderer): void;
 }
 
-declare class Stage {
+declare class Stage extends PIXI.Container {
     // The interactive flag causes a memory leak.
     interactive: boolean;
 
@@ -2228,7 +2291,7 @@ declare class Stage {
     removeChildAt(index: number): PIXI.DisplayObject;
 }
 
-declare class Tilemap extends PIXI.DisplayObjectContainer {
+declare class Tilemap extends PIXI.Container {
     // Tile type checkers
 
     static TILE_ID_A1: number;
@@ -2363,7 +2426,7 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      * @property parent
      * @type PIXI.DisplayObjectContainer
      */
-    parent: PIXI.DisplayObjectContainer;
+    parent: PIXI.Container;
 
     /**
      * The tilemap which displays 2D tile-based game map.
@@ -2448,6 +2511,14 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
      * @return {PIXI.DisplayObject} The child that was removed
      */
     removeChildAt(index: number): PIXI.DisplayObject;
+
+    /**
+     * Forces to refresh the tileset
+     *
+     * @method refresh
+     */
+    refreshTileset(): void;
+
 
     protected _margin: number;
     protected _width: number;
@@ -2614,7 +2685,48 @@ declare class Tilemap extends PIXI.DisplayObjectContainer {
     protected _compareChildOrder(a: Sprite, b: Sprite): number;
 }
 
-declare class TilingSprite extends PIXI.TilingSprite {
+declare class ShaderTilemap extends Tilemap {
+    /**
+     * Uploads animation state in renderer
+     *
+     * @method _hackRenderer
+     * @param {PIXI.SystemRenderer} pixi renderer
+     * @private
+     */
+    _hackRenderer(renderer: PIXI.SystemRenderer): PIXI.SystemRenderer;
+
+    /**
+     * PIXI render method
+     *
+     * @method renderWebGL
+     * @param {PIXI.WebGLRenderer} pixi renderer
+     */
+    renderWebGL(renderer: PIXI.WebGLRenderer): void;
+
+    /**
+     * PIXI render method
+     *
+     * @method renderCanvas
+     * @param {PIXI.CanvasRenderer} pixi renderer
+     */
+    renderCanvas(renderer: PIXI.CanvasRenderer): void;
+
+    /**
+     * Forces to repaint the entire tilemap AND update bitmaps list if needed
+     *
+     * @method refresh
+     */
+    refresh(): void;
+
+    /**
+     * Call after you update tileset
+     *
+     * @method refreshTileset
+     */
+    refreshTileset(): void;
+}
+
+declare class TilingSprite extends PIXI.extras.TilingSprite {
     /**
      * The origin point of the tiling sprite for scrolling.
      *
@@ -2663,6 +2775,8 @@ declare class TilingSprite extends PIXI.TilingSprite {
      */
     y: number;
 
+    spriteId: number;
+
     /**
      * The sprite object for a tiling image.
      *
@@ -2707,6 +2821,8 @@ declare class TilingSprite extends PIXI.TilingSprite {
      */
     setFrame(x: number, y: number, width: number, height: number): void;
 
+    updateTransformTS(): void;
+
     protected _bitmap: Bitmap;
     protected _width: number;
     protected _height: number;
@@ -2725,33 +2841,35 @@ declare class TilingSprite extends PIXI.TilingSprite {
     protected _refresh(): void;
 
     /**
+     * @method _renderCanvas
+     * @param {PIXI.CanvasRenderer} renderer
+     * @private
+     */
+    protected _renderCanvas(renderer: PIXI.CanvasRenderer): void;
+
+    /**
+     * @method _renderWebGL
+     * @param {PIXI.WebGLRenderer} renderer
+     * @private
+     */
+    protected _renderWebGL(renderer: PIXI.WebGLRenderer): void;
+
+    /**
      * @method generateTilingTexture
      * @param {Boolean} arg
      */
-    generateTilingTexture(arg: boolean): void;
+    // generateTilingTexture(arg: boolean): void;
 }
 
-
-
-declare class ToneFilter extends PIXI.AbstractFilter {
-    passes: Array<boolean>;
-    uniforms: MV.Uniforms;
-    fragmentSrc: Array<string>;
-
+declare class ToneFilter extends PIXI.filters.ColorMatrixFilter {
     /**
      * The color matrix filter for WebGL.
      *
      * @class ToneFilter
+     * @extends PIXI.Filter
      * @constructor
      */
     constructor();
-
-    /**
-     * Resets the filter.
-     *
-     * @method reset
-     */
-    reset(): void;
 
     /**
      * Changes the hue.
@@ -2778,16 +2896,9 @@ declare class ToneFilter extends PIXI.AbstractFilter {
      * @param {Number} b The blue strength in the range (-255, 255)
      */
     adjustTone(r?: number, g?: number, b?: number): void;
-
-    /**
-     * @method _multiplyMatrix
-     * @param {Array} matrix
-     * @private
-     */
-    protected _multiplyMatrix(matrix: Array<number>): void;
 }
 
-declare class ToneSprite extends PIXI.DisplayObject {
+declare class ToneSprite extends PIXI.Container {
     /**
      * The sprite which changes the screen color in 2D canvas mode.
      *
@@ -2821,20 +2932,18 @@ declare class ToneSprite extends PIXI.DisplayObject {
 
     /**
      * @method _renderCanvas
-     * @param {PIXI.CanvasRenderer} renderSession
+     * @param {PIXI.CanvasRenderer} renderer
      * @private
      */
-    protected _renderCanvas(renderSession: PIXI.CanvasRenderer): void;
+    protected _renderCanvas(renderer: PIXI.CanvasRenderer): void;
 
     /**
      * @method _renderWebGL
-     * @param {PIXI.WebGLRenderer} renderSession
+     * @param {PIXI.WebGLRenderer} renderer
      * @private
      */
-    protected _renderWebGL(renderSession: PIXI.WebGLRenderer): void;
+    protected _renderWebGL(renderer: PIXI.WebGLRenderer): void;
 }
-
-
 
 interface TouchInputStatic {
     _mousePressed: boolean;
@@ -3616,7 +3725,7 @@ declare class WebAudio {
     protected _readFourCharacters(array: Uint8Array, index: number): void;
 }
 
-declare class Weather extends PIXI.DisplayObjectContainer {
+declare class Weather extends PIXI.Container {
     /**
      * The type of the weather in ['none', 'rain', 'storm', 'snow'].
      *
@@ -3736,7 +3845,7 @@ declare class Weather extends PIXI.DisplayObjectContainer {
     protected _rebornSprite(sprite: Sprite): void;
 }
 
-declare abstract class _Window extends PIXI.DisplayObjectContainer {
+declare abstract class _Window extends PIXI.Container {
     /**
      * The origin point of the window for scrolling.
      *
@@ -3895,7 +4004,7 @@ declare abstract class _Window extends PIXI.DisplayObjectContainer {
      * @property parent
      * @type PIXI.DisplayObjectContainer
      */
-    parent: PIXI.DisplayObjectContainer;
+    parent: PIXI.Container;
 
     /**
      * The window in the game.
@@ -4022,7 +4131,7 @@ declare abstract class _Window extends PIXI.DisplayObjectContainer {
     protected _padding: number;
     protected _margin: number;
     protected _colorTone: Array<number>;
-    protected _windowSpriteContainer: PIXI.DisplayObjectContainer;
+    protected _windowSpriteContainer: PIXI.Container;
     protected _windowBackSprite: Sprite;
     protected _windowCursorSprite: Sprite;
     protected _windowFrameSprite: Sprite;
@@ -4112,7 +4221,7 @@ declare abstract class _Window extends PIXI.DisplayObjectContainer {
 }
 
 
-declare class WindowLayer extends PIXI.DisplayObjectContainer {
+declare class WindowLayer extends PIXI.Container {
     /**
      * The width of the window layer in pixels.
      *
@@ -4159,7 +4268,9 @@ declare class WindowLayer extends PIXI.DisplayObjectContainer {
      * @property parent
      * @type PIXI.DisplayObjectContainer
      */
-    parent: PIXI.DisplayObjectContainer;
+    parent: PIXI.Container;
+
+    voidFilter: PIXI.Filter;
 
     /**
      * The layer which contains game windows.
@@ -4224,19 +4335,26 @@ declare class WindowLayer extends PIXI.DisplayObjectContainer {
      */
     removeChildAt(index: number): PIXI.DisplayObject;
 
+    /**
+     * @method _renderCanvas
+     * @param {PIXI.CanvasRenderer} renderer
+     * @private
+     */
+    renderCanvas(renderer: PIXI.CanvasRenderer);
+
+    /**
+     * @method _renderWebGL
+     * @param {PIXI.WebGLRenderer} renderer
+     * @private
+     */
+    renderWebGL(renderer: PIXI.WebGLRenderer): void;
+
     protected _width: number;
     protected _height: number;
     protected _tempCanvas: HTMLCanvasElement;
-    protected _vertexBuffer: WebGLBuffer;
     protected _translationMatrix: Array<number>;
-    protected _dummySprite: Sprite;
-
-    /**
-     * @method _renderCanvas
-     * @param {PIXI.CanvasRenderer} renderSession
-     * @private
-     */
-    protected _renderCanvas(renderSession: PIXI.CanvasRenderer);
+    protected _windowMask: PIXI.Graphics;
+    protected _renderSprite: PIXI.Container;
 
     /**
      * @method _canvasClearWindowRect
@@ -4247,38 +4365,103 @@ declare class WindowLayer extends PIXI.DisplayObjectContainer {
     protected _canvasClearWindowRect(renderSession: PIXI.CanvasRenderer, window: Window): void;
 
     /**
-     * @method _renderWebGL
-     * @param {PIXI.WebGLRenderer} renderSession
-     * @private
-     */
-    protected _renderWebGL(renderSession: PIXI.WebGLRenderer): void;
-
-    /**
-     * @method _webglMaskOutside
-     * @param {PIXI.WebGLRenderer} renderSession
-     * @private
-     */
-    protected _webglMaskOutside(renderSession: PIXI.WebGLRenderer): void;
-
-    /**
-     * @method _webglMaskWindow
-     * @param {PIXI.WebGLRenderer} renderSession
+     * @method _maskWindow
      * @param {Window} window
      * @private
      */
-    protected _webglMaskWindow(renderSession: PIXI.WebGLRenderer, window: Window): void;
+     protected _maskWindow(window: _Window): void;
+}
+
+declare class CacheEntry {
+    /**
+     * The resource class. Allows to be collected as a garbage if not use for some time or ticks
+     *
+     * @class CacheEntry
+     * @constructor
+     * @param {ResourceManager} resource manager
+     * @param {string} key, url of the resource
+     * @param {string} item - Bitmap, HTML5Audio, WebAudio - whatever you want to store in the cache
+     */
+    constructor(cache: CacheMap, key: string, item: string)
 
     /**
-     * @method _webglMaskRect
-     * @param {PIXI.WebGLRenderer} renderSession
-     * @param {Number} x
-     * @param {Number} y
-     * @param {Number} w
-     * @param {Number} h
-     * @private
+     * frees the resource
      */
-    protected _webglMaskRect(renderSession: PIXI.WebGLRenderer, x: number, y: number, w: number, h: number): void;
+    free(byTTL?: boolean): void;
+
+    /**
+     * Allocates the resource
+     * @returns {CacheEntry}
+     */
+    allocate(): CacheEntry;
+
+    /**
+     * Sets the time to live
+     * @param {number} ticks TTL in ticks, 0 if not set
+     * @param {number} time TTL in seconds, 0 if not set
+     * @returns {CacheEntry}
+     */
+    setTimeToLive(ticks?: number, seconds?: number): CacheEntry;
+
+    isStillAlive(): boolean;
+
+    /**
+     * makes sure that resource wont freed by Time To Live
+     * if resource was already freed by TTL, put it in cache again
+     */
+    touch(): void;
 }
+
+declare class CacheMap {
+    /**
+     * Cache for images, audio, or any other kind of resource
+     * @param manager
+     * @constructor
+     */
+    constructor(manager: ImageManagerStatic);
+
+    /**
+     * checks ttl of all elements and removes dead ones
+     */
+    checkTTL(): void;
+
+    /**
+     * cache item
+     * @param key url of cache element
+     * @returns {*|null}
+     */
+    getItem(key: string): any;
+
+    clear(): void;
+    setItem(key, item): CacheEntry;
+    update(ticks: number, delta: number): void;
+}
+
+
+interface DecrypterStatic {
+    hasEncryptedImages: boolean;
+    hasEncryptedAudio: boolean;
+
+    _requestImgFile: Array<string>;
+    _headerlength: number;
+    _xhrOk: number;
+    _encryptionKey: string;
+    _ignoreList: Array<string>;
+
+    SIGNATURE: string;
+    VER: string;
+    REMAIN: string;
+
+    checkImgIgnore(url: string): boolean;
+    decryptImg(url: string, bitmap: Bitmap): void;
+    decryptHTML5Audio(url: string, bgm: MV.AudioParameters, pos?: number): void;
+    cutArrayHeader(arrayBuffer: ArrayBuffer, length: number): ArrayBuffer;
+    decryptArrayBuffer(arrayBuffer: ArrayBuffer): void;
+    createBlobUrl(arrayBuffer: ArrayBuffer): string;
+    extToEncryptExt(url: string): string;
+    readEncryptionkey(): void;
+}
+declare var Decrypter: DecrypterStatic;
 declare namespace RPG {
     export interface MetaData {
         /**
@@ -6219,9 +6402,6 @@ declare namespace RPG {
     }
 }
 declare namespace MV {
-    export interface Uniforms {
-        matrix: Matrix;
-    }
     export interface Matrix {
         type: string;
         value: Array<number>;
@@ -6329,6 +6509,7 @@ interface AudioManagerStatic {
     _staticBuffers: Array<Html5AudioStatic | WebAudio>;
     _replayFadeTime: number;
     _path: string;
+    _blobUrl: string;
 
     bgmVolume: number;
     bgsVolume: number;
@@ -6377,6 +6558,8 @@ interface AudioManagerStatic {
     checkErrors(): void;
     checkWebAudioError(): void;
     checkWebAudioError(webAudio: Html5AudioStatic | WebAudio): void;
+    playEncryptedBgm(bgm: MV.AudioParameters, pos?: number): void;
+    createDecryptBuffer(url: string, bgm: MV.AudioParameters, pos?: number): void;
 }
 declare var AudioManager: AudioManagerStatic;
 
@@ -6523,7 +6706,7 @@ declare var $gameScreen: Game_Screen;
 declare var $gameTimer: Game_Timer;
 declare var $gameMessage: Game_Message;
 declare var $gameSwitches: Game_Switches;
-declare var $gamevariables: Game_Variables;
+declare var $gameVariables: Game_Variables;
 declare var $gameSelfSwitches: Game_SelfSwitches;
 declare var $gameActors: Game_Actors;
 declare var $gameParty: Game_Party;
@@ -6590,7 +6773,7 @@ declare var DataManager: DataManagerStatic;
  * The static class that loads images, creates bitmap objects and retains them.
  */
 interface ImageManagerStatic {
-    _cache: {[key: string]: Bitmap};
+    cache: CacheMap;
 
     loadAnimation(filename: string, hue?: number): Bitmap;
     loadBattleback1(filename: string, hue?: number): Bitmap;
@@ -6608,6 +6791,7 @@ interface ImageManagerStatic {
     loadTitle2(filename: string, hue?: number): Bitmap;
     loadBitmap(folder: string, filename: string, hue: number, smooth: boolean): Bitmap;
     loadEmptyBitmap(path: string, hue: number): Bitmap;
+    loadNormalBitmap(path: string, hue: number): Bitmap;
     clear(): void;
     isReady(): boolean;
     isObjectCharacter(filename: string): boolean;
@@ -6701,6 +6885,7 @@ interface SceneManagerStatic {
     snap(): Bitmap;
     snapForBackground(): void;
     backgroundBitmap(): Bitmap;
+    updateManagers(ticks: number, delta: number): void;
 }
 declare var SceneManager: SceneManagerStatic;
 
@@ -9640,7 +9825,7 @@ declare class Sprite_Actor extends Sprite_Battler {
 declare class Sprite_Enemy extends Sprite_Battler {
     protected _enemy: Game_Enemy;
     protected _appeared: boolean;
-    protected _battlerName: String;
+    protected _battlerName: string;
     protected _battlerHue: number;
     protected _effectType: string;
     protected _effectDuration: number;
@@ -9702,6 +9887,7 @@ declare class Sprite_Animation extends Sprite {
     protected _cellSprites: Array<Sprite>;
     protected _screenFlashSprite: ScreenSprite;
     protected _duplicated: boolean;
+    protected _reduceArtifacts: boolean;
 
     initMembers(): void;
     setup(target: Sprite_Base, animation: RPG.Animation, mirror: boolean, delay: number): void;
@@ -9848,7 +10034,8 @@ declare class Sprite_Balloon extends Sprite_Base {
  */
 declare class Sprite_Picture extends Sprite {
     protected _pictureId: number;
-    protected _pictureName: String;
+    protected _pictureName: string;
+    protected _isPicture: boolean;
 
     constructor(pictureId: number);
 
@@ -9934,7 +10121,7 @@ declare class Spriteset_Base extends Sprite {
  */
 declare class Spriteset_Map extends Spriteset_Base {
     protected _parallax: TilingSprite;
-    protected _tilemap: Tilemap;
+    protected _tilemap: Tilemap | ShaderTilemap;
     protected _tileset: RPG.Tileset;
     protected _characterSprites: Array<Sprite_Character>;
     protected _shadowSprite: Sprite;
@@ -10746,7 +10933,10 @@ declare class Window_NameEdit extends Window_Base {
 
     windowWidth(): number;
     windowHeight(): number;
-    name(): string;
+
+    // "name" is defines already by superclass(PIXI.DisplayObject).
+    // name(): string;
+
     restoreDefault(): boolean;
     add(ch: string): boolean;
     back(): boolean;
@@ -11283,6 +11473,7 @@ declare class Scene_Boot extends Scene_Base {
     protected _startDate: Date;
 
     loadSystemImages(): void;
+    loadSystemWindowImage(): void;
     isGameFontLoaded(): boolean;
     updateDocumentTitle(): void;
     checkPlayerLocation(): void;

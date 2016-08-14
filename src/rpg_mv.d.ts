@@ -1,7 +1,4 @@
 declare namespace MV {
-    export interface Uniforms {
-        matrix: Matrix;
-    }
     export interface Matrix {
         type: string;
         value: Array<number>;

@@ -738,7 +738,10 @@ declare class Window_NameEdit extends Window_Base {
 
     windowWidth(): number;
     windowHeight(): number;
-    name(): string;
+
+    // "name" is defines already by superclass(PIXI.DisplayObject).
+    // name(): string;
+
     restoreDefault(): boolean;
     add(ch: string): boolean;
     back(): boolean;

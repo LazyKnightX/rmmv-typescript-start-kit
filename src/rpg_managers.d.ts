@@ -17,6 +17,7 @@ interface AudioManagerStatic {
     _staticBuffers: Array<Html5AudioStatic | WebAudio>;
     _replayFadeTime: number;
     _path: string;
+    _blobUrl: string;
 
     bgmVolume: number;
     bgsVolume: number;
@@ -65,6 +66,8 @@ interface AudioManagerStatic {
     checkErrors(): void;
     checkWebAudioError(): void;
     checkWebAudioError(webAudio: Html5AudioStatic | WebAudio): void;
+    playEncryptedBgm(bgm: MV.AudioParameters, pos?: number): void;
+    createDecryptBuffer(url: string, bgm: MV.AudioParameters, pos?: number): void;
 }
 declare var AudioManager: AudioManagerStatic;
 
@@ -278,7 +281,7 @@ declare var DataManager: DataManagerStatic;
  * The static class that loads images, creates bitmap objects and retains them.
  */
 interface ImageManagerStatic {
-    _cache: {[key: string]: Bitmap};
+    cache: CacheMap;
 
     loadAnimation(filename: string, hue?: number): Bitmap;
     loadBattleback1(filename: string, hue?: number): Bitmap;
@@ -296,6 +299,7 @@ interface ImageManagerStatic {
     loadTitle2(filename: string, hue?: number): Bitmap;
     loadBitmap(folder: string, filename: string, hue: number, smooth: boolean): Bitmap;
     loadEmptyBitmap(path: string, hue: number): Bitmap;
+    loadNormalBitmap(path: string, hue: number): Bitmap;
     clear(): void;
     isReady(): boolean;
     isObjectCharacter(filename: string): boolean;
@@ -389,6 +393,7 @@ interface SceneManagerStatic {
     snap(): Bitmap;
     snapForBackground(): void;
     backgroundBitmap(): Bitmap;
+    updateManagers(ticks: number, delta: number): void;
 }
 declare var SceneManager: SceneManagerStatic;
 

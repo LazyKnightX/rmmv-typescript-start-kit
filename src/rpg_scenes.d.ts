@@ -43,6 +43,7 @@ declare class Scene_Boot extends Scene_Base {
     protected _startDate: Date;
 
     loadSystemImages(): void;
+    loadSystemWindowImage(): void;
     isGameFontLoaded(): boolean;
     updateDocumentTitle(): void;
     checkPlayerLocation(): void;

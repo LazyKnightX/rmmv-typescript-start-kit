@@ -21,7 +21,6 @@ rpg maker mv d.ts
 * SaveFileInfo
 * TextState
 * TouchInputEvents
-* Uniforms
 
 ### RPG
 * BaseItem
@@ -42,15 +41,15 @@ rpg maker mv d.ts
             newMtd(): number;
         }
     }
-    
+
     Scene_Base.prototype.newMtd = function(): string {
         return '123';
     };
-    
+
     DataManager.newMtd =  function(): number {
         return 456;
     };
-    
+
     //
     var scene = new Scene_Base();
     var num = scene.newMtd() + DataManager.newMtd().toString();
@@ -64,6 +63,6 @@ This is equivalent to alias in RGSS(Ruby).
         var a = mtd.call(this);
         return a + '123';
     };
-    
+
     //
     console.assert(new Scene_Base().newMtd() === '123123');
