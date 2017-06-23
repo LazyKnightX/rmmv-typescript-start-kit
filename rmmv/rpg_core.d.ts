@@ -2253,6 +2253,8 @@ declare class Stage extends PIXI.Container {
      */
     constructor();
 
+    initialize(): void;
+
     /**
      * Adds a child to the container.
      *
