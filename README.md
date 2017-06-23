@@ -1,5 +1,11 @@
 # Essential TypeScript Declares (*.d.ts) for RPG Maker MV
 
+## Tip
+
+* There use "constructor" to replace RMMV's "initialize" in Scene/Window/etc.. , if you want to rewrite "initialize", just direct use "constructor".
+
+## Thanks
+
 Thanks for all providers of those components (pixi.d.ts, fps-meter.d.ts, lz-string.d.ts, rmmv.d.ts)!
 
 谢谢提供了
