@@ -2,7 +2,14 @@
 
 Thanks for all providers of those components (pixi.d.ts, fps-meter.d.ts, lz-string.d.ts, rmmv.d.ts)!
 
-谢谢提供 pixi.d.ts, fps-meter.d.ts, lz-string.d.ts, rmmv.d.ts 的开发者们！
+谢谢提供了
+
+* [pixi.d.ts](https://github.com/pixijs/pixi-typescript)
+* [fps-meter.d.ts](https://github.com/NativeScript/nativescript-unit-test-runner)
+* [lz-string.d.ts](https://github.com/pieroxy/lz-string)
+* [rmmv.d.ts](https://github.com/AsterAtwood/rmmv.d.ts)
+
+的开发者们！
 
 Feel free to issue me or pull request if you find any problem.
 
