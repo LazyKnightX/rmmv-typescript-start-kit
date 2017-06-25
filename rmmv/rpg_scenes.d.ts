@@ -462,6 +462,7 @@ declare class Scene_Battle extends Scene_Base {
     protected _messageWindow: Window_Message;
     protected _scrollTextWindow: Window_ScrollText;
 
+    initialize(): void;
     updateBattleProcess(): void;
     isAnyInputWindowActive(): boolean;
     changeInputWindow(): void;

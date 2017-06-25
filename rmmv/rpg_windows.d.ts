@@ -227,7 +227,8 @@ declare class Window_Selectable extends Window_Base {
 declare class Window_Command extends Window_Selectable {
     protected _list: Array<MV.CommandItem>;
 
-    constructor(x: number, y: number);
+    constructor();
+    initialize(x: number, y: number): void;
 
     windowWidth(): number;
     windowHeight(): number;
