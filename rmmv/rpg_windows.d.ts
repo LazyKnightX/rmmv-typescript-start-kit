@@ -610,7 +610,7 @@ declare class Window_ShopCommand extends Window_HorzCommand {
     protected _windowWidth: number;
     protected _purchaseOnly: boolean;
 
-    initialize(width: number, purchaseOnly: boolean): void;
+    constructor(width: number, purchaseOnly: boolean);
 }
 
 /**
