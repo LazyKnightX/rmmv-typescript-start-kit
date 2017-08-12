@@ -1,22 +1,20 @@
-# Essential TypeScript Declares (*.d.ts) for RPG Maker MV
+[English](README.en.md)
 
-## Tip
+# 在 RPG Maker MV 中使用 TypeScript 的必要基础套件
 
-* There use "constructor" to replace RMMV's "initialize" in Scene/Window/etc.. , if you want to rewrite "initialize", just direct use "constructor".
+本仓库整合了使用RPG Maker MV所必备的基础TypeScript声明文件（*.d.ts），用于让想要在RPG Maker MV中体验TypeScript的开发者尽快上手。
 
-## Thanks
+## 提示
 
-Thanks for all providers of those components (pixi.d.ts, fps-meter.d.ts, lz-string.d.ts, rmmv.d.ts)!
+* 本仓库中的套件使用constructor替代RMMV的各类Scene/Window/Sprite/..等对象的所有initialize逻辑，如果你想要改写initialize的功能，请从constructor下手。
 
-谢谢提供了
+## 谢谢！
+
+谢谢提供了以下组件的所有开发者们！
 
 * [pixi.d.ts](https://github.com/pixijs/pixi-typescript)
 * [fps-meter.d.ts](https://github.com/NativeScript/nativescript-unit-test-runner)
 * [lz-string.d.ts](https://github.com/pieroxy/lz-string)
 * [rmmv.d.ts](https://github.com/AsterAtwood/rmmv.d.ts)
-
-的开发者们！
-
-Feel free to issue me or pull request if you find any problem.
 
 如果你发现了任何问题，欢迎提出Issue或者Pull Request！
