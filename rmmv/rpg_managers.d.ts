@@ -81,7 +81,7 @@ interface BattleManagerStatic {
     _canEscape: boolean;
     _canLose: boolean;
     _battleTest: boolean;
-    _eventCallback: () => void;
+    _eventCallback: typeof Function;
     _preemptive: boolean;
     _surprise: boolean;
     _actorIndex: number;
@@ -103,7 +103,7 @@ interface BattleManagerStatic {
     initMembers(): void;
     isBattleTest(): boolean;
     setBattleTest(battleTest: boolean): void;
-    setEventCallback(callback: () => void): void;
+    setEventCallback(callback: typeof Function): void;
     setLogWindow(logWindow: Window_BattleLog): void;
     setStatusWindow(statusWindow: Window_BattleStatus): void;
     setSpriteset(spriteset: Spriteset_Battle): void;
@@ -336,11 +336,11 @@ declare var PluginManager: PluginManagerStatic;
 interface SceneManagerStatic {
     _scene: Scene_Base;
     _nextScene: Scene_Base;
-    _stack: Array<() => void>;
+    _stack: Array<typeof Scene_Base>;
     _stopped: boolean;
     _sceneStarted: boolean;
     _exiting: boolean;
-    _previousClass: () => void;
+    _previousClass: typeof Scene_Base;
     _backgroundBitmap: Bitmap;
     _screenWidth: number;
     _screenHeight: number;
@@ -350,7 +350,7 @@ interface SceneManagerStatic {
     _currentTime: number;
     _accumulator: number;
 
-    run(sceneClass: () => void): void;
+    run(sceneClass: typeof Scene_Base): void;
     initialize(): void;
     initGraphics(): void;
     preferableRendererType(): string;
@@ -381,10 +381,10 @@ interface SceneManagerStatic {
     isSceneChanging(): boolean;
     isCurrentSceneBusy(): boolean;
     isCurrentSceneStarted(): boolean;
-    isNextScene(sceneClass: () => void): boolean;
-    isPreviousScene(sceneClass: () => void): boolean;
-    goto(sceneClass: () => void): void;
-    push(sceneClass: () => void): void;
+    isNextScene(sceneClass: typeof Scene_Base): boolean;
+    isPreviousScene(sceneClass: typeof Scene_Base): boolean;
+    goto(sceneClass: typeof Scene_Base): void;
+    push(sceneClass: typeof Scene_Base): void;
     pop(): void;
     exit(): void;
     clearStack(): void;
